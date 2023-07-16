@@ -6,10 +6,18 @@ import { AppComponent } from './app.component';
 import { AdminModule } from './admin/admin.module';
 import { UiModule } from './ui/ui.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, AdminModule, UiModule, BrowserAnimationsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    AdminModule,
+    UiModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

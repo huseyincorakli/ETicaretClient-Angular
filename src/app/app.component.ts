@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CustomToastrService, ToastrMessageType, ToastrPosition } from './services/ui/custom-toastr.service';
 // declare var $:any;
 
 @Component({
@@ -8,6 +9,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'ETicaretClient_2023';
+  constructor(private toastr:CustomToastrService){
+    toastr.message("DENEME","MESAJ",ToastrMessageType.Warning,ToastrPosition.BottomFull)
+  }
   
 }
 
