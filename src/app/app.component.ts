@@ -10,7 +10,7 @@ import { CustomToastrService, ToastrMessageType, ToastrPosition } from './servic
 export class AppComponent {
   title = 'ETicaretClient_2023';
   constructor(private toastr:CustomToastrService){
-    toastr.message("DENEME","MESAJ",ToastrMessageType.Warning,ToastrPosition.BottomFull)
+   // toastr.message("DENEME","MESAJ",ToastrMessageType.Warning,ToastrPosition.BottomFull)
   }
   
 }
