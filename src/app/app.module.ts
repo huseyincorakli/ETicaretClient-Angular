@@ -20,7 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
     UiModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
-    NgxSpinnerModule,HttpClientModule
+    NgxSpinnerModule,
+    HttpClientModule
   ],
   providers: [{
     provide:'baseUrl',useValue:'https://localhost:7229/api',multi:true
