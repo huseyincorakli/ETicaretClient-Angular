@@ -1,6 +1,8 @@
 import { Directive, ElementRef, EventEmitter, HostListener, Input, Output, Renderer2 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerType } from 'src/app/base/base.component';
+import { DeleteDialogComponent, DeleteState } from 'src/app/dialogs/delete-dialog/delete-dialog.component';
 import { ProductService } from 'src/app/services/common/models/product.service';
 declare var $:any;
 @Directive({
@@ -12,7 +14,8 @@ export class DeleteDirective {
     private element: ElementRef,
     private _render: Renderer2,
     private productService: ProductService,
-    private spinner:NgxSpinnerService
+    private spinner:NgxSpinnerService,
+    public dialog: MatDialog
   ) { 
 
     const img= _render.createElement('img');
@@ -26,12 +29,30 @@ export class DeleteDirective {
   @Input() id:string;
   @HostListener('click')
   async onclick(){
-    this.spinner.show(SpinnerType.Classic)
-    const td=HTMLTableCellElement=this.element.nativeElement
-    await this.productService.delete(this.id);
-    $(td.parentElement).fadeOut(400,()=>{
-      this.callback.emit()
+    this.openDialog(async ()=>{
+      this.spinner.show(SpinnerType.Classic)
+      const td=HTMLTableCellElement=this.element.nativeElement
+      await this.productService.delete(this.id);
+      $(td.parentElement).animate({
+        opacity:0,
+        left:'+=50',
+        height:'toogle'
+      },800,()=>{
+        this.callback.emit()
+      })
+      this.spinner.hide(SpinnerType.Classic)
+    })
+  }
+
+  openDialog(callback:any): void {
+    const dialogRef = this.dialog.open(DeleteDialogComponent, {
+      width:'250px',
+      data:DeleteState.Yes,
     });
-    this.spinner.hide(SpinnerType.Classic)
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result==DeleteState.Yes)
+        callback()
+    });
   }
 }
