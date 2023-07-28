@@ -11,6 +11,7 @@ import { List_Product } from 'src/app/contracts/list_product';
 export class ProductService {
 
   constructor(private httpClientService: HttpClientService) { }
+  //CREATE PRODUCT
   create(product: Create_Product, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void) {
     this.httpClientService.post({
       controller: 'products'
@@ -28,6 +29,8 @@ export class ProductService {
         errorCallBack(message)
       })
   }
+
+//READ PRODUCT
   async read(page: number = 0, size: number = 5, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalCount: number, products: List_Product[] }> {
     const promiseData: Promise<{ totalCount: number, products: List_Product[] }> = this.httpClientService.get
     <{ totalCount: number, products: List_Product[] }>({
@@ -39,6 +42,8 @@ export class ProductService {
 
     return await promiseData;
   }
+
+  //DELETE PRODUCT
    async delete(id:string){ 
     await this.httpClientService.delete({
       controller:'products'
