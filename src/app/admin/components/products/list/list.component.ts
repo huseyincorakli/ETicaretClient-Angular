@@ -17,7 +17,7 @@ export class ListComponent extends BaseComponent implements OnInit {
     super(spinner)
   }
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['name', 'price', 'stock', 'createdDate', 'updatedDate', 'edit', 'delete'];
+  displayedColumns: string[] = ['name', 'price', 'stock', 'createDate', 'updatedDate', 'edit', 'delete'];
   dataSource: MatTableDataSource<List_Product> = null;
 
   async getProducts() {
@@ -31,6 +31,8 @@ export class ListComponent extends BaseComponent implements OnInit {
           this.alertify.message(errorMessage,
             { dismissOthers: true, messageType: MessageType.Error, position: Position.TopRight })
         })
+        console.log(allProducts);
+        
     this.dataSource = new MatTableDataSource<List_Product>(allProducts.products)
     this.paginator.length = allProducts.totalCount
   }
