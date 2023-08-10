@@ -4,7 +4,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { List_Product } from 'src/app/contracts/list_product';
+import { SelectProductImageDialogComponent } from 'src/app/dialogs/select-product-image-dialog/select-product-image-dialog.component';
 import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
+import { DialogService } from 'src/app/services/common/dialog.service';
 import { ProductService } from 'src/app/services/common/models/product.service';
 
 @Component({
@@ -13,13 +15,20 @@ import { ProductService } from 'src/app/services/common/models/product.service';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent extends BaseComponent implements OnInit {
-  constructor(private productService: ProductService, spinner: NgxSpinnerService, private alertify: AlertifyService) {
+  constructor(
+    private productService: ProductService,
+    spinner: NgxSpinnerService,
+    private alertify: AlertifyService,
+    private dialogService:DialogService
+      
+      ) {
     super(spinner)
   }
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['name', 'price', 'stock', 'createDate', 'updatedDate', 'edit', 'delete'];
+  displayedColumns: string[] = ['name', 'price', 'stock', 'createDate', 'updatedDate', 'photos','edit', 'delete'];
   dataSource: MatTableDataSource<List_Product> = null;
 
+  
   async getProducts() {
     this.showSpinner(SpinnerType.Clock)
     const allProducts: { totalCount: number, products: List_Product[] } =
@@ -42,5 +51,15 @@ export class ListComponent extends BaseComponent implements OnInit {
 
   async ngOnInit() {
     await this.getProducts();
+  }
+
+  addProductImages(id:string){
+    this.dialogService.openDialog({
+      componentType:SelectProductImageDialogComponent,
+      data:id,
+      options:{
+        width:"1000px"
+      }
+    })
   }
 }

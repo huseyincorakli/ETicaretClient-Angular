@@ -1,0 +1,21 @@
+.images{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 10px;
+}
+
+.product-image-card {
+    max-width: 300px;
+    margin-top: 8px;
+    background-color: #ddd;
+  }
+
+.product-image-button{
+    background-color: rgb(235, 86, 86);
+    color: white;
+}
+img{
+    width: 250px;
+    height: 260px;
+}
