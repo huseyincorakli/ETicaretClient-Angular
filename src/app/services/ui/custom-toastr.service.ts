@@ -13,7 +13,7 @@ export class CustomToastrService {
   }
 }
 export enum ToastrMessageType {
-  Success = "succes",
+  Success = "success",
   Info = "info",
   Warning = "warning",
   Error = "error",
