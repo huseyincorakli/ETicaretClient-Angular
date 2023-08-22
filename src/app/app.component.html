@@ -31,21 +31,40 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="register"
+            <a
+              class="nav-link active"
+              aria-current="page"
+              routerLink="register"
+              *ngIf="!authService.isAuthenticated"
               >Register</a
             >
           </li>
-           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="login"
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              routerLink="login"
+              *ngIf="!authService.isAuthenticated"
               >Login</a
             >
           </li>
           <li class="nav-item">
             <a
-              class="btn btn-outline-success"
+              class="nav-link active text-info"
               aria-current="page"
               routerLink="admin"
+              *ngIf="authService.isAuthenticated"
               >Yönetim Paneli</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link active  text-danger"
+              aria-current="page"
+              routerLink="admin"
+              *ngIf="authService.isAuthenticated"
+              (click)="signOut()"
+              >Çıkış Yap</a
             >
           </li>
           <!-- <li class="nav-item dropdown">
@@ -63,7 +82,7 @@
                   <a class="nav-link disabled">Disabled</a>
                 </li> -->
         </ul>
-        <form class="d-flex" role="search">
+        <!-- <form class="d-flex" role="search">
           <input
             class="form-control me-2"
             type="search"
@@ -71,7 +90,7 @@
             aria-label="Search"
           />
           <a class="btn btn-outline-success" href="#">Search</a>
-        </form>
+        </form> -->
       </div>
     </div>
   </nav>

@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { Observable } from 'rxjs';
 import { SpinnerType } from 'src/app/base/base.component';
+import { _isAuthenticated, } from 'src/app/services/common/auth.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 
 @Injectable({
@@ -12,7 +11,6 @@ import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/
 export class AuthGuard implements CanActivate {
   
   constructor(
-    private jwtHelper:JwtHelperService,
     private router:Router,
     private toastr:CustomToastrService,
     private spinner:NgxSpinnerService
@@ -22,16 +20,9 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot,state: RouterStateSnapshot){
     this.spinner.show(SpinnerType.Clock)
-    const token:string = localStorage.getItem("accessToken");
     
-    let expired:boolean;
-    try {
-      expired= this.jwtHelper.isTokenExpired(token)
-    } catch {
-      expired=true;
-    }
     
-    if (!token || expired) {
+    if (!_isAuthenticated) {
       this.router.navigate(['login'],{queryParams:{returnUrl:state.url}});
       this.toastr.message('Yetki Gerekli','Lütfen Oturum Açınız.',ToastrMessageType.Warning,ToastrPosition.TopRight)
     }
