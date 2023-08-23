@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/common/auth.service';
 import { UserService } from 'src/app/services/common/models/user.service';
 import { SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
 import { GoogleLoginProvider } from "@abacritt/angularx-social-login";
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -24,20 +25,28 @@ export class LoginComponent extends BaseComponent {
     super(spinner)
     this.socialAuthService.authState.subscribe(async (user: SocialUser) => {
       this.showSpinner(SpinnerType.Clock)
-      await userService.googleLogin(user, () => {
-        this.authService.identityCheck();
-        this.activatedRoute.queryParams.subscribe(params => {
-          const returnUrl: string = params['returnUrl'];
-          if(!returnUrl){
-            this.router.navigate(['admin'])
-            
-          }
-          if (returnUrl) {
-            this.router.navigate([returnUrl])
-          }
-        })
-        this.hideSpinner(SpinnerType.Clock)
-      })
+      
+      switch(user.provider){
+        case 'GOOGLE':
+          await userService.googleLogin(user, () => {
+            this.authService.identityCheck();
+            this.activatedRoute.queryParams.subscribe(params => {
+              const returnUrl: string = params['returnUrl'];
+              if(!returnUrl){
+                this.router.navigate(['admin'])
+                
+              }
+              if (returnUrl) {
+                this.router.navigate([returnUrl])
+              }
+            })
+            this.hideSpinner(SpinnerType.Clock)
+          })
+        break;
+        case'FACEBOOK':
+        //-----
+        break;
+      }
     })
   }
 
