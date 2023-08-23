@@ -3,7 +3,7 @@
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.1.
 
 
-##Errors : 
+#Errors : 
 error NG8001: 'asl-google-signin-button' is not a known element:
 1. If 'asl-google-signin-button' is an Angular component, then verify that it is part of this module.
 2. If 'asl-google-signin-button' is a Web Component then add 'CUSTOM_ELEMENTS_SCHEMA' to the '@NgModule.schemas' of this component to suppress this message.
