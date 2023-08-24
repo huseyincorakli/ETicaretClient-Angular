@@ -4,8 +4,9 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { AuthService } from 'src/app/services/common/auth.service';
 import { UserService } from 'src/app/services/common/models/user.service';
-import { SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
+import { FacebookLoginProvider, SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
 import { GoogleLoginProvider } from "@abacritt/angularx-social-login";
+import { UserAuthService } from 'src/app/services/common/models/user-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ import { GoogleLoginProvider } from "@abacritt/angularx-social-login";
 export class LoginComponent extends BaseComponent {
 
   constructor(
-    private userService: UserService,
+    private userAuthService: UserAuthService,
     spinner: NgxSpinnerService,
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
@@ -23,12 +24,10 @@ export class LoginComponent extends BaseComponent {
     private socialAuthService: SocialAuthService
   ) {
     super(spinner)
+    
     this.socialAuthService.authState.subscribe(async (user: SocialUser) => {
       this.showSpinner(SpinnerType.Clock)
-      
-      switch(user.provider){
-        case 'GOOGLE':
-          await userService.googleLogin(user, () => {
+          await userAuthService.googleLogin(user, () => {
             this.authService.identityCheck();
             this.activatedRoute.queryParams.subscribe(params => {
               const returnUrl: string = params['returnUrl'];
@@ -42,19 +41,31 @@ export class LoginComponent extends BaseComponent {
             })
             this.hideSpinner(SpinnerType.Clock)
           })
-        break;
-        case'FACEBOOK':
-        //-----
-        break;
+        //  case'FACEBOOK':
+        // await userService.facebookLogin(user, () => {
+        //   this.authService.identityCheck();
+        //   this.activatedRoute.queryParams.subscribe(params => {
+        //     const returnUrl: string = params['returnUrl'];
+        //     if(!returnUrl){
+        //       this.router.navigate(['admin'])
+              
+        //     }
+        //     if (returnUrl) {
+        //       this.router.navigate([returnUrl])
+        //     }
+        //   })
+        //   this.hideSpinner(SpinnerType.Clock)
+        // })
+        // break;
       }
-    })
+    )
   }
 
 
 
   async login(password: string, usernameOrEmail: string) {
     this.showSpinner(SpinnerType.Classic)
-    await this.userService.login(usernameOrEmail, password, () => {
+    await this.userAuthService.login(usernameOrEmail, password, () => {
       this.authService.identityCheck();
       this.activatedRoute.queryParams.subscribe(params => {
         const returnUrl: string = params['returnUrl'];
@@ -73,4 +84,8 @@ export class LoginComponent extends BaseComponent {
   navigateRegister(){
     this.router.navigate(['register'])
   }
+  facebookLogin(){
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
+  }
 }
+

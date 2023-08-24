@@ -28,7 +28,15 @@
       <a style="cursor: pointer; color:blue" (click)="navigateRegister()">Hesabınız yok mu? Kaydolun.</a>
       <br>
       <br>
-      <asl-google-signin-button type='icon' size='medium'/>
+      <div class="login">
+        <div class="social">
+          <asl-google-signin-button type='icon' size='medium'/>
+        </div>
+        
+          <!-- <div (click)="facebookLogin()" style="cursor: pointer;"><img class="fLogin" src="../../../../assets/facebook.png" alt=""></div> -->
+        
+      </div>
+
       <br>
       <button type="submit" class="btn btn-primary" (click)="login(txtPassword.value,txtUsernameOrEmail.value)">Giriş Yap</button>
       
