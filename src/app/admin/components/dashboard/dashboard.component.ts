@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 
 
 @Component({
@@ -6,9 +7,11 @@ import { Component } from '@angular/core';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
-  constructor(){
-   
+export class DashboardComponent implements OnInit {
+ 
+  ngOnInit(): void {
+    
+  
   }
 
 }
