@@ -59,7 +59,10 @@ export class ProductService {
     },id) 
      const images= firstValueFrom(getImages)
      succesCallBack();
+    
     return await images;
+    
+    
   }
 
   async deleteImage(id:string,imageId:string,succesCallBack:()=>void){
@@ -70,5 +73,15 @@ export class ProductService {
     },id);
     firstValueFrom(deleteObservable);
     succesCallBack();
+  }
+
+  async changeShowcaseImage(imageId:string , productId:string, succesCallBack?:()=>void){
+    const changeShowcaseImageObservable= this.httpClientService.get({
+      controller:'products',
+      action:'ChangeShowcaseImage',
+      queryString:`imageId=${imageId}&productId=${productId}`
+    })
+     firstValueFrom(changeShowcaseImageObservable);
+     succesCallBack();
   }
 }

@@ -8,6 +8,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerType } from 'src/app/base/base.component';
 import { DialogService } from 'src/app/services/common/dialog.service';
 import { DeleteDialogComponent, DeleteState } from '../delete-dialog/delete-dialog.component';
+import { AlertifyService, MessageType } from 'src/app/services/admin/alertify.service';
 declare var $:any;
 
 
@@ -22,7 +23,8 @@ export class SelectProductImageDialogComponent extends BaseDialog<SelectProductI
     @Inject(MAT_DIALOG_DATA) public data: SelectProductImageState | string,
     private productService: ProductService,
     private spinner:NgxSpinnerService,
-    private dialogService:DialogService
+    private dialogService:DialogService,
+    private alertify:AlertifyService
   ) {
     super(dialogRef)
   }
@@ -32,8 +34,12 @@ export class SelectProductImageDialogComponent extends BaseDialog<SelectProductI
   async ngOnInit() {
     this.spinner.show(SpinnerType.Classic)
     this.images = await this.productService.readImages(this.data as string,()=>{
+     
+      
       this.spinner.hide(SpinnerType.Classic)
     })
+
+  
   }
  
   deleteImage(imageId:string,event:any){
@@ -51,6 +57,16 @@ export class SelectProductImageDialogComponent extends BaseDialog<SelectProductI
     }
   })
   
+  }
+
+  showCase(imageId:string){
+   this.spinner.show(SpinnerType.Classic)
+   this.productService.changeShowcaseImage(imageId,this.data as string,()=>{
+    this.spinner.hide(SpinnerType.Classic)
+    this.alertify.message('Vitrin resmi güncellendi',{
+      messageType:MessageType.Success
+    })
+   })
   }
 
   @Output() options: Partial<FileUploadOptions> = {
