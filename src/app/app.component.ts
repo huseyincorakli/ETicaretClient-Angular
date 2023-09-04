@@ -4,6 +4,7 @@ import { AuthService } from './services/common/auth.service';
 import { Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerType } from './base/base.component';
+import { HttpClientService } from './services/common/http-client.service';
 // declare var $:any;
 
 @Component({
@@ -12,7 +13,8 @@ import { SpinnerType } from './base/base.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(public authService: AuthService, private toastr: CustomToastrService,private router:Router,private spinner:NgxSpinnerService) {
+  constructor(public authService: AuthService, private toastr: CustomToastrService, private router: Router, private spinner: NgxSpinnerService) {
+
     authService.identityCheck();
   }
   signOut() {
@@ -20,10 +22,10 @@ export class AppComponent {
     localStorage.removeItem('accessToken')
     this.router.navigate(['/'])
     this.toastr.message('Başarılı', 'Çıkış Yapılmıştır!', ToastrMessageType.Info, ToastrPosition.TopRight)
-    setTimeout(()=>{
+    setTimeout(() => {
       window.location.reload();
-      
-    },2)
+
+    }, 2)
     this.spinner.hide(SpinnerType.Classic)
     this.authService.identityCheck();
   }
