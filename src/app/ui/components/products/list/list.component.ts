@@ -41,7 +41,7 @@ export class ListComponent extends BaseComponent implements OnInit {
     this.baseUrl = await this.fileService.getBaseStorageUrl()
 
     this.activatedRoute.params.subscribe(async params => {
-
+      this.showSpinner(SpinnerType.Classic)
       const deneme = params["pageNo"]
 
       if (parseInt(params["pageNo"]) <= 0 || params["pageNo"] == undefined) {
@@ -105,6 +105,7 @@ export class ListComponent extends BaseComponent implements OnInit {
           this.pageList.push(i);
         }
       }
+      this.hideSpinner(SpinnerType.Classic)
     });
 
   }

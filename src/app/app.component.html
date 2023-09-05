@@ -79,7 +79,7 @@
         </ul>
         <div class="d-flex" role="search">
          
-          <a class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"   >Basket</a>
+          <a  *ngIf="authService.isAuthenticated"  class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"  (click)="loadComponent()"  >Basket</a>
         </div>
       </div>
     </div>
@@ -91,5 +91,15 @@
 <ngx-spinner name="clock" type="timer"></ngx-spinner>
 <ngx-spinner name="classic" type="ball-clip-rotate"></ngx-spinner>
 
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg ">
 
-<app-baskets></app-baskets>
+<ng-template appDynamicLoadComponent></ng-template>
+</div>
+</div>
