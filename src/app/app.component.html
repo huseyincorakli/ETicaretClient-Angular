@@ -26,11 +26,6 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="baskets"
-              >Basket</a
-            >
-          </li>
-          <li class="nav-item">
             <a
               class="nav-link active"
               aria-current="page"
@@ -82,15 +77,10 @@
                   <a class="nav-link disabled">Disabled</a>
                 </li> -->
         </ul>
-        <!-- <form class="d-flex" role="search">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-          />
-          <a class="btn btn-outline-success" href="#">Search</a>
-        </form> -->
+        <div class="d-flex" role="search">
+         
+          <a class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"   >Basket</a>
+        </div>
       </div>
     </div>
   </nav>
@@ -100,3 +90,6 @@
 </div>
 <ngx-spinner name="clock" type="timer"></ngx-spinner>
 <ngx-spinner name="classic" type="ball-clip-rotate"></ngx-spinner>
+
+
+<app-baskets></app-baskets>

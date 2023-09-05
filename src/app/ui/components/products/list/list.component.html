@@ -25,7 +25,7 @@
               FİYAT: {{ product.price | currency: '₺' }} <br />
               STOK: {{ product.stock }}
             </p>
-            <a href="#" class="btn btn-primary">Sepete Ekle</a>
+            <a (click)="addToBasket(product)" class="btn btn-primary">Sepete Ekle</a>
           </div>
         </div>
       </div>
