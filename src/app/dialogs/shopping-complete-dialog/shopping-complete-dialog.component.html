@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Dikkat!</h1>
+<div mat-dialog-content>
+  <p>Alışveriş tamamlanacak. Emin misin?</p>
+</div>
+<div mat-dialog-actions style="float:right">
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial (click)="complete()">Yes</button>
+  <button mat-button (click)="close()">Sepete Dön</button>
+</div>

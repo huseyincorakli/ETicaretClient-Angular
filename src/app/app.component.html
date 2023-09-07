@@ -79,7 +79,7 @@
         </ul>
         <div class="d-flex" role="search">
          
-          <a  *ngIf="authService.isAuthenticated"  class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#exampleModal"  (click)="loadComponent()"  >Basket</a>
+          <a  *ngIf="authService.isAuthenticated"  class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#basketModal"  (click)="loadComponent()"  >Basket</a>
         </div>
       </div>
     </div>
@@ -93,7 +93,7 @@
 
 <div
   class="modal fade"
-  id="exampleModal"
+  id="basketModal"
   tabindex="-1"
   aria-labelledby="exampleModalLabel"
   aria-hidden="true"
