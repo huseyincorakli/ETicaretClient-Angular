@@ -20,7 +20,7 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
       switch (err.status) {
         case HttpStatusCode.Unauthorized:
           const url = this.router.url;
-          if (url == '/products') {
+          if (url.includes('/products')) {
             this.toastr.message(
               'Giriş Yapınız',
               'Sepete ürün eklemek için giriş yapınız!',
