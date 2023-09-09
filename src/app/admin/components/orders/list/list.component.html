@@ -24,7 +24,10 @@
         <td mat-cell *matCellDef="let element">{{ element.createdDate }}</td>
       </ng-container>
   
-   
+      <ng-container matColumnDef="viewDetail">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element"><img (click)="showDetail(element.id)" style="cursor: pointer; width:25px;" src="../../../../../assets/detail.png" alt=""></td>
+      </ng-container>
       
       <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef></th>

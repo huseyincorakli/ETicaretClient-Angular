@@ -5,6 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { List_Product } from 'src/app/contracts/list_product';
 import { List_Order } from 'src/app/contracts/order/list_order';
+import { OrderDetailDialogComponent, OrderDetailDialogState } from 'src/app/dialogs/order-detail-dialog/order-detail-dialog.component';
 import { SelectProductImageDialogComponent } from 'src/app/dialogs/select-product-image-dialog/select-product-image-dialog.component';
 import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
 import { DialogService } from 'src/app/services/common/dialog.service';
@@ -27,7 +28,7 @@ export class ListComponent extends BaseComponent {
     super(spinner)
   }
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['orderCode', 'userName', 'totalPrice', 'createDate', 'delete'];
+  displayedColumns: string[] = ['orderCode', 'userName', 'totalPrice', 'createDate','viewDetail', 'delete'];
   dataSource: MatTableDataSource<List_Order> = null;
 
   
@@ -53,6 +54,11 @@ export class ListComponent extends BaseComponent {
   async ngOnInit() {
     await this.getOrders();
   }
-
+  showDetail(id:string){
+    this.dialogService.openDialog({
+      componentType:OrderDetailDialogComponent,
+      data:id
+    })
+  }
   
 }
