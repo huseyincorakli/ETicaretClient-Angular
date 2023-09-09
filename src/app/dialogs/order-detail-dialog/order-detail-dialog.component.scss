@@ -1,0 +1,36 @@
+.order-detail-table {
+    width: 100%;
+  }
+  
+  .mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+    background-color: rgb(63, 63, 63);
+    color:white;
+  }
+  
+  .order-detail-row-is-clicked {
+    font-weight: bold;
+  }
+  
+  .basketPrice{
+    margin-top: 20px;
+    font-weight: bolder;
+    float: right;
+    margin-right: 5px;
+  }
+
+  .orderAddress{
+    margin-top: 20px;
+    font-weight: bolder;
+  }
+
+  .orderDescription{
+    margin-top: 20px;
+    font-weight: bolder;
+  }

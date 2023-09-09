@@ -1,13 +1,66 @@
-<h2 mat-dialog-title>Sipariş  Detayı</h2>
+<h2 mat-dialog-title>Sipariş Detayı</h2>
 <mat-dialog-content class="mat-typography">
-  
+  <mat-toolbar>
+    <span>Sipariş No:{{ singleOrder.orderCode }}</span>
+  </mat-toolbar>
+
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    class="mat-elevation-z8 order-detail-table"
+  >
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+    </ng-container>
+
+    <!-- Price Column -->
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>Price</th>
+      <td mat-cell *matCellDef="let element">{{ element.price | currency }}</td>
+    </ng-container>
+
+    <!-- Quantity Column -->
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef>Quantity</th>
+      <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="totalPrice">
+      <th mat-header-cell *matHeaderCellDef>Total Price</th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.price * element.quantity | currency }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      (click)="clickedRows.add(row)"
+      [class.order-detail-row-is-clicked]="clickedRows.has(row)"
+      *matRowDef="let row; columns: displayedColumns"
+    ></tr>
+  </table>
 
 
-  
+  <br />
+  <div class="orderAddress">
+    <p>Adres Bilgisi: {{ singleOrder.address }}</p>
+  </div>
+  <br />
+  <div class="orderDescription">
+    <p>Açıklama: {{ singleOrder.description }}</p>
+  </div>
+  <br />
+  <div class="basketPrice">
+    <p>Sepet Tutarı: {{ totalPrice | currency }}</p>
+  </div>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Kapat</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Siparişi Tamamla</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>
+    Siparişi Tamamla
+  </button>
 </mat-dialog-actions>
-

@@ -57,7 +57,10 @@ export class ListComponent extends BaseComponent {
   showDetail(id:string){
     this.dialogService.openDialog({
       componentType:OrderDetailDialogComponent,
-      data:id
+      data:id,
+      options:{
+        width:'750px'
+      }
     })
   }
   

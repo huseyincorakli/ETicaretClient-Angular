@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { BasketItemRemoveDialogComponent } from './basket-item-remove-dialog/basket-item-remove-dialog.component';
 import { ShoppingCompleteDialogComponent } from './shopping-complete-dialog/shopping-complete-dialog.component';
 import { OrderDetailDialogComponent } from './order-detail-dialog/order-detail-dialog.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 
 @NgModule({
@@ -27,7 +29,7 @@ import { OrderDetailDialogComponent } from './order-detail-dialog/order-detail-d
     MatDialogModule,
     MatButtonModule,
     MatCardModule,
-    FormsModule
+    FormsModule,MatTableModule,MatToolbarModule
   ]
 })
 export class DialogModule { }
