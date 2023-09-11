@@ -40,7 +40,7 @@ export class ListComponent extends BaseComponent implements OnInit {
           this.alertify.message(errorMessage,
             { dismissOthers: true, messageType: MessageType.Error, position: Position.TopRight })
         })
-        console.log(allProducts);
+       
      
     this.dataSource = new MatTableDataSource<List_Product>(allProducts.products)
     this.paginator.length = allProducts.totalProductCount
