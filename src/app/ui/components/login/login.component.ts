@@ -7,6 +7,7 @@ import { UserService } from 'src/app/services/common/models/user.service';
 import { FacebookLoginProvider, SocialAuthService, SocialUser } from "@abacritt/angularx-social-login";
 import { GoogleLoginProvider } from "@abacritt/angularx-social-login";
 import { UserAuthService } from 'src/app/services/common/models/user-auth.service';
+import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent extends BaseComponent {
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private socialAuthService: SocialAuthService
+    private socialAuthService: SocialAuthService,
+    private toast:CustomToastrService
   ) {
     super(spinner)
     
@@ -76,10 +78,13 @@ export class LoginComponent extends BaseComponent {
         if (returnUrl) {
           this.router.navigate([returnUrl])
         }
+        
       })
-      this.hideSpinner(SpinnerType.Classic)
+      
+    }).catch(error=>{
+      this.toast.message("Hata","Hatalı giriş denemesi.Lütfen giriş bilgilerinizi kontrol ediniz.",ToastrMessageType.Error,ToastrPosition.TopRight)
     })
-
+    this.hideSpinner(SpinnerType.Classic)
   }
   navigateRegister(){
     this.router.navigate(['register'])
