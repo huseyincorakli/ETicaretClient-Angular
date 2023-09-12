@@ -58,9 +58,9 @@
   </div>
 
 </mat-dialog-content>
-<mat-dialog-actions align="end">
+<mat-dialog-actions align="end" style="margin-right: 5px;">
   <button mat-button mat-dialog-close>Kapat</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>
+  <button *ngIf="!singleOrder.completed"  (click)="completeOrder()" mat-button [mat-dialog-close]="data" cdkFocusInitial>
     Siparişi Tamamla
   </button>
 </mat-dialog-actions>

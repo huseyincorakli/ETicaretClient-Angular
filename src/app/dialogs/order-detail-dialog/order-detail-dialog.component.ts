@@ -3,6 +3,11 @@ import { BaseDialog } from '../base/base-dialog';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { OrderService } from 'src/app/services/common/models/order.service';
 import { SingleOrder } from 'src/app/contracts/order/single_order';
+import { DialogService } from 'src/app/services/common/dialog.service';
+import { CompleteOrderDialogComponent, CompleteOrderState } from '../complete-order-dialog/complete-order-dialog.component';
+import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
+import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
+import { SpinnerType } from 'src/app/base/base.component';
 
 @Component({
   selector: 'app-order-detail-dialog',
@@ -13,7 +18,11 @@ export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComp
   constructor(
     dialogRef: MatDialogRef<OrderDetailDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: OrderDetailDialogState | string,
-    private orderService: OrderService) {
+    private orderService: OrderService,
+    private dialogService:DialogService,
+    private spinner:NgxSpinnerService,
+    private alertify:AlertifyService
+    ) {
 
     super(dialogRef)
   }
@@ -31,6 +40,30 @@ export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComp
     this.totalPrice=this.singleOrder.basketItems.map((basketItem,index)=>basketItem.price*basketItem.quantity).reduce((price,current)=>price+current);
   }
 
+completeOrder(){
+  this.dialogService.openDialog({
+    componentType:CompleteOrderDialogComponent,
+    data:CompleteOrderState.Yes,
+    afterClosed:async()=>{
+      this.spinner.show(SpinnerType.Classic)
+     await this.orderService.completeOrder(this.data as string).then(value=>{
+      this.spinner.hide(SpinnerType.Classic)
+      this.alertify.message("Sipariş tamamlandı",{
+       messageType:MessageType.Success,
+       position:Position.TopRight
+      })
+     }).catch(error=>{
+      this.spinner.hide(SpinnerType.Classic)
+      this.alertify.message(`Hata : ${error}`,{
+        messageType:MessageType.Error,
+        position:Position.TopCenter
+       })
+     });
+     
+    }
+  })
+  
+}
 
 }
 export enum OrderDetailDialogState {
