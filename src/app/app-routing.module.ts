@@ -12,6 +12,13 @@ const routes: Routes = [
     children: [
       { path: '', component: DashboardComponent ,canActivate:[AuthGuard]},
       {
+        path: 'roles',
+        loadChildren: () =>
+          import('./admin/components/roles/roles.module').then(
+            (module) => module.RolesModule
+          ),canActivate:[AuthGuard]
+      },
+      {
         path: 'customers',
         loadChildren: () =>
           import('./admin/components/customers/customers.module').then(
@@ -39,7 +46,9 @@ const routes: Routes = [
             (module) => module.OrdersModule
           ),canActivate:[AuthGuard]
       },
+     
     ],canActivate:[AuthGuard]
+    
   },
   { path: '', component: HomeComponent },
   {
