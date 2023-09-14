@@ -11,7 +11,8 @@ export class RoleService {
 
   async getRoles(page: number, size: number, successCallBack?: () => void, errorCallBack?: (error) => void) {
     const observable: Observable<any> = this.httpClientService.get({
-      controller: 'roles'
+      controller: 'roles',
+      queryString: `page=${page}&size=${size}`
     })
     const promiseData = firstValueFrom(observable)
     promiseData.then(successCallBack).catch(errorCallBack)

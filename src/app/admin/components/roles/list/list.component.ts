@@ -30,7 +30,7 @@ export class ListComponent extends BaseComponent implements OnInit {
   
   async getRoles() {
     this.showSpinner(SpinnerType.Clock)
-    const allRoles: { totalRoleCount: number, roles: List_Role[] } =
+    const allRoles: { totalCount: number, roles: List_Role[] } =
       await this.roleService.getRoles(
         this.paginator ? this.paginator.pageIndex : 0,
         this.paginator ? this.paginator.pageSize : 5,
@@ -42,7 +42,8 @@ export class ListComponent extends BaseComponent implements OnInit {
        
      
     this.dataSource = new MatTableDataSource<List_Role>(allRoles.roles)
-    this.paginator.length = allRoles.totalRoleCount
+    this.paginator.length = allRoles.totalCount
+    
   }
   async pageChange() {
     await this.getRoles();
