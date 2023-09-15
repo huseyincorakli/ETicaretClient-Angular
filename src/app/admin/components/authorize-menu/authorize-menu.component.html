@@ -4,7 +4,7 @@
     <!-- use a disabled button to provide padding for tree leaf -->
     <button mat-icon-button disabled></button>
 
-    <button class="roleBtn" mat-raised-button (click)="assignRole(node.code,node.name)">Rol Ata</button><span class="roleSpn">→</span>
+    <button class="roleBtn" mat-raised-button (click)="assignRole(node.code,node.name,node.menuName)">Rol Ata</button><span class="roleSpn">→</span>
     <mark> {{ node.name }}</mark>
   </mat-tree-node>
   <!-- This is the tree node template for expandable nodes -->
