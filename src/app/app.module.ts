@@ -37,14 +37,14 @@ import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-
     JwtModule.forRoot({
       config:{
         tokenGetter:()=>localStorage.getItem('accessToken'),
-        allowedDomains:['crklih.bsite.net']
+        allowedDomains:['localhost:7229']
       }
     }),
     SocialLoginModule,
   ],
   providers: [
-    {provide:'baseUrl',useValue:'https://crklih.bsite.net/api',multi:true},
-    {provide:'baseSignalRUrl',useValue:'https://crklih.bsite.net/',},
+    {provide:'baseUrl',useValue:'https://localhost:7229/api',multi:true},
+    {provide:'baseSignalRUrl',useValue:'https://localhost:7229/',},
     {
       provide: "SocialAuthServiceConfig",
       useValue: {
