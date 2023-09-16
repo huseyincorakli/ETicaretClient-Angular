@@ -33,6 +33,7 @@ export class AuthorizeMenuDialogComponent extends BaseDialog<AuthorizeMenuDialog
 
 
   async ngOnInit() {
+    this.isLoading=true;
     this._assignedRoles = await this.authorizationService.getRolesToEndpoint(this.data.code, this.data.menuName);
 
     this.datas = await this.roleService.getRoles(-1, -1);
@@ -42,7 +43,8 @@ export class AuthorizeMenuDialogComponent extends BaseDialog<AuthorizeMenuDialog
         name: r.name,
         selected: this._assignedRoles?.indexOf(r.name) > -1
       }
-    });  
+    });
+    this.isLoading=false;  
   }
 
   ngOnDestroy(): void {
@@ -55,8 +57,6 @@ export class AuthorizeMenuDialogComponent extends BaseDialog<AuthorizeMenuDialog
       var element = e._elementRef.nativeElement.innerText
       selectedRoles.push(element)
     })
-
-    console.log(selectedRoles);
     this.isLoading = true;
     this.authorizationService.assignRoleEndpoint(selectedRoles, this.data.code, this.data.menuName, () => {
       this.toastr.message('Başarılı', `${this.data.menuName}'ın ilgili endpointine rol atama işlemi başarılı!`, ToastrMessageType.Info, ToastrPosition.TopRight)

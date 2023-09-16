@@ -4,8 +4,9 @@
    
     <p>İlgili endpointe aşağıdan rolleri atayınız.</p>
     <mat-selection-list #rolesComponent>
+      {{isLoading?"Loading...":""}}
       <mat-list-option *ngFor="let role of listRoles" selected="{{role.selected}}">
-        {{role.name}}
+        {{isLoading?"Loading...":role.name}}
       </mat-list-option>
     </mat-selection-list>
     
