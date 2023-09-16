@@ -35,7 +35,11 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
               ToastrPosition.BottomFull);
           }
           else {
-            
+            this.toastr.message(
+              'Yetkisiz İşlem',
+              'Bu işlem için yetkiniz yoktur!',
+              ToastrMessageType.Warning,
+              ToastrPosition.BottomFull);
           }
          
           this.userAuthService.refreshTokenLogin(localStorage.getItem('refreshToken')).then(data => { })
@@ -51,20 +55,16 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
 
         case HttpStatusCode.InternalServerError:
           
-          if (url == '/products'){
-
-          }
-          
-          else {
             this.toastr.message(
               'Sunucu Hatası',
               'Sunucuda beklenmedik bir hata oluştu!',
               ToastrMessageType.Error,
               ToastrPosition.BottomFull);
-          }
+          
           break;
 
         case HttpStatusCode.BadRequest:
+          
           if (url == '/products'){
 
           }
@@ -78,6 +78,7 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
           break;
 
         case HttpStatusCode.Forbidden:
+         
           this.toastr.message(
             'Erişim Engellendi',
             'Bu kaynağa erişim izniniz yok!',
@@ -86,6 +87,7 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
           break;
 
         case HttpStatusCode.ServiceUnavailable:
+          
           this.toastr.message(
             'Servis Kullanılamıyor',
             'Şu an servis kullanılamıyor, lütfen daha sonra tekrar deneyin!',
@@ -95,6 +97,7 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
 
         // Diğer durumlar için varsayılan mesaj
         default:
+          
           this.toastr.message(
             'Hata!',
             'Beklenmeyen bir hata oluştu!',
