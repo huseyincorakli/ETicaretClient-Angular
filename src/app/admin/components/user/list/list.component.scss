@@ -1,0 +1,24 @@
+table {
+    width: 90%;
+  }
+  
+ .twoFactor{
+  display: flex;
+  align-items: center;
+ } 
+ .tFimage{
+  margin-right: 4px;
+ }
+.twoFactorTrueSpan{
+  
+  color:green;
+  font-weight: bold;
+}
+
+.twoFactorFalseSpan{
+  color:red;
+  font-weight: bold;
+}
+.container-row{
+  background-color: aqua;
+}

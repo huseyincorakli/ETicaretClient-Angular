@@ -6,7 +6,7 @@
     <mat-selection-list #rolesComponent>
       {{isLoading?"Loading...":""}}
       <mat-list-option *ngFor="let role of listRoles" selected="{{role.selected}}">
-        {{isLoading?"Loading...":role.name}}
+        {{role.name}}
       </mat-list-option>
     </mat-selection-list>
     

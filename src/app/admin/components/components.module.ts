@@ -6,6 +6,7 @@ import { CustomersModule } from './customers/customers.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthorizeMenuModule } from './authorize-menu/authorize-menu.module';
 import { RolesModule } from './roles/roles.module';
+import { UserModule } from './user/user.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { RolesModule } from './roles/roles.module';
     CustomersModule,
     DashboardModule,
     AuthorizeMenuModule,
-    RolesModule
+    RolesModule,
+    UserModule
   ],
 })
 export class ComponentsModule {}
