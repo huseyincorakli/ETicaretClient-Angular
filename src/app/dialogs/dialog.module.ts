@@ -20,6 +20,9 @@ import {MatListModule} from '@angular/material/list';
 import {MatInputModule} from '@angular/material/input';
 import { AuthorizeUserDialogComponent } from './authorize-user-dialog/authorize-user-dialog.component';
 import { QrcodeDialogComponent } from './qrcode-dialog/qrcode-dialog.component';
+import { QrcodeReadingDialogComponent } from './qrcode-reading-dialog/qrcode-reading-dialog.component';
+import {  MatFormFieldModule } from '@angular/material/form-field';
+import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 
 
 @NgModule({
@@ -32,7 +35,8 @@ import { QrcodeDialogComponent } from './qrcode-dialog/qrcode-dialog.component';
     CompleteOrderDialogComponent,
     AuthorizeMenuDialogComponent,
     AuthorizeUserDialogComponent,
-    QrcodeDialogComponent
+    QrcodeDialogComponent,
+    QrcodeReadingDialogComponent
   ],
   imports: [
     CommonModule,
@@ -45,7 +49,10 @@ import { QrcodeDialogComponent } from './qrcode-dialog/qrcode-dialog.component';
     MatToolbarModule,
     MatBadgeModule,
     MatListModule,
-    MatInputModule
+    MatInputModule,
+    MatFormFieldModule,
+    MatInputModule,
+    NgxScannerQrcodeModule
   ]
 })
 export class DialogModule { }

@@ -40,4 +40,5 @@ import { DeleteModule } from 'src/app/directives/admin/delete.module';
     DeleteModule
   ]
 })
+
 export class ProductsModule { }
