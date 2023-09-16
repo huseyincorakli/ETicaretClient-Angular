@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { List_Product } from 'src/app/contracts/list_product';
+import { QrcodeDialogComponent } from 'src/app/dialogs/qrcode-dialog/qrcode-dialog.component';
 import { SelectProductImageDialogComponent } from 'src/app/dialogs/select-product-image-dialog/select-product-image-dialog.component';
 import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
 import { DialogService } from 'src/app/services/common/dialog.service';
@@ -25,7 +26,7 @@ export class ListComponent extends BaseComponent implements OnInit {
     super(spinner)
   }
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['name', 'price', 'stock', 'createDate', 'updatedDate', 'photos','edit', 'delete'];
+  displayedColumns: string[] = ['name', 'price', 'stock', 'createDate', 'updatedDate', 'photos','qrcode','edit', 'delete'];
   dataSource: MatTableDataSource<List_Product> = null;
 
   
@@ -51,6 +52,15 @@ export class ListComponent extends BaseComponent implements OnInit {
 
   async ngOnInit() {
     await this.getProducts();
+  }
+  showQRCode(productId:string,name:string){
+    this.dialogService.openDialog({
+      componentType:QrcodeDialogComponent,
+      data:{productId:productId,name:name},
+      options:{
+        width:"400px"
+      }
+    })
   }
 
   addProductImages(id:string){

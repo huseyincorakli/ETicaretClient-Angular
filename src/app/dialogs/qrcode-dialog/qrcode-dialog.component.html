@@ -1,0 +1,7 @@
+<h1 mat-dialog-title>{{data.name}} QR Code</h1>
+<div mat-dialog-content>
+  <p *ngIf="loadingState">Loading...</p>
+  <img *ngIf="!loadingState" width="300px" height="300px" [src]="qrCodeSafeUrl" alt="">
+</div>
+<div mat-dialog-actions>
+</div>
