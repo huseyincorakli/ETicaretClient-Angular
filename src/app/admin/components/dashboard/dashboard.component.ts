@@ -16,9 +16,9 @@ export class DashboardComponent implements OnInit {
   }
  
   ngOnInit(): void {
-    this.signalRService.on(HubUrls.ProductHub,ReceiveFunctions.ProductAddedMessageReceiveFunction,message =>{
-     // alert(message)
-    })
+    // this.signalRService.on(HubUrls.ProductHub,ReceiveFunctions.ProductAddedMessageReceiveFunction,message =>{
+    //  // alert(message)
+    // })
     this.signalRService.on(HubUrls.OrderHub,ReceiveFunctions.OrderAddedMessageReceiveFunction,message =>{
       this.alertify.message(message,{
         messageType:MessageType.Notify,

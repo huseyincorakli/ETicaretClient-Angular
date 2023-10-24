@@ -1,4 +1,7 @@
-<div class="mx-2 my-1"><button mat-raised-button color="primary" (click)="showProductQrCodeReading()">Read QRCODE</button></div>
+<div class="d-flex flex-row mt-2">
+  <div class="mx-2 my-1"><button mat-raised-button color="primary" (click)="showProductQrCodeReading()">Read QRCODE</button></div>
+<div class="mx-2 my-1"><button mat-raised-button color="primary" (click)="generateProductDescriptionGenerator()">Generate Product Description</button></div>
+</div>
 <mat-drawer-container class="product-container">
   <mat-drawer mode="side" opened>
     <app-create (createdProduct)="createdProduct($event)" ></app-create>

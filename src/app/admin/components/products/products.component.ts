@@ -7,6 +7,7 @@ import { HttpClientService } from 'src/app/services/common/http-client.service';
 import { ListComponent } from './list/list.component';
 import { DialogService } from 'src/app/services/common/dialog.service';
 import { QrcodeReadingDialogComponent } from 'src/app/dialogs/qrcode-reading-dialog/qrcode-reading-dialog.component';
+import { GenerateProductDesciriptionDialogComponent } from 'src/app/dialogs/generate-product-desciription-dialog/generate-product-desciription-dialog.component';
 
 @Component({
   selector: 'app-products',
@@ -37,6 +38,16 @@ export class ProductsComponent extends BaseComponent implements OnInit {
       options:{
         width:"500px",
         height:"600px"
+      }
+    })
+  }
+
+  generateProductDescriptionGenerator(){
+    this.dialogService.openDialog({
+      componentType:GenerateProductDesciriptionDialogComponent,
+      options:{
+        width:"400px",
+        height:"500px"
       }
     })
   }

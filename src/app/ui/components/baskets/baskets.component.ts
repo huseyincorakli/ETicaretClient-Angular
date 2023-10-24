@@ -70,7 +70,7 @@ export class BasketsComponent extends BaseComponent implements OnInit {
         order.description = "Ketçap mayonez olmasın :)"
         await this.orderService.create(order);
         this.hideSpinner(SpinnerType.Clock);
-        this.toastr.message("Sipariş Tamamlandı", "Siparişiniz oluşturulmuştur bizi tercih ettiğiniz için cart curt.", ToastrMessageType.Success, ToastrPosition.TopRight);
+        this.toastr.message("Sipariş Tamamlandı", "Siparişiniz oluşturulmuştur bizi tercih ettiğiniz için teşekkürler.", ToastrMessageType.Success, ToastrPosition.TopRight);
        
       }
     })
