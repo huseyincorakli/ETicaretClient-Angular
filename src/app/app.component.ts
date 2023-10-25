@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from './services/ui/custom-toastr.service';
 import { AuthService } from './services/common/auth.service';
 import { Router } from '@angular/router';
@@ -19,7 +19,7 @@ export class AppComponent {
  
   @ViewChild(DynamicLoadComponentDirective,{static:true})
   dynamicLoadComponentDirective:DynamicLoadComponentDirective
-
+  @ViewChild('navbarSupportedContent') navbarContent: ElementRef;
   constructor(
     public authService: AuthService, 
     private toastr: CustomToastrService, 
@@ -29,6 +29,18 @@ export class AppComponent {
     ) {
 
     authService.identityCheck();
+  }
+  
+  toggleNavbarContent() {
+    const navbarContent = this.navbarContent.nativeElement;
+    
+    if (navbarContent.classList.contains('show')) {
+      // Eğer Navbar içeriği "show" durumundaysa, kapat
+      navbarContent.classList.remove('show');
+    } else {
+      // Eğer Navbar içeriği "show" durumunda değilse, aç
+      navbarContent.classList.add('show');
+    }
   }
   signOut() {
     this.spinner.show(SpinnerType.Classic)
@@ -47,5 +59,6 @@ export class AppComponent {
   loadComponent(){
    this.dynamicLoadComponentService.loadComponent(ComponentType.BasketComponent,this.dynamicLoadComponentDirective.viewContainerRef)
   }
+  
 }
 
