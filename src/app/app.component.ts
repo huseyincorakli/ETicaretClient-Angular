@@ -46,6 +46,7 @@ export class AppComponent {
     this.spinner.show(SpinnerType.Classic)
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
+    localStorage.removeItem('role')
     this.router.navigate(['/'])
     this.toastr.message('Başarılı', 'Çıkış Yapılmıştır!', ToastrMessageType.Info, ToastrPosition.TopRight)
     setTimeout(() => {

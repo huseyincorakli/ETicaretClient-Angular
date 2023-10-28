@@ -17,7 +17,8 @@ body {
 .signupBtn {
   width: 120px;
   height: 40px;
-  border-radius: 30px;
+  border-radius: 10px;
+  margin: 5px;
   border: none;
   display: flex;
   align-items: center;
@@ -30,22 +31,94 @@ body {
   cursor: pointer;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.212);
 }
-
+.signinBtn {
+  width: 120px;
+  height: 40px;
+  border-radius: 10px;
+  margin: 5px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 20px;
+  gap: 9px;
+  color: white;
+  background: linear-gradient(to right,rgb(154, 189, 184),rgb(1, 172, 163));
+  position: relative;
+  cursor: pointer;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.212);
+}
+.basketBtn {
+  width: 120px;
+  height: 40px;
+  border-radius: 10px;
+  margin: 5px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 20px;
+  gap: 9px;
+  color: white;
+  background: linear-gradient(to right,rgb(97, 231, 104),rgb(50, 172, 1));
+  position: relative;
+  cursor: pointer;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.212);
+}
+.dashBoardBtn {
+  width: 120px;
+  height: 40px;
+  border-radius: 10px;
+  margin: 5px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 20px;
+  padding: 5px;
+  gap: 9px;
+  color: white;
+  background: linear-gradient(to right,rgb(45, 47, 211),rgb(56, 128, 187));
+  position: relative;
+  cursor: pointer;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.212);
+}
+.logoutBtn {
+  width: 120px;
+  height: 40px;
+  border-radius: 10px;
+  margin: 5px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 20px;
+  gap: 9px;
+  color: white;
+  background: linear-gradient(to right,rgb(255, 0, 0),rgb(231, 88, 88));
+  position: relative;
+  cursor: pointer;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.212);
+}
 .arrow {
   position: absolute;
   right: 7.5px;
   background-color: rgb(255, 255, 255);
-  width: 25px;
-  height: 25px;
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: 25%;
 }
 
 .signupBtn:hover .arrow {
   animation: slide-in-left 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
 }
+.signinBtn:hover .arrow {
+  animation: slide-in-left 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
 
 @keyframes slide-in-left {
   0% {
@@ -57,4 +130,71 @@ body {
     transform: translateX(0);
     opacity: 1;
   }
+}
+.loginIcon{
+  width: 20px;
+  height: 20px;
+}
+.registerIcon{
+  width: 24px;
+  height: 24px;
+}
+.dashboardIcon{
+  width: 20px;
+  height: 20px;
+}
+
+.cta {
+  border: none;
+  background: none;
+}
+
+.cta span {
+  padding-bottom: 7px;
+  letter-spacing: 1px;
+  font-size: 14px;
+  padding-right: 15px;
+  text-transform: uppercase;
+}
+
+.cta svg {
+  transform: translateX(-8px);
+  transition: all 0.3s ease;
+}
+
+.cta:hover svg {
+  transform: translateX(0);
+}
+
+.cta:active svg {
+  transform: scale(0.9);
+}
+
+.hover-underline-animation {
+  position: relative;
+  color: black;
+  padding-bottom: 18px;
+}
+
+.hover-underline-animation:after {
+  content: "";
+  position: absolute;
+  width: 75%;
+  transform: scaleX(0);
+  height: 4px;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(to right,rgb(25, 0, 255),rgb(3, 61, 168));
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.cta:hover .hover-underline-animation:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+.mainSearch input:focus{
+  box-shadow: none;
+  outline: none;
 }

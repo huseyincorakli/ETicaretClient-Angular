@@ -1,76 +1,86 @@
 <div class="container">
-  <nav class="headerNav navbar navbar-expand-lg sticky-top">
-    <div class="container-fluid">
+    <nav class="headerNav navbar navbar-expand-lg sticky-top">
+      <div class="container-fluid">
         <a class="navbar-brand" routerLink=""><b>CARTOPIA</b></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+        <button style="margin-left: 120px;"   class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" routerLink="">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" routerLink="products">Products</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active text-info" aria-current="page" routerLink="admin" *ngIf="authService.isAuthenticated">Yönetim Paneli</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active text-danger" aria-current="page" routerLink="admin" *ngIf="authService.isAuthenticated" (click)="signOut()">Çıkış Yap</a>
-                </li>
-            </ul>
-            <div class="d-flex" role="search">
-                <a *ngIf="authService.isAuthenticated" class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#basketModal" (click)="loadComponent()">Basket</a>
-            </div>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <button class="signupBtn" routerLink="register"
-                    *ngIf="!authService.isAuthenticated">
-                        SIGN UP
-                        <span class="arrow">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512" fill="rgb(183, 128, 255)">
-                                <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path>
-                            </svg>
-                        </span>
-                    </button>
-                </li>
-                <li class="nav-item">
-                  <button class="signupBtn"  routerLink="login"
-                  *ngIf="!authService.isAuthenticated"  >
-                    LOGIN
-                    <span class="arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 320 512" fill="rgb(183, 128, 255)">
-                            <path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path>
-                        </svg>
-                    </span>
-                </button>
-                    <!-- <a class="nav-link active" aria-current="page" routerLink="login" *ngIf="!authService.isAuthenticated">Login</a> -->
-                </li>
-            </ul>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a id="deneme" class="cta nav-link active" aria-current="page" routerLink="products">
+                <span class="hover-underline-animation"><span style="font-weight: 500">ALL PRODUCTS</span></span>
+              </a>
+            </li>
+            <li class="nav-item dropdown">
+              <a id="deneme" class="cta nav-link active" aria-current="page" data-bs-toggle="dropdown" aria-expanded="false">
+                <span class="hover-underline-animation"><span style="font-weight: 500">Categories</span></span>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </a>
+            </li>
+            
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <button class="signupBtn" routerLink="register" *ngIf="!authService.isAuthenticated">
+                SIGN UP
+                <span class="arrow">
+                  <img class="registerIcon" src="../assets/add-person.png" alt="" />
+                </span>
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="signinBtn" routerLink="login" *ngIf="!authService.isAuthenticated">
+                LOGIN
+                <span class="arrow">
+                  <img class="registerIcon" src="../assets/login (1).png" alt="" />
+                </span>
+              </button>
+            </li>
+          </ul>
         </div>
+        <!-- Basket, Yönetim Paneli, and Çıkış Yap links on the right -->
+        <ul class="navbar-nav">
+          <li>
+            <button class="basketBtn" *ngIf="authService.isAuthenticated" data-bs-toggle="modal" data-bs-target="#basketModal" (click)="loadComponent()">
+              <span style="font-weight: 500; font-size: 15px;">Basket</span>
+              <span class="arrow">
+                <img class="registerIcon" src="../assets/shopping-online.png" alt="" />
+              </span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="dashBoardBtn" aria-current="page" routerLink="admin" *ngIf="authService.isAuthenticated && authService.hasRole">
+              Dashboard
+              <span class="arrow">
+                <img class="dashboardIcon" src="../assets/dashboard.png" alt="" />
+              </span>
+            </button>
+          </li>
+          <li class="nav-item">
+            <button class="logoutBtn" aria-current="page" routerLink="admin" *ngIf="authService.isAuthenticated" (click)="signOut()">
+              Logout
+              <span class="arrow">
+                <img class="registerIcon" src="../assets/power-button.png" alt="" />
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container">
+      <router-outlet></router-outlet>
     </div>
-</nav>
-  
-  <div class="container">
-    <router-outlet></router-outlet>
   </div>
-</div>
-<ngx-spinner name="clock" type="timer"></ngx-spinner>
-<ngx-spinner name="classic" type="ball-clip-rotate"></ngx-spinner>
-
-<div
-  class="modal fade"
-  id="basketModal"
-  tabindex="-1"
-  aria-labelledby="exampleModalLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog modal-lg ">
-
-<ng-template appDynamicLoadComponent></ng-template>
-</div>
-</div>
-
-
-
+  <ngx-spinner name="clock" type="timer"></ngx-spinner>
+  <ngx-spinner name="classic" type="ball-clip-rotate"></ngx-spinner>
+  <div class="modal fade" id="basketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <ng-template appDynamicLoadComponent></ng-template>
+    </div>
+  </div>
+  

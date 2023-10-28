@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SpinnerType } from 'src/app/base/base.component';
-import { _isAuthenticated, } from 'src/app/services/common/auth.service';
+import { _hasRole, _isAuthenticated, } from 'src/app/services/common/auth.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 
 @Injectable({
@@ -26,6 +26,10 @@ export class AuthGuard implements CanActivate {
       this.router.navigate(['login'],{queryParams:{returnUrl:state.url}});
       this.toastr.message('Yetki Gerekli','Lütfen Oturum Açınız.',ToastrMessageType.Warning,ToastrPosition.TopRight)
     }
+    if(!_hasRole){
+      this.router.navigate(['products'],{queryParams:{returnUrl:state.url}});
+    }
+    
 
     this.spinner.hide(SpinnerType.Clock)
     return true;

@@ -4,11 +4,18 @@ import {JwtHelperService} from '@auth0/angular-jwt'
   providedIn: 'root'
 })
 export class AuthService {
+  
 
   constructor(private jwtHelper:JwtHelperService) { }
   identityCheck(){
     const token:string = localStorage.getItem("accessToken");
-    
+    const role:string = localStorage.getItem("role");
+    if (role=="Müşteri") {
+    _hasRole=false;
+    }
+    if(role!="Müşteri"){
+      _hasRole=true;
+    }
     let expired:boolean;
     try {
       expired= this.jwtHelper.isTokenExpired(token)
@@ -17,10 +24,16 @@ export class AuthService {
     }
     _isAuthenticated= token!=null && !expired;
   }
+ 
   
+
   get isAuthenticated():boolean{
     return _isAuthenticated;
+  }
+  get hasRole():boolean{
+  return _hasRole;
   }
 }
 
 export let _isAuthenticated:boolean
+export let _hasRole:boolean

@@ -23,6 +23,7 @@ export class UserAuthService {
     if (tokenResponse) {
       this.toastr.message('Başarılı', "Kullanıcı Girişi Başarılı", ToastrMessageType.Success, ToastrPosition.TopRight)
       localStorage.setItem('accessToken', tokenResponse.token.accessToken)
+      localStorage.setItem('role', tokenResponse.role)
       localStorage.setItem('refreshToken', tokenResponse.token.refreshToken)
     }
     
