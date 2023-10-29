@@ -37,7 +37,7 @@ export class ProductsComponent extends BaseComponent implements OnInit {
       componentType:QrcodeReadingDialogComponent,
       options:{
         width:"500px",
-        height:"600px"
+        height:"500px"
       }
     })
   }
