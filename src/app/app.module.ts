@@ -16,6 +16,7 @@ import {
 } from '@abacritt/angularx-social-login';
 import { HttpErrorHandlerInterceptorService } from './services/common/http-error-handler-interceptor.service';
 import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
+import { CategoryEmitterService } from './services/common/emitters.service';
 
 
 
@@ -63,7 +64,7 @@ import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-
       } as SocialAuthServiceConfig
     },
     {provide:HTTP_INTERCEPTORS,useClass:HttpErrorHandlerInterceptorService,multi:true},
-    
+    CategoryEmitterService
   ],
   bootstrap: [AppComponent],
 })

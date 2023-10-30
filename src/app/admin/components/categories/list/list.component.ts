@@ -4,7 +4,10 @@ import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { List_Category } from 'src/app/contracts/categories/list_category';
+import { UpdateCategoryDialogComponent } from 'src/app/dialogs/update-category-dialog/update-category-dialog.component';
 import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
+import { DialogService } from 'src/app/services/common/dialog.service';
+import { CategoryEmitterService } from 'src/app/services/common/emitters.service';
 import { CategoryService } from 'src/app/services/common/models/category.service';
 
 @Component({
@@ -12,20 +15,32 @@ import { CategoryService } from 'src/app/services/common/models/category.service
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent  extends BaseComponent implements OnInit{
- constructor(
+export class ListComponent extends BaseComponent implements OnInit {
+  constructor(
+    private categoryEmitterService: CategoryEmitterService,
     private categoryService: CategoryService,
     spinner: NgxSpinnerService,
     private alertify: AlertifyService,
-      
-      ) {
+    private dialogService:DialogService
+
+  ) {
+    categoryEmitterService.updateCategory.subscribe(()=>{
+      this.getCategories();
+    })
     super(spinner)
   }
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['name', 'isactive', 'createDate', 'updatedDate','edit'];
+  displayedColumns: string[] = ['name', 'isactive', 'createDate', 'updatedDate', 'edit'];
   dataSource: MatTableDataSource<List_Category> = null;
-  
-  
+
+  async getCategoryNames() {
+    try {
+      await this.categoryService.getAllCategoryNames();
+    } catch (error) {
+      // Handle error here
+    }
+  }
+
   async getCategories() {
     this.showSpinner(SpinnerType.Clock)
     const allCategories: { totalCategoryCount: number, categories: List_Category[] } =
@@ -37,8 +52,8 @@ export class ListComponent  extends BaseComponent implements OnInit{
           this.alertify.message(errorMessage,
             { dismissOthers: true, messageType: MessageType.Error, position: Position.TopRight })
         })
-       
-     
+
+
     this.dataSource = new MatTableDataSource<List_Category>(allCategories.categories)
     this.paginator.length = allCategories.totalCategoryCount
   }
@@ -56,7 +71,8 @@ export class ListComponent  extends BaseComponent implements OnInit{
         position: Position.BottomRight,
         messageType: MessageType.Success
       });
-      this.getCategories(); 
+      this.categoryEmitterService.categoryStatusChanged.emit()
+      this.getCategories();
     }, () => {
       this.alertify.message("An error occurred while updating!", {
         position: Position.BottomRight,
@@ -65,6 +81,16 @@ export class ListComponent  extends BaseComponent implements OnInit{
     });
   }
 
-  
-  
+  deneme(id:string,name:string,isActive:boolean){
+    this.dialogService.openDialog({
+      componentType:UpdateCategoryDialogComponent,
+      data:{id,name,isActive},
+      options:{
+        width:"500px"
+      }
+    })
+  }
+
+
+
 }

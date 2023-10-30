@@ -31,7 +31,7 @@
     
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element"><img style="cursor: pointer; width:25px;" src="../../../../../assets/edit.png" alt=""></td>
+      <td  mat-cell *matCellDef="let element"><img (click)="deneme(element.id,element.categoryName,element.isActive)" style="cursor: pointer; width:25px;" src="../../../../../assets/edit.png" alt=""></td>
     </ng-container>
     
 
