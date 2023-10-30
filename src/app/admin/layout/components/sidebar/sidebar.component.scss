@@ -1,0 +1,38 @@
+.adminList{
+    display: flex;
+    flex-direction: row;
+}
+.adminListItems{
+    display: flex;
+    width: 100%;
+}
+
+.adminListItems mat-list-item a{
+    display: flex;
+    justify-content: center;
+}
+
+.adminListItems mat-list-item a:hover{
+    text-decoration: underline;
+}
+.adminList a{
+    text-decoration: none; /* Altı çiziyi kaldır */
+    color: #3498db; /* Metin rengi */
+    transition: color 0.3s; /* Renk değişimi yumuşak geçiş */
+    font-weight: bold;
+}
+.adminList a:hover{
+    color: #e74c3c;
+}
+
+@media (max-width: 768px) {
+    .adminList{
+        display: block;
+        flex-direction: column;
+    }
+    .adminListItems{
+        display: block;
+        width: 100%;
+    }
+  }
+

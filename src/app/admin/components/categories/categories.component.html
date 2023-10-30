@@ -1,0 +1,14 @@
+<mat-drawer-container class="categories-container" autosize>
+  <mat-drawer #drawer class="example-sidenav" mode="over">
+    <app-create (createdCategory)="createdCategory($event)"></app-create>
+  </mat-drawer>
+
+  <div class="example-sidenav-content">
+    <div >
+        <button type="button" mat-button (click)="drawer.toggle()">
+            Add Category
+          </button>
+    </div>
+    <app-list></app-list>
+  </div>
+</mat-drawer-container>

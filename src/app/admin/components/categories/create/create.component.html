@@ -1,0 +1,21 @@
+<div class="create-category">
+    
+    <mat-form-field class="product-create">
+        <mat-label>Name</mat-label>
+        <input matInput  #txtName/>
+      </mat-form-field>
+      <div class="radio-group">
+        <label><b>Is Active: </b></label>
+        <br>
+        <mat-radio-group  name="isActive" [(ngModel)]="selectedValue">
+          <mat-radio-button value="true">Yes</mat-radio-button>
+          <mat-radio-button value="false">No</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      
+      
+      
+      <button mat-raised-button color="primary" (click)="createCategory(txtName,selectedValue)" >Create Category</button>
+       
+      
+</div>

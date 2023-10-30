@@ -7,6 +7,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { AuthorizeMenuModule } from './authorize-menu/authorize-menu.module';
 import { RolesModule } from './roles/roles.module';
 import { UserModule } from './user/user.module';
+import { CategoriesModule } from './categories/categories.module';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { UserModule } from './user/user.module';
     DashboardModule,
     AuthorizeMenuModule,
     RolesModule,
-    UserModule
+    UserModule,
+    CategoriesModule
   ],
 })
 export class ComponentsModule {}

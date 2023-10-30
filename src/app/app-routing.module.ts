@@ -19,6 +19,13 @@ const routes: Routes = [
           ),canActivate:[AuthGuard]
       },
       {
+        path: 'categories',
+        loadChildren: () =>
+          import('./admin/components/categories/categories.module').then(
+            (module) => module.CategoriesModule
+          ),canActivate:[AuthGuard]
+      },
+      {
         path: 'users',
         loadChildren: () =>
           import('./admin/components/user/user.module').then(
