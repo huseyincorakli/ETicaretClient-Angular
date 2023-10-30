@@ -1,16 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { List_Category } from 'src/app/contracts/categories/list_category';
-import { List_Product } from 'src/app/contracts/list_product';
-import { QrcodeDialogComponent } from 'src/app/dialogs/qrcode-dialog/qrcode-dialog.component';
-import { SelectProductImageDialogComponent } from 'src/app/dialogs/select-product-image-dialog/select-product-image-dialog.component';
 import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
-import { DialogService } from 'src/app/services/common/dialog.service';
 import { CategoryService } from 'src/app/services/common/models/category.service';
-import { ProductService } from 'src/app/services/common/models/product.service';
 
 @Component({
   selector: 'app-list',
@@ -22,7 +17,6 @@ export class ListComponent  extends BaseComponent implements OnInit{
     private categoryService: CategoryService,
     spinner: NgxSpinnerService,
     private alertify: AlertifyService,
-    private dialogService:DialogService
       
       ) {
     super(spinner)
@@ -30,7 +24,7 @@ export class ListComponent  extends BaseComponent implements OnInit{
   @ViewChild(MatPaginator) paginator: MatPaginator;
   displayedColumns: string[] = ['name', 'isactive', 'createDate', 'updatedDate','edit'];
   dataSource: MatTableDataSource<List_Category> = null;
-
+  
   
   async getCategories() {
     this.showSpinner(SpinnerType.Clock)
@@ -56,6 +50,21 @@ export class ListComponent  extends BaseComponent implements OnInit{
     await this.getCategories();
   }
 
+  async changeCategoryStatus(id: string, isActive: boolean) {
+    await this.categoryService.changeCategoryStatus(id, !isActive, () => {
+      this.alertify.message("Update is success!", {
+        position: Position.BottomRight,
+        messageType: MessageType.Success
+      });
+      this.getCategories(); 
+    }, () => {
+      this.alertify.message("An error occurred while updating!", {
+        position: Position.BottomRight,
+        messageType: MessageType.Error
+      });
+    });
+  }
 
+  
   
 }

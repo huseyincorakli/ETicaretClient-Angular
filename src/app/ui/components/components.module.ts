@@ -6,6 +6,7 @@ import { HomeModule } from './home/home.module';
 import { RegisterModule } from './register/register.module';
 import { PasswordResetModule } from './password-reset/password-reset.module';
 import { UpdatePasswordModule } from './update-password/update-password.module';
+import { CategoriesModule } from './categories/categories.module';
 
 
 
@@ -21,10 +22,12 @@ import { UpdatePasswordModule } from './update-password/update-password.module';
     RegisterModule,
     // LoginModule
     PasswordResetModule,
-    UpdatePasswordModule
+    UpdatePasswordModule,
+    CategoriesModule
   ],
   exports: [
-    BasketsModule
+    BasketsModule,
+    CategoriesModule
   ]
 })
 export class ComponentsModule { }

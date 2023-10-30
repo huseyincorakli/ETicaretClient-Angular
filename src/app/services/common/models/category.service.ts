@@ -42,4 +42,28 @@ export class CategoryService {
 
     return await promiseData;
   }
+
+  async getAllCategoryNames(): Promise<{ categoryNames: string[] }> {
+    try {
+      const response = await this.httpClientService.get<{ categoryNames: string[] }>({
+        controller: 'category',
+        action: 'GetAllCategoryName',
+      }).toPromise();
+      return response;
+    } catch (errorResponse: any) {
+      throw new Error(errorResponse.message);
+    }
+  }
+
+  async changeCategoryStatus(categoryId:string,isActive:boolean
+    ,succesCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void){
+     const promiseData:Promise<any> =this.httpClientService.put({
+      controller:'category',
+      action:'ChangeCategoryStatus'
+     },{categoryId,isActive}).toPromise();
+     promiseData.then(x=>succesCallBack())
+     .catch((errorResponse:HttpErrorResponse)=>errorCallBack(errorResponse.message))
+
+     return await promiseData;
+  }
 }

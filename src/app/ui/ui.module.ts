@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ComponentsModule } from './components/components.module';
+import { CategoriesModule } from './components/categories/categories.module';
 
 
 
@@ -9,7 +10,8 @@ import { ComponentsModule } from './components/components.module';
   imports: [
     CommonModule,ComponentsModule
   ],exports:[
-    ComponentsModule
+    ComponentsModule,
+    CategoriesModule
   ]
 })
 export class UiModule { }

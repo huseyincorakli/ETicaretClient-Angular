@@ -60,6 +60,8 @@ export class AppComponent {
   loadComponent(){
    this.dynamicLoadComponentService.loadComponent(ComponentType.BasketComponent,this.dynamicLoadComponentDirective.viewContainerRef)
   }
+
+ 
   
 }
 

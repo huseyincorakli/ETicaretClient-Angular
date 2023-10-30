@@ -7,10 +7,12 @@
     </ng-container>
 
 
-    <ng-container matColumnDef="isactive">
+    <ng-container  matColumnDef="isactive">
       <th mat-header-cell *matHeaderCellDef>Is Active</th>
-      <td mat-cell  *matCellDef="let element"><img *ngIf="element.isActive" src="../../../../../assets/check.png" alt="">
-        <img *ngIf="!element.isActive" src="../../../../../assets/close.png" alt="">
+      <td mat-cell  *matCellDef="let element">
+        <img  (click)="changeCategoryStatus(element.id,element.isActive)" style="margin-right: 10px; cursor: pointer;" src="../../../../../assets/exchange.png" alt="">
+        <img style="width: 15px;" *ngIf="element.isActive" src="../../../../../assets/check.png" alt="">
+        <img style="width: 15px;" *ngIf="!element.isActive" src="../../../../../assets/close.png" alt="">
       </td>
     </ng-container>
 
