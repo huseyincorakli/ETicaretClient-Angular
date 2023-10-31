@@ -16,6 +16,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { FileUploadModule } from 'src/app/services/common/file-upload/file-upload.module';
 import { DialogModule } from '@angular/cdk/dialog';
 import { DeleteModule } from 'src/app/directives/admin/delete.module';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { DeleteModule } from 'src/app/directives/admin/delete.module';
     MatPaginatorModule,
     DialogModule,
     FileUploadModule,
-    DeleteModule
+    DeleteModule,
+    MatSelectModule
   ]
 })
 

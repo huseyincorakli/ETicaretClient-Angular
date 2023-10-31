@@ -16,6 +16,7 @@ export class CreateComponent extends BaseComponent implements OnInit {
     private alertify: AlertifyService) {
     super(spiner)
   }
+  selected = 'none';
 
   ngOnInit(): void { }
  @Output() createdProduct:EventEmitter<Create_Product> = new EventEmitter();

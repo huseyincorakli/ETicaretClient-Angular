@@ -19,11 +19,11 @@ constructor(private categoryService:CategoryService,
 async ngOnInit() {
   await this.getCategories();
 }
-categoryNames:string[];
+categoryNames:any[];
  async getCategories() {
   try {
     const result = await this.categoryService.getAllCategoryNames();
-    this.categoryNames = result.categoryNames;
+    this.categoryNames = result.categoryNames.map(ct=>ct.categoryName);
   } catch (error) {
     
   }

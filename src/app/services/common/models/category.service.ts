@@ -44,7 +44,19 @@ export class CategoryService {
     return await promiseData;
   }
 
-  async getAllCategoryNames(): Promise<{ categoryNames: string[] }> {
+  async getAllCategoryNames(): Promise<{ categoryNames: any }> {
+    try {
+      const response = await this.httpClientService.get<{ categoryNames: any }>({
+        controller: 'category',
+        action: 'GetAllCategoryName',
+      }).toPromise();
+      return response;
+    } catch (errorResponse: any) {
+      throw new Error(errorResponse.message);
+    }
+  }
+
+  async getAllCategory(): Promise<{ categoryNames: string[] }> {
     try {
       const response = await this.httpClientService.get<{ categoryNames: string[] }>({
         controller: 'category',

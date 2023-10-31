@@ -33,13 +33,7 @@ export class ListComponent extends BaseComponent implements OnInit {
   displayedColumns: string[] = ['name', 'isactive', 'createDate', 'updatedDate', 'edit'];
   dataSource: MatTableDataSource<List_Category> = null;
 
-  async getCategoryNames() {
-    try {
-      await this.categoryService.getAllCategoryNames();
-    } catch (error) {
-      // Handle error here
-    }
-  }
+  
 
   async getCategories() {
     this.showSpinner(SpinnerType.Clock)

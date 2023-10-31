@@ -10,6 +10,7 @@ import { UserModule } from './user/user.module';
 import { CategoriesModule } from './categories/categories.module';
 
 
+
 @NgModule({
   declarations: [],
   imports: [
@@ -21,7 +22,7 @@ import { CategoriesModule } from './categories/categories.module';
     AuthorizeMenuModule,
     RolesModule,
     UserModule,
-    CategoriesModule
+    CategoriesModule,
   ],
 })
 export class ComponentsModule {}

@@ -6,6 +6,15 @@
   <mat-label>Stock</mat-label>
   <input matInput type="number" min="0" value="0"   #txtStock/>
 </mat-form-field>
+<mat-form-field>
+  <mat-label>Select an option</mat-label>
+  <mat-select [(value)]="selected">
+    <mat-option aria-selected="true">None</mat-option>
+    <mat-option value="option1">Option 1</mat-option>
+    <mat-option value="option2">Option 2</mat-option>
+    <mat-option value="option3">Option 3</mat-option>
+  </mat-select>
+</mat-form-field>
 <mat-form-field class="product-create">
   <mat-label>Price</mat-label>
   <input matInput type="number" min="0" value="0"   #txtPrice/>
