@@ -26,10 +26,7 @@ export class CreateComponent extends BaseComponent implements OnInit {
   }
   @Output() createdProduct: EventEmitter<Create_Product> = new EventEmitter();
 
-// deneme(){
-//   console.log(this.selected);
-  
-// }
+
 
   create(name: HTMLInputElement, price: HTMLInputElement, stock: HTMLInputElement, description: HTMLInputElement) {
     this.showSpinner(SpinnerType.Classic)
