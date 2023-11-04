@@ -23,7 +23,7 @@ categoryNames:any[];
  async getCategories() {
   try {
     const result = await this.categoryService.getAllCategoryNames();
-    this.categoryNames = result.categoryNames.map(ct=>ct.categoryName);
+    this.categoryNames = result.categoryNames.map(ct=>ct.categoryName+"///"+ct.id);
   } catch (error) {
     
   }

@@ -1,4 +1,4 @@
 <ul  class="dropdown-menu">
-  <li *ngFor="let name of categoryNames"><a class="dropdown-item" href="#">{{name}}</a></li>
+  <li *ngFor="let name of categoryNames"><a class="dropdown-item" routerLink="products-by-category/{{name.split('///')[1]}}">{{name.split("///")[0]}}</a></li>
   
 </ul>

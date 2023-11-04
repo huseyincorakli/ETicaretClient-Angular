@@ -18,6 +18,10 @@
       <td mat-cell *matCellDef="let element">{{ element.stock }}</td>
     </ng-container>
 
+    <ng-container matColumnDef="categoryName">
+      <th mat-header-cell *matHeaderCellDef>Category</th>
+      <td mat-cell *matCellDef="let element">{{ element.categoryName }}</td>
+    </ng-container>
 
     <ng-container matColumnDef="createDate">
       <th mat-header-cell *matHeaderCellDef>Created Date</th>

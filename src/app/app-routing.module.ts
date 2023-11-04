@@ -80,6 +80,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'products-by-category/:categoryId',
+    loadChildren: () =>
+      import('./ui/components/get-product-by-category/get-product-by-category.module').then(
+        (module) => module.GetProductByCategoryModule
+      ),
+  },
+  {
     path: 'password-reset',
     loadChildren: () =>
       import('./ui/components/password-reset/password-reset.module').then(

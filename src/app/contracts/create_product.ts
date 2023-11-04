@@ -3,4 +3,5 @@ export class Create_Product {
     stock:number;
     price:number; 
     description:string;
+    categoryId:string;
 }

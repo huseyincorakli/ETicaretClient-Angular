@@ -8,5 +8,5 @@ export class List_Product{
     createDate:Date;
     updatedDate:Date;
     imagePath:string;
-    productImageFiles?:List_Product_Image[]
+    productImageFiles?:List_Product_Image[];
 }

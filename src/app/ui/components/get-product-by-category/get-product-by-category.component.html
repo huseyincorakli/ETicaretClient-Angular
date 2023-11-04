@@ -1,0 +1,37 @@
+<div class="mt-2 p-2">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 mb-2 mr-2" *ngFor="let product of products">
+          <div class="card" style="width: 16rem">
+            <img
+              *ngIf="!product.productImageFiles.length"
+              width="250"
+              height="250"
+              class="card-img-top"
+              src="../../../../../assets/default-product-image.png"
+              alt="Card image cap"
+            />
+            <img
+              *ngIf="product.productImageFiles.length"
+              width="250"
+              height="250"
+              class="card-img-top"
+              src="{{ baseUrl.url }}/{{ product.imagePath }}"
+              alt="Card image cap"
+            />
+            <div class="card-body">
+              <h3 class="card-title">{{ product.name }}</h3>
+              <p class="card-text">
+                FİYAT: {{ product.price | currency: '₺' }} <br />
+                STOK: {{ product.stock }}
+              </p>
+              <a (click)="addToBasket(product)" class="btn btn-primary">Sepete Ekle</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+   
+  </div>
+  

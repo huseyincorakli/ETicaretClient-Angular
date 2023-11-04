@@ -25,7 +25,7 @@
               <th scope="row">{{i+1}}</th>
               <td>{{basketItem.name}}</td>
               <td >{{basketItem.price}} $</td>
-              <td><input style="width: 60px; " class="form-control-sm" type="number" [value]="basketItem.quantity" data-id="{{basketItem.basketItemId}}" (change)="changeQuantity($event)"></td>
+              <td><input style="width: 60px; " class="form-control-sm" min="0"  type="number" [value]="basketItem.quantity" data-id="{{basketItem.basketItemId}}" (change)="changeQuantity($event)"></td>
               <td><button class="btn btn-danger btn-sm" (click)="removeBasketItem(basketItem.basketItemId)">X</button></td>
             </tr>
           </tbody>

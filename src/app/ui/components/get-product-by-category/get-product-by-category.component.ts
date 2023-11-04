@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { async } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
@@ -11,24 +12,27 @@ import { ProductService } from 'src/app/services/common/models/product.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 
 @Component({
-  selector: 'app-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: 'app-get-product-by-category',
+  templateUrl: './get-product-by-category.component.html',
+  styleUrls: ['./get-product-by-category.component.scss']
 })
-export class ListComponent extends BaseComponent implements OnInit {
-  constructor(
-    private productService: ProductService, 
-    private activatedRoute: ActivatedRoute, 
-    private fileService: FileService,
-    spinner:NgxSpinnerService,
-    private basketService:BasketService,
-    private toastr:CustomToastrService
-    ) 
-  {
-    super(spinner)
-   }
+export class GetProductByCategoryComponent extends BaseComponent implements OnInit {
 
-  products: List_Product[];
+  constructor(
+    private productService: ProductService,
+    private activatedRoute: ActivatedRoute,
+    private fileService: FileService,
+    spinner: NgxSpinnerService,
+    private basketService: BasketService,
+    private toastr: CustomToastrService
+
+
+  ) {
+    super(spinner)
+
+  }
+
+  products: any;
 
   currentPageNo: number;
   totalProductCount: number;
@@ -36,15 +40,14 @@ export class ListComponent extends BaseComponent implements OnInit {
   pageSize: number = 12;
   baseUrl: BaseUrl;
   pageList: number[] = [];
-
+  categoryId: string;
   async ngOnInit() {
     this.baseUrl = await this.fileService.getBaseStorageUrl()
 
     this.activatedRoute.params.subscribe(async params => {
       this.showSpinner(SpinnerType.Classic)
-      const deneme = params["pageNo"]
-      console.log(deneme);
-      
+      this.categoryId = params["categoryId"];
+
 
       if (parseInt(params["pageNo"]) <= 0 || params["pageNo"] == undefined) {
         this.currentPageNo = 1
@@ -54,65 +57,32 @@ export class ListComponent extends BaseComponent implements OnInit {
         this.currentPageNo = parseInt(params["pageNo"])
       }
 
-      const data: { totalProductCount: number, products: List_Product[] } = 
-      await this.productService.read(this.currentPageNo - 1, this.pageSize, () => {
+      const data: { totalProductCount: number, products: List_Product[] } =
+        await this.productService.readByCategory(this.currentPageNo - 1, this.pageSize, this.categoryId, () => {
+          this.hideSpinner(SpinnerType.Classic)
+        }, errorMessage => {
 
-      }, errorMessage => {
-
-      })
-
-
-
-      this.products = data.products;
-      this.products = this.products.map<List_Product>(p => {
-
-
-        const listProduct: List_Product = {
-
-          id: p.id,
-          createDate: p.createDate,
-          name: p.name,
-          price: p.price,
-          stock: p.stock,
-          updatedDate: p.updatedDate,
-          productImageFiles: p.productImageFiles,
-          imagePath: p.productImageFiles.length ? p.productImageFiles.find(p => p.showcase).path : '',
-        }
-
-
-
-        return listProduct
-
-      })
+        })
 
 
 
 
-      this.totalProductCount = data.totalProductCount;
-      this.totalPageCount = Math.ceil(this.totalProductCount / this.pageSize);
+      this.products = data.products
+      this.totalProductCount = data.totalProductCount
+      console.log(this.totalProductCount);
 
-      this.pageList = [];
+     
 
-      if (this.currentPageNo - 2 <= 0) {
-        for (let i = 0; i <= 7; i++) {
-          this.pageList.push(i);
-        }
-      }
-      else if (this.currentPageNo + 2 >= this.totalPageCount) {
-        for (let i = this.totalPageCount - 6; i <= this.totalPageCount; i++) {
-          this.pageList.push(i);
-        }
-      }
-      else {
-        for (let i = this.currentPageNo - 2; i <= this.currentPageNo + 2; i++) {
-          this.pageList.push(i);
-        }
-      }
+     
+
+
+
+
       this.hideSpinner(SpinnerType.Classic)
     });
 
-  }
 
+  }
   async addToBasket(product: List_Product) {
     this.showSpinner(SpinnerType.Clock)
     let _basketItem:Create_Basket_Item = new Create_Basket_Item();
@@ -122,5 +92,6 @@ export class ListComponent extends BaseComponent implements OnInit {
     this.hideSpinner(SpinnerType.Clock);
     this.toastr.message('BAŞARILI','ÜRÜN SEPETE EKLENDİ',ToastrMessageType.Success,ToastrPosition.TopRight);
   }
+
 
 }

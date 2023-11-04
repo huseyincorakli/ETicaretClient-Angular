@@ -32,13 +32,25 @@ export class ProductService {
         errorCallBack(message)
       })
   }
-
+// /GetProductsByCategory?CategoryId=d4229dcf-9a81-4906-8531-2a1823fec79b&PageNo=0&PageSize=5
   //READ PRODUCT
   async read(page: number = 0, size: number = 5, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
     const promiseData: Promise<{ totalProductCount: number, products: List_Product[] }> = this.httpClientService.get
       <{ totalProductCount: number, products: List_Product[] }>({
         controller: 'products',
         queryString: `page=${page}&size=${size}`
+      }).toPromise();
+    promiseData.then(d => succesCallBack())
+      .catch((errorResponse: HttpErrorResponse) => errorCallBack(errorResponse.message))
+
+    return await promiseData;
+  }
+  async readByCategory(page: number = 0, size: number = 5,categoryId:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
+    const promiseData: Promise<{ totalProductCount: number, products: List_Product[] }> = this.httpClientService.get
+      <{ totalProductCount: number, products: List_Product[] }>({
+        controller: 'products',
+        action:'GetProductsByCategory',
+        queryString: `CategoryId=${categoryId}&page=${page}&size=${size}`
       }).toPromise();
     promiseData.then(d => succesCallBack())
       .catch((errorResponse: HttpErrorResponse) => errorCallBack(errorResponse.message))

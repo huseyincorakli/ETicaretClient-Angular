@@ -54,10 +54,10 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
           break;
 
         case HttpStatusCode.InternalServerError:
-          
+          debugger
             this.toastr.message(
-              'Sunucu Hatası',
-              'Sunucuda beklenmedik bir hata oluştu!',
+              'Error',
+              err.error.Message,
               ToastrMessageType.Error,
               ToastrPosition.BottomFull);
           

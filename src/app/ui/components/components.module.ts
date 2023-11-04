@@ -7,12 +7,15 @@ import { RegisterModule } from './register/register.module';
 import { PasswordResetModule } from './password-reset/password-reset.module';
 import { UpdatePasswordModule } from './update-password/update-password.module';
 import { CategoriesModule } from './categories/categories.module';
+import { GetProductByCategoryModule } from './get-product-by-category/get-product-by-category.module';
 
 
 
 
 @NgModule({
   declarations: [
+  
+    
   ],
   imports: [
     CommonModule,
@@ -23,11 +26,12 @@ import { CategoriesModule } from './categories/categories.module';
     // LoginModule
     PasswordResetModule,
     UpdatePasswordModule,
-    CategoriesModule
+    CategoriesModule,
+    GetProductByCategoryModule
   ],
   exports: [
     BasketsModule,
-    CategoriesModule
+    CategoriesModule,
   ]
 })
 export class ComponentsModule { }
