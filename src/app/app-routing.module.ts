@@ -94,6 +94,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'settings',
+    loadChildren: () =>
+      import('./ui/components/settings/settings.module').then(
+        (module) => module.SettingsModule
+      ),
+  },
+  {
     path: 'update-password/:userId/:resetToken',
     loadChildren: () =>
       import('./ui/components/update-password/update-password.module').then(

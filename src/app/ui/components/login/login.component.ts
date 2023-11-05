@@ -67,7 +67,7 @@ export class LoginComponent extends BaseComponent {
 
   async login(password: string, usernameOrEmail: string) {
     this.showSpinner(SpinnerType.Classic)
-    await this.userAuthService.login(usernameOrEmail, password, () => {
+   const data =  await this.userAuthService.login(usernameOrEmail, password, () => {
       this.authService.identityCheck();
       this.activatedRoute.queryParams.subscribe(params => {
         const returnUrl: string = params['returnUrl'];
@@ -85,7 +85,9 @@ export class LoginComponent extends BaseComponent {
       this.toast.message("Hata","Hatalı giriş denemesi.Lütfen giriş bilgilerinizi kontrol ediniz.",ToastrMessageType.Error,ToastrPosition.TopRight)
     })
     this.hideSpinner(SpinnerType.Classic)
+
   }
+  
   navigateRegister(){
     this.router.navigate(['register'])
   }

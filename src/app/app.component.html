@@ -38,34 +38,43 @@
               </button>
             </li>
           </ul>
+          <ul class="navbar-nav">
+            <li>
+              <button class="basketBtn" *ngIf="authService.isAuthenticated" data-bs-toggle="modal" data-bs-target="#basketModal" (click)="loadComponent()">
+                <span style="font-weight: 500; font-size: 15px;">Basket</span>
+                <span class="arrow">
+                  <img class="registerIcon" src="../assets/shopping-online.png" alt="" />
+                </span>
+              </button>
+            </li>
+            <li>
+              <button class="basketBtn" routerLink="settings" *ngIf="authService.isAuthenticated">
+                <span style="font-weight: 500; font-size: 15px;">Settings</span>
+                <span class="arrow">
+                  <img class="registerIcon" src="../assets/settings.png" alt="" />
+                </span>
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="dashBoardBtn" aria-current="page" routerLink="admin" *ngIf="authService.isAuthenticated && authService.hasRole">
+                Dashboard
+                <span class="arrow">
+                  <img class="dashboardIcon" src="../assets/dashboard.png" alt="" />
+                </span>
+              </button>
+            </li>
+            <li class="nav-item">
+              <button class="logoutBtn" aria-current="page" routerLink="admin" *ngIf="authService.isAuthenticated" (click)="signOut()">
+                Logout
+                <span class="arrow">
+                  <img class="registerIcon" src="../assets/power-button.png" alt="" />
+                </span>
+              </button>
+            </li>
+          </ul>
         </div>
         <!-- Basket, Yönetim Paneli, and Çıkış Yap links on the right -->
-        <ul class="navbar-nav">
-          <li>
-            <button class="basketBtn" *ngIf="authService.isAuthenticated" data-bs-toggle="modal" data-bs-target="#basketModal" (click)="loadComponent()">
-              <span style="font-weight: 500; font-size: 15px;">Basket</span>
-              <span class="arrow">
-                <img class="registerIcon" src="../assets/shopping-online.png" alt="" />
-              </span>
-            </button>
-          </li>
-          <li class="nav-item">
-            <button class="dashBoardBtn" aria-current="page" routerLink="admin" *ngIf="authService.isAuthenticated && authService.hasRole">
-              Dashboard
-              <span class="arrow">
-                <img class="dashboardIcon" src="../assets/dashboard.png" alt="" />
-              </span>
-            </button>
-          </li>
-          <li class="nav-item">
-            <button class="logoutBtn" aria-current="page" routerLink="admin" *ngIf="authService.isAuthenticated" (click)="signOut()">
-              Logout
-              <span class="arrow">
-                <img class="registerIcon" src="../assets/power-button.png" alt="" />
-              </span>
-            </button>
-          </li>
-        </ul>
+        
       </div>
     </nav>
     <div class="main">

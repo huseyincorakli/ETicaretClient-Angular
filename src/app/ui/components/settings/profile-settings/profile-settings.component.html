@@ -1,0 +1,86 @@
+<div class="row">
+    <div class="col-md-1"></div>
+    <div class="col-md-10">
+      <div class="container">
+        <div class="row justify-content-center align-items-center " >
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-body">
+      
+        <div class="form-group ">
+          <label for="nameSurname">Ad Soyad</label>
+          <input
+          value="{{updateProfile.nameSurname}}"
+          #txtName
+            type="text"
+            formControlName="nameSurname"
+            class="form-control"
+            id="nameSurname"
+            placeholder="Ad Soyad"
+          />
+          
+         
+        </div>
+        <div class="form-group">
+          <label for="username">Kullanıcı Adı</label>
+          <input
+          value="{{updateProfile.username}}"
+          #txtUsername
+            type="text"
+            formControlName="username"
+            class="form-control"
+            id="username"
+            placeholder="Kullanıcı Adı"
+          />
+         
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+          value="{{updateProfile.email}}"
+          #txtEmail
+            type="email"
+            formControlName="email"
+            class="form-control"
+            id="email"
+            placeholder="Email"
+          />
+         
+         
+        </div>
+        <div class="form-group">
+          <label for="password">Şifre</label>
+          <input
+          #txtPassword
+            type="password"
+            formControlName="password"
+            class="form-control"
+            id="password"
+            placeholder="Şifre"
+          />
+        </div>
+        <div class="form-group">
+          <label for="passwordConfirm">Şifre Tekrar</label>
+          <input
+          #txtPasswordConfirm
+            type="passwordConfirm"
+            formControlName="passwordConfirm"
+            class="form-control"
+            id="passwordConfirm"
+            placeholder="Şifre Tekrar"
+           
+          />
+          
+        </div>
+        <br />
+        <button  class="btn btn-primary" (click)="UpdateUser(txtName,txtUsername,txtEmail,txtPassword,txtPasswordConfirm)">Güncelle</button>
+      
+    </div>
+    </div>
+    </div>
+    </div>
+    </div>
+  </div>
+    <div class="col-md-1"></div>
+  </div>
+  

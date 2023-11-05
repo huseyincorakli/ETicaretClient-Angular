@@ -29,7 +29,6 @@ export class UpdateCategoryDialogComponent extends BaseDialog<UpdateCategoryDial
     throw new Error('Method not implemented.');
   }
   async updateCategory(id: string, name: HTMLInputElement, isActive: boolean) {
-    console.log(id, name.value, isActive);
     await this.categoryService.updateCategory(id, name.value, isActive, () => {
       this.alertify.message("Update is success!",{
         messageType:MessageType.Success,

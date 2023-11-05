@@ -19,8 +19,8 @@ export class UserAuthService {
     }, { usernameOrEmail, password })
     
     const tokenResponse: TokenResponse = await firstValueFrom(observable) as TokenResponse;
-   
     if (tokenResponse) {
+      localStorage.setItem("userId",tokenResponse.userId)
       this.toastr.message('Başarılı', "Kullanıcı Girişi Başarılı", ToastrMessageType.Success, ToastrPosition.TopRight)
       localStorage.setItem('accessToken', tokenResponse.token.accessToken)
       localStorage.setItem('role', tokenResponse.role)
@@ -41,6 +41,9 @@ export class UserAuthService {
    if (tokenResponse) {
     this.toastr.message('Başarılı', "Kullanıcı Girişi Başarılı", ToastrMessageType.Success, ToastrPosition.TopRight)
     localStorage.setItem('accessToken', tokenResponse.token.accessToken)
+    localStorage.setItem('role', tokenResponse.role)
+    localStorage.setItem('userId', tokenResponse.userId)
+    debugger
     localStorage.setItem('refreshToken', tokenResponse.token.refreshToken)
   }
   callBackFunction();

@@ -7,6 +7,7 @@ import { TokenResponse } from 'src/app/contracts/token/tokenResponse';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from '../../ui/custom-toastr.service';
 import { SocialUser } from '@abacritt/angularx-social-login';
 import { List_User } from 'src/app/contracts/users/list_user';
+import { UpdateProfile } from 'src/app/contracts/users/update_profile';
 
 @Injectable({
   providedIn: 'root'
@@ -78,5 +79,31 @@ export class UserService {
     })
       .catch(error => errorCallBack(error))
     return (await promiseData).userRoles;
+  }
+
+  async updateProfile(updateProfile:UpdateProfile,succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void){
+    const observable=this.httpClientService.put({
+      action:'UpdateProfile',
+      controller:'users'
+    },updateProfile)
+    const promiseData= firstValueFrom(observable)
+    promiseData.then(value=>{
+      succesCallBack();
+    })
+    .catch(error=>errorCallBack(error))
+    await promiseData;
+  }
+
+  async getUserById(userId:string,succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void):Promise<any>{
+    const observable=this.httpClientService.get({
+      action:'GetUserById',
+      controller:'users',
+      queryString:`UserId=${userId}`
+    })
+    const promiseData=firstValueFrom(observable)
+    promiseData.then(value=>{
+      succesCallBack();
+    }).catch(error=>errorCallBack(error))
+    return await promiseData;
   }
 }

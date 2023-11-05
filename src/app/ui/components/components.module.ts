@@ -8,6 +8,7 @@ import { PasswordResetModule } from './password-reset/password-reset.module';
 import { UpdatePasswordModule } from './update-password/update-password.module';
 import { CategoriesModule } from './categories/categories.module';
 import { GetProductByCategoryModule } from './get-product-by-category/get-product-by-category.module';
+import { SettingsModule } from './settings/settings.module';
 
 
 
@@ -27,7 +28,7 @@ import { GetProductByCategoryModule } from './get-product-by-category/get-produc
     PasswordResetModule,
     UpdatePasswordModule,
     CategoriesModule,
-    GetProductByCategoryModule
+    GetProductByCategoryModule,SettingsModule
   ],
   exports: [
     BasketsModule,

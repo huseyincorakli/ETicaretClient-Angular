@@ -47,6 +47,7 @@ export class AppComponent {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
     localStorage.removeItem('role')
+    localStorage.removeItem('userId')
     this.router.navigate(['/'])
     this.toastr.message('Başarılı', 'Çıkış Yapılmıştır!', ToastrMessageType.Info, ToastrPosition.TopRight)
     setTimeout(() => {
