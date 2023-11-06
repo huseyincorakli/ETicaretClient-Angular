@@ -38,6 +38,7 @@
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/ngx-spinner/animations/ball-clip-rotate.css",
               "node_modules/ngx-spinner/animations/timer.css"
+
             ],
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",

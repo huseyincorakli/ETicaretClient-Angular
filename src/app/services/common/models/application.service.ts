@@ -17,4 +17,12 @@ export class ApplicationService {
 
     return await firstValueFrom(observable);
   }
+  async getAddressFromCoordinates(lat: number, lon: number) {
+    const url = `https://nominatim.openstreetmap.org/reverse?format=geocodejson&lat=${lat}&lon=${lon}`;
+    var data =  this.httpClientService.get({
+      fullEndPoint:url
+    });
+    
+    return await firstValueFrom(data)
+  }
 }

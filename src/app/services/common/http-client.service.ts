@@ -46,6 +46,8 @@ export class HttpClientService {
     return this.httpClient.delete<T>(url,{headers:requestParameters.headers,responseType:requestParameters.responseType as 'json'})
    }
 
+  
+
 }
 
 export class RequestParameters {
