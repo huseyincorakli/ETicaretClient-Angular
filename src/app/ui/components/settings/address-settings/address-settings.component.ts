@@ -13,6 +13,7 @@ import { Icon, Style } from 'ol/style';
 import { HttpClientService } from 'src/app/services/common/http-client.service';
 import { ApplicationService } from 'src/app/services/common/models/application.service';
 import { Address } from 'src/app/contracts/address-settings/address';
+import { AddressService } from 'src/app/services/common/models/address.service';
 @Component({
   selector: 'app-address-settings',
   templateUrl: './address-settings.component.html',
@@ -24,13 +25,25 @@ export class AddressSettingsComponent implements OnInit {
   vectorLayer: VectorLayer<VectorSource>;
   vectorSource: VectorSource;
   address:Address = new Address();
+  userId=localStorage.getItem('userId');
 
-  constructor(private applicationService:ApplicationService) { }
+  constructor(private applicationService:ApplicationService,
+    private addressService:AddressService) { }
+    userHasAddress:any;
 
-  ngOnInit() {
+  async ngOnInit() {
     this.requestLocationPermission()
+    const data:any = await this.addressService.checkAddressForUser(this.userId,()=>{
+      alert("hata yok")
+    },(err)=>{
+      
+    })
+    this.userHasAddress=data.address;
     
   }
+
+
+
 
   generateMap(lat:any,lon:any) {
     const centerCoordinate = fromLonLat([lon, lat]); 
@@ -60,7 +73,6 @@ export class AddressSettingsComponent implements OnInit {
       const x = event.coordinate;
       const coordinates = toLonLat(event.coordinate);
       const [lon, lat] = coordinates;
-      console.log('Tıklanan Konum:', lat, lon);
       this.getAddressFromCoordinates(lat,lon);
       this.addIcon(x);
     });
@@ -95,7 +107,6 @@ export class AddressSettingsComponent implements OnInit {
     this.address.name=addressData.name? addressData.name :'';
     this.address.county=addressData.admin.level6;
     
-    console.log(this.address);
     
     
   }
@@ -107,7 +118,6 @@ export class AddressSettingsComponent implements OnInit {
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
           this.generateMap(lat,lon);
-          console.log('Kullanıcının Konumu:', lat, lon);
 
           // Konum izni aldıktan sonra yapılacak işlemleri burada gerçekleştirebilirsiniz.
           this.getAddressFromCoordinates(lat, lon);
