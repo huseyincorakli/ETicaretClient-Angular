@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import TileLayer from 'ol/layer/Tile';
@@ -14,39 +14,107 @@ import { HttpClientService } from 'src/app/services/common/http-client.service';
 import { ApplicationService } from 'src/app/services/common/models/application.service';
 import { Address } from 'src/app/contracts/address-settings/address';
 import { AddressService } from 'src/app/services/common/models/address.service';
+import { Create_Address } from 'src/app/contracts/address-settings/create_address';
+import { UserInfoService } from 'src/app/services/admin/user-info.service';
+import { Update_Address } from 'src/app/contracts/address-settings/update_address';
+import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 @Component({
   selector: 'app-address-settings',
   templateUrl: './address-settings.component.html',
   styleUrls: ['./address-settings.component.scss']
 })
-export class AddressSettingsComponent implements OnInit {
+export class AddressSettingsComponent extends BaseComponent implements OnInit {
   @ViewChild('harita', { static: true }) mapElement: ElementRef;
   map: Map;
   vectorLayer: VectorLayer<VectorSource>;
   vectorSource: VectorSource;
-  address:Address = new Address();
-  userId=localStorage.getItem('userId');
-
-  constructor(private applicationService:ApplicationService,
-    private addressService:AddressService) { }
-    userHasAddress:any;
-
-  async ngOnInit() {
-    this.requestLocationPermission()
-    const data:any = await this.addressService.checkAddressForUser(this.userId,()=>{
-      alert("hata yok")
-    },(err)=>{
-      
-    })
-    this.userHasAddress=data.address;
-    
+  address: Address = new Address();
+  userId = localStorage.getItem('userId');
+  addressId: string;
+  userHasAddress: any;
+  nameSurname: any;
+  initialAddress: any;
+  constructor(private applicationService: ApplicationService,
+    private addressService: AddressService,
+    private userInfoService: UserInfoService,
+    spinner: NgxSpinnerService,
+    private toastr:CustomToastrService
+  ) {
+    super(spinner)
   }
 
 
+  async ngOnInit() {
+    this.showSpinner(SpinnerType.Classic)
+    this.requestLocationPermission()
+    const data: any = await this.addressService.checkAddressForUser(this.userId, () => {
+    }, (err) => {
 
+    })
+    this.userHasAddress = data.address;
+    this.nameSurname = this.userInfoService.getSharedData();
+    if (this.userHasAddress != false) {
+      this.initialAddress = await this.getAddress();
+      this.addressId = this.initialAddress.address.id;
+    }
+    this.hideSpinner(SpinnerType.Classic)
 
-  generateMap(lat:any,lon:any) {
-    const centerCoordinate = fromLonLat([lon, lat]); 
+  }
+  async changeAddress(){
+    this.initialAddress = await this.getAddress();
+  }
+
+  async getAddress(){
+    return await this.addressService.getAddress(this.userId)
+  }
+
+  async updateAddress(name: HTMLInputElement, telNumber: HTMLInputElement, city: HTMLInputElement, county: HTMLInputElement, addressInfo: HTMLInputElement, directions: HTMLInputElement) {
+    this.showSpinner(SpinnerType.Classic)
+    const uAddress = new Update_Address();
+    uAddress.addressId = this.addressId;
+    uAddress.addressInfo = addressInfo.value;
+    uAddress.city = city.value;
+    uAddress.county = county.value;
+    uAddress.directions = directions.value;
+    uAddress.nameSurname = name.value;
+    uAddress.telNumber = telNumber.value;
+    debugger;
+    await this.addressService.updateAddress(uAddress, () => {
+    this.hideSpinner(SpinnerType.Classic)
+    this.toastr.message('Update is success','Address is updated',ToastrMessageType.Success,ToastrPosition.TopRight)
+    }, () => {
+    this.hideSpinner(SpinnerType.Classic)
+
+      alert("hata")
+    })
+  }
+
+  CreateNewAddress(name: HTMLInputElement, telNumber: HTMLInputElement, city: HTMLInputElement, county: HTMLInputElement, addressInfo: HTMLInputElement, directions: HTMLInputElement) {
+    this.showSpinner(SpinnerType.Classic)
+    const createAddress = new Create_Address;
+    createAddress.addressInfo = addressInfo.value;
+    createAddress.city = city.value;
+    createAddress.county = county.value;
+    createAddress.directions = directions.value;
+    createAddress.nameSurname = name.value;
+    createAddress.telNumber = telNumber.value;
+    createAddress.userId = localStorage.getItem('userId');
+    this.addressService.addAddress(createAddress, () => {
+    this.hideSpinner(SpinnerType.Classic)
+    this.toastr.message('Added!','Address is added!',ToastrMessageType.Success,ToastrPosition.TopRight)
+    this.requestLocationPermission();
+    }, () => {
+    this.hideSpinner(SpinnerType.Classic)
+      alert('hata')
+    })
+
+  }
+  generateMap(lat: any, lon: any) {
+    this.hideSpinner(SpinnerType.Classic)
+
+    const centerCoordinate = fromLonLat([lon, lat]);
 
     const view = new View({
       center: centerCoordinate,
@@ -73,9 +141,11 @@ export class AddressSettingsComponent implements OnInit {
       const x = event.coordinate;
       const coordinates = toLonLat(event.coordinate);
       const [lon, lat] = coordinates;
-      this.getAddressFromCoordinates(lat,lon);
+      this.getAddressFromCoordinates(lat, lon);
       this.addIcon(x);
     });
+    this.hideSpinner(SpinnerType.Classic)
+
   }
 
   addIcon(coordinates: number[]) {
@@ -97,27 +167,30 @@ export class AddressSettingsComponent implements OnInit {
     this.vectorSource.addFeature(iconFeature);
   }
   async getAddressFromCoordinates(lat: number, lon: number) {
-   var data:any = await  this.applicationService.getAddressFromCoordinates(lat,lon);
-   
-    const addressData:any= data.features[0].properties.geocoding;
+    this.showSpinner(SpinnerType.Classic)
 
-    this.address.city=addressData.admin.level4;
-    this.address.country=addressData.country;
-    this.address.label=addressData.label;
-    this.address.name=addressData.name? addressData.name :'';
-    this.address.county=addressData.admin.level6;
-    
-    
-    
+    var data: any = await this.applicationService.getAddressFromCoordinates(lat, lon);
+
+    const addressData: any = data.features[0].properties.geocoding;
+
+    this.address.city = addressData.admin.level4;
+    this.address.country = addressData.country;
+    this.address.label = addressData.label;
+    this.address.name = addressData.name ? addressData.name : '';
+    this.address.county = addressData.admin.level6;
+    this.hideSpinner(SpinnerType.Classic)
+
   }
   requestLocationPermission() {
+    this.showSpinner(SpinnerType.Classic)
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           // Kullanıcının konumunu başarıyla aldık
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
-          this.generateMap(lat,lon);
+          this.generateMap(lat, lon);
 
           // Konum izni aldıktan sonra yapılacak işlemleri burada gerçekleştirebilirsiniz.
           this.getAddressFromCoordinates(lat, lon);
@@ -129,6 +202,8 @@ export class AddressSettingsComponent implements OnInit {
     } else {
       console.error('Tarayıcı konum API desteklemiyor.');
     }
+    this.hideSpinner(SpinnerType.Classic)
+
   }
- 
+
 }

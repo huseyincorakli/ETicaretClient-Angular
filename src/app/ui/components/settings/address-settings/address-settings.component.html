@@ -10,14 +10,15 @@
                     <div class="card-body">
                         
                         <div class="form-group">
-                            <div class="form-group">
-                                <button *ngIf="userHasAddress==false" class="btn btn-sm btn-primary w-100"  data-bs-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample">Adres Ekle</button>
+                            <div *ngIf="userHasAddress==false" class="form-group">
+                                <button  class="btn btn-sm btn-primary w-100"  data-bs-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample">Adres Ekle</button>
                                 <div class="collapse" id="collapseExample3">
                                     <div class="card card-body">
                                      
                                         <div class="form-group">
                                             <label for="nameSurname">Ad Soyad</label>
                                             <input
+                                                value="{{nameSurname}}"
                                               #txtName
                                               type="text"
                                               formControlName="nameSurname"
@@ -27,9 +28,9 @@
                                             />
                                           </div>
                                           <div class="form-group">
-                                            <label for="nameSurname">Telefon Numarası</label>
+                                            <label for="telNum">Telefon Numarası</label>
                                             <input
-                                              #txtName
+                                              #txtTelNo
                                               type="tel"
                                               formControlName="telNum"
                                               class="form-control"
@@ -38,34 +39,34 @@
                                             />
                                           </div>
                                           <div class="form-group">
-                                            <label for="nameSurname">Şehir</label>
+                                            <label for="city">Şehir</label>
                                             <input
                                               value="{{ address.city }}"
-                                              #txtName
+                                              #txtCity
                                               type="text"
-                                              formControlName="country"
+                                              formControlName="city"
                                               class="form-control"
-                                              id="country"
+                                              id="city"
                                               placeholder="Şehir"
                                             />
                                           </div>
                                           <div class="form-group">
-                                            <label for="nameSurname">İlçe</label>
+                                            <label for="county">İlçe</label>
                                             <input
                                               value="{{ address.county }}"
-                                              #txtName
+                                              #txtCounty
                                               type="text"
-                                              formControlName="town"
+                                              formControlName="county"
                                               class="form-control"
-                                              id="town"
+                                              id="county"
                                               placeholder="İlçe"
                                             />
                                           </div>
                                           <div class="form-group">
-                                            <label for="nameSurname">Adres Bilgileri</label>
+                                            <label for="addressInfo">Adres Bilgileri</label>
                                             <input
                                               value="{{ address.label }}"
-                                              #txtName
+                                              #txtAddressInfo
                                               type="text"
                                               formControlName="addressInfo"
                                               class="form-control"
@@ -74,42 +75,43 @@
                                             />
                                           </div>
                                           <div class="form-group">
-                                            <label for="nameSurname">Adres Tarifi</label>
+                                            <label for="directions">Adres Tarifi</label>
                                             <input
-                                              #txtName
+                                              #txtDirections
                                               type="text"
-                                              formControlName="addressInfo"
+                                              formControlName="directions"
                                               class="form-control"
-                                              id="addressInfo"
+                                              id="directions"
                                               placeholder="Adres Tarifi"
                                             />
                                           </div>
                                           <br />
-                                          <button class="btn btn-primary">Güncelle</button>
+                                          <button class="btn btn-primary" (click)="CreateNewAddress(txtName,txtTelNo,txtCity,txtCounty,txtAddressInfo,txtDirections)">Adresi Ekle</button>
                                     </div>
                                   </div>
                                 <br>
                                 <br>
                               </div>
-                            <button  *ngIf="userHasAddress!=false" class="btn btn-sm btn-primary w-100"  data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">Adresimi Göster</button>
-                            <div class="collapse" id="collapseExample">
-                                <div class="card card-body">
-                                  Ad Soyad, Telefon Numarası <br>
-                                  Şehir/İlçe , Adres Bilgileri <br>
-                                  Adres tarifi
+                            <button   *ngIf="userHasAddress!=false" (click)="changeAddress()" class="btn btn-sm btn-primary w-100"  data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"  >Adresimi Göster</button>
+                            <div  class="collapse" id="collapseExample">
+                                <div *ngIf="initialAddress!=null" class="card card-body">
+                                {{initialAddress.address.nameSurname}}, {{initialAddress.address.telNumber}} <br>
+                                  {{initialAddress.address.city}}/{{initialAddress.address.county}} , {{initialAddress.address.addressInfo}} <br>
+                                  {{initialAddress.address.directions}}
                                 </div>
                               </div>
                             <br>
                             <br>
                           </div>
-                          <div class="form-group">
-                            <button *ngIf="userHasAddress!=false" class="btn btn-sm btn-primary w-100"  data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">Adresimi Güncelle</button>
+                          <div *ngIf="userHasAddress!=false" class="form-group">
+                            <button  class="btn btn-sm btn-primary w-100"  data-bs-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">Adresimi Güncelle</button>
                             <div class="collapse" id="collapseExample2">
                                 <div class="card card-body">
                                  
                                     <div class="form-group">
                                         <label for="nameSurname">Ad Soyad</label>
                                         <input
+                                            value="{{nameSurname}}"
                                           #txtName
                                           type="text"
                                           formControlName="nameSurname"
@@ -119,9 +121,9 @@
                                         />
                                       </div>
                                       <div class="form-group">
-                                        <label for="nameSurname">Telefon Numarası</label>
+                                        <label for="telNum">Telefon Numarası</label>
                                         <input
-                                          #txtName
+                                          #txtTelNo
                                           type="tel"
                                           formControlName="telNum"
                                           class="form-control"
@@ -130,34 +132,34 @@
                                         />
                                       </div>
                                       <div class="form-group">
-                                        <label for="nameSurname">Şehir</label>
+                                        <label for="city">Şehir</label>
                                         <input
                                           value="{{ address.city }}"
-                                          #txtName
+                                          #txtCity
                                           type="text"
-                                          formControlName="country"
+                                          formControlName="city"
                                           class="form-control"
-                                          id="country"
+                                          id="city"
                                           placeholder="Şehir"
                                         />
                                       </div>
                                       <div class="form-group">
-                                        <label for="nameSurname">İlçe</label>
+                                        <label for="county">İlçe</label>
                                         <input
                                           value="{{ address.county }}"
-                                          #txtName
+                                          #txtCounty
                                           type="text"
-                                          formControlName="town"
+                                          formControlName="county"
                                           class="form-control"
-                                          id="town"
+                                          id="county"
                                           placeholder="İlçe"
                                         />
                                       </div>
                                       <div class="form-group">
-                                        <label for="nameSurname">Adres Bilgileri</label>
+                                        <label for="addressInfo">Adres Bilgileri</label>
                                         <input
                                           value="{{ address.label }}"
-                                          #txtName
+                                          #txtAddressInfo
                                           type="text"
                                           formControlName="addressInfo"
                                           class="form-control"
@@ -166,18 +168,18 @@
                                         />
                                       </div>
                                       <div class="form-group">
-                                        <label for="nameSurname">Adres Tarifi</label>
+                                        <label for="directions">Adres Tarifi</label>
                                         <input
-                                          #txtName
+                                          #txtDirections
                                           type="text"
-                                          formControlName="addressInfo"
+                                          formControlName="directions"
                                           class="form-control"
-                                          id="addressInfo"
+                                          id="directions"
                                           placeholder="Adres Tarifi"
                                         />
                                       </div>
                                       <br />
-                                      <button class="btn btn-primary">Güncelle</button>
+                                      <button class="btn btn-primary" (click)="updateAddress(txtName,txtTelNo,txtCity,txtCounty,txtAddressInfo,txtDirections)">Güncelle</button>
                                 </div>
                               </div>
                             <br>

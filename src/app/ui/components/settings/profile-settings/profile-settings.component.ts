@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { UpdateProfile } from 'src/app/contracts/users/update_profile';
+import { UserInfoService } from 'src/app/services/admin/user-info.service';
 import { HttpClientService } from 'src/app/services/common/http-client.service';
 import { UserService } from 'src/app/services/common/models/user.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
@@ -15,7 +16,10 @@ export class ProfileSettingsComponent extends BaseComponent implements OnInit {
 
   constructor(private userService: UserService, 
     spinner:NgxSpinnerService,
-    private toastr:CustomToastrService) {
+    private toastr:CustomToastrService,
+    private userInfoService:UserInfoService
+
+   ) {
 super(spinner)
   }
   userId: string;
@@ -33,6 +37,9 @@ super(spinner)
     this.updateProfile.email = data.updateProfile.email;
     this.updateProfile.nameSurname=data.updateProfile.nameSurname;
     this.updateProfile.username=data.updateProfile.username;
+    this.userInfoService.setSharedData(data.updateProfile.nameSurname);
+    this.hideSpinner(SpinnerType.Classic)
+
   }
 
   async UpdateUser(name: HTMLInputElement, username: HTMLInputElement,
