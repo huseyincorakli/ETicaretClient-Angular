@@ -20,6 +20,7 @@ import { Update_Address } from 'src/app/contracts/address-settings/update_addres
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
+import { CategoryEmitterService } from 'src/app/services/common/emitters.service';
 @Component({
   selector: 'app-address-settings',
   templateUrl: './address-settings.component.html',
@@ -36,17 +37,28 @@ export class AddressSettingsComponent extends BaseComponent implements OnInit {
   userHasAddress: any;
   nameSurname: any;
   initialAddress: any;
+
+
   constructor(private applicationService: ApplicationService,
     private addressService: AddressService,
     private userInfoService: UserInfoService,
     spinner: NgxSpinnerService,
-    private toastr:CustomToastrService
+    private toastr: CustomToastrService,
+    private emitterService: CategoryEmitterService
   ) {
     super(spinner)
+    this.emitterService.addressAdded.subscribe(() => {
+      this.CheckAddress();
+    })
+
   }
 
 
   async ngOnInit() {
+
+    this.CheckAddress()
+  }
+  async CheckAddress() {
     this.showSpinner(SpinnerType.Classic)
     this.requestLocationPermission()
     const data: any = await this.addressService.checkAddressForUser(this.userId, () => {
@@ -60,14 +72,17 @@ export class AddressSettingsComponent extends BaseComponent implements OnInit {
       this.addressId = this.initialAddress.address.id;
     }
     this.hideSpinner(SpinnerType.Classic)
-
   }
-  async changeAddress(){
+  async changeAddress() {
     this.initialAddress = await this.getAddress();
   }
 
-  async getAddress(){
-    return await this.addressService.getAddress(this.userId)
+  async getAddress() {
+    return await this.addressService.getAddress(this.userId,()=>{
+    },(err)=>{
+      console.log(err);
+      
+    })
   }
 
   async updateAddress(name: HTMLInputElement, telNumber: HTMLInputElement, city: HTMLInputElement, county: HTMLInputElement, addressInfo: HTMLInputElement, directions: HTMLInputElement) {
@@ -80,12 +95,11 @@ export class AddressSettingsComponent extends BaseComponent implements OnInit {
     uAddress.directions = directions.value;
     uAddress.nameSurname = name.value;
     uAddress.telNumber = telNumber.value;
-    debugger;
     await this.addressService.updateAddress(uAddress, () => {
-    this.hideSpinner(SpinnerType.Classic)
-    this.toastr.message('Update is success','Address is updated',ToastrMessageType.Success,ToastrPosition.TopRight)
+      this.hideSpinner(SpinnerType.Classic)
+      this.toastr.message('Update is success', 'Address is updated', ToastrMessageType.Success, ToastrPosition.TopRight)
     }, () => {
-    this.hideSpinner(SpinnerType.Classic)
+      this.hideSpinner(SpinnerType.Classic)
 
       alert("hata")
     })
@@ -102,11 +116,12 @@ export class AddressSettingsComponent extends BaseComponent implements OnInit {
     createAddress.telNumber = telNumber.value;
     createAddress.userId = localStorage.getItem('userId');
     this.addressService.addAddress(createAddress, () => {
-    this.hideSpinner(SpinnerType.Classic)
-    this.toastr.message('Added!','Address is added!',ToastrMessageType.Success,ToastrPosition.TopRight)
-    this.requestLocationPermission();
+      this.hideSpinner(SpinnerType.Classic)
+      this.toastr.message('Added!', 'Address is added!', ToastrMessageType.Success, ToastrPosition.TopRight)
+      this.emitterService.addressAdded.emit();
+      this.requestLocationPermission();
     }, () => {
-    this.hideSpinner(SpinnerType.Classic)
+      this.hideSpinner(SpinnerType.Classic)
       alert('hata')
     })
 

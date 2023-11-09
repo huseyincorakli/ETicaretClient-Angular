@@ -34,15 +34,17 @@
   </div>
 
   <div class="d-grid gap-2  mt-2">
-    <button class="btn btn-primary btn-sm" type="button"
-     (click)="deneme(txtBrand,txtCategory,txtDescription,txtKeywords,txtProductName)">Generate</button>
+    <button *ngIf="!isLoading" class="btn btn-primary btn-sm" type="button"
+     (click)="generate(txtBrand,txtCategory,txtDescription,txtKeywords,txtProductName)">Generate
+    </button>
+    <button *ngIf="isLoading" class="btn btn-primary btn-sm" type="button" disabled>
+      <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+     Generating...
+    </button>
   </div>
 
-  
-
   <div *ngIf="generatedData.description" class="alert alert-success mt-2" role="alert">
-    <p class="data"> {{generatedData.description}}</p>
-    <hr>
-    <button class="btn btn-primary btn-sm" type="button" (click)="CopyToClipBoard()">Copy</button>
+    <p id="copyText"  class="data">  {{generatedData.description}}</p>
+   
   </div>
 </div>

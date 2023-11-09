@@ -8,6 +8,7 @@ import { Create_Order } from 'src/app/contracts/order/create_order';
 import { BasketItemDeleteState, BasketItemRemoveDialogComponent } from 'src/app/dialogs/basket-item-remove-dialog/basket-item-remove-dialog.component';
 import { ShoppingCompleteDialogComponent, ShoppingCompleteState } from 'src/app/dialogs/shopping-complete-dialog/shopping-complete-dialog.component';
 import { DialogService } from 'src/app/services/common/dialog.service';
+import { AddressService } from 'src/app/services/common/models/address.service';
 import { BasketService } from 'src/app/services/common/models/basket.service';
 import { OrderService } from 'src/app/services/common/models/order.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
@@ -19,14 +20,27 @@ declare var $: any
   styleUrls: ['./baskets.component.scss']
 })
 export class BasketsComponent extends BaseComponent implements OnInit {
-  constructor(spinner: NgxSpinnerService, private basketService: BasketService, private orderService: OrderService, private toastr: CustomToastrService, private dialogService: DialogService, private router: Router) {
+  userId: string = localStorage.getItem('userId');
+  address: any;
+  constructor(
+    spinner: NgxSpinnerService,
+    private basketService: BasketService,
+    private orderService: OrderService,
+    private toastr: CustomToastrService,
+    private dialogService: DialogService,
+    private router: Router,
+    private addressService: AddressService) {
     super(spinner)
   }
+  totalPrice:number=0;
+
   basketItems: List_Basket_Item[];
   async ngOnInit() {
     this.showSpinner(SpinnerType.Clock)
     this.basketItems = await this.basketService.get()
     this.hideSpinner(SpinnerType.Clock)
+    this.address = await this.addressService.getAddress(this.userId, () => { }, () => { })
+    this.calculate()
   }
   async changeQuantity(object: any) {
     this.showSpinner(SpinnerType.Clock)
@@ -37,6 +51,8 @@ export class BasketsComponent extends BaseComponent implements OnInit {
     basketItem.quantity = quantity;
     await this.basketService.update(basketItem)
     this.hideSpinner(SpinnerType.Clock)
+    this.calculate();
+
   }
   async removeBasketItem(basketItemId: string) {
     $("#basketModal").modal("hide")
@@ -52,28 +68,50 @@ export class BasketsComponent extends BaseComponent implements OnInit {
         $("." + basketItemId).fadeOut(400);
         $("#basketModal").modal("show")
         $(".modal-backdrop").show()
+
       }
 
     })
-
+    this.calculate();
   }
   async completeShopping() {
-    $("#basketModal").modal("hide")
-    $(".modal-backdrop").hide()
-    this.dialogService.openDialog({
-      componentType: ShoppingCompleteDialogComponent,
-      data: ShoppingCompleteState.Yes,
-      afterClosed: async () => {
-        this.showSpinner(SpinnerType.Clock)
-        const order: Create_Order = new Create_Order();
-        order.address = "Kahramanmaraş/Dulkadiroğlu Bağlarbaşı Mahallesi..."
-        order.description = "Ketçap mayonez olmasın :)"
-        await this.orderService.create(order);
-        this.hideSpinner(SpinnerType.Clock);
-        this.toastr.message("Sipariş Tamamlandı", "Siparişiniz oluşturulmuştur bizi tercih ettiğiniz için teşekkürler.", ToastrMessageType.Success, ToastrPosition.TopRight);
-       
-      }
-    })
+    if (this.address.address == false) {
+      this.toastr.message("Address Error", "Please Fill Your Address, You are redirected to the address settings..", ToastrMessageType.Error, ToastrPosition.TopRight)
+      setTimeout(() => {
+        $("#basketModal").modal("hide")
+        $(".modal-backdrop").hide()
+        this.router.navigate(['/settings'])
+      }, 3500);
+
+    }
+    else {
+      $("#basketModal").modal("hide")
+      $(".modal-backdrop").hide()
+      this.dialogService.openDialog({
+        componentType: ShoppingCompleteDialogComponent,
+        data: ShoppingCompleteState.Yes,
+        afterClosed: async () => {
+          this.showSpinner(SpinnerType.Clock)
+          const order: Create_Order = new Create_Order();
+          order.address = "Kahramanmaraş/Dulkadiroğlu Bağlarbaşı Mahallesi..."
+          order.description = "Ketçap mayonez olmasın :)"
+          await this.orderService.create(order);
+          this.hideSpinner(SpinnerType.Clock);
+          this.toastr.message("Sipariş Tamamlandı", "Siparişiniz oluşturulmuştur bizi tercih ettiğiniz için teşekkürler.", ToastrMessageType.Success, ToastrPosition.TopRight);
+
+        }
+      })
+    }
+
+  }
+  //! BURDA KALDIM
+  calculate() {
+
+    for (let index = 0; index < this.basketItems.length; index++) {
+      this.totalPrice =  (this.basketItems[index].price * this.basketItems[index].quantity)
+
+    }
+    console.log(this.totalPrice);
 
   }
 }
