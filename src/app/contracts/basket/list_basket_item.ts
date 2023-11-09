@@ -3,4 +3,5 @@ export class List_Basket_Item {
     name:string;
     price:number;
     quantity:number;
+    totalPrice:number;
 }

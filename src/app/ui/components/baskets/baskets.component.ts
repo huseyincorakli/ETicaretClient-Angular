@@ -21,7 +21,9 @@ declare var $: any
 })
 export class BasketsComponent extends BaseComponent implements OnInit {
   userId: string = localStorage.getItem('userId');
+  totalBasketPrice: number = 0;
   address: any;
+  userMessage:string="";
   constructor(
     spinner: NgxSpinnerService,
     private basketService: BasketService,
@@ -32,7 +34,6 @@ export class BasketsComponent extends BaseComponent implements OnInit {
     private addressService: AddressService) {
     super(spinner)
   }
-  totalPrice:number=0;
 
   basketItems: List_Basket_Item[];
   async ngOnInit() {
@@ -40,9 +41,11 @@ export class BasketsComponent extends BaseComponent implements OnInit {
     this.basketItems = await this.basketService.get()
     this.hideSpinner(SpinnerType.Clock)
     this.address = await this.addressService.getAddress(this.userId, () => { }, () => { })
-    this.calculate()
+    this.calculateTotalBasketPrice();
   }
-  async changeQuantity(object: any) {
+  ngAfterViewInit() {
+  }
+  async changeQuantity(object: any,abc:List_Basket_Item) {
     this.showSpinner(SpinnerType.Clock)
     const basketItemId = object.target.attributes["id"].value;
     const quantity: number = object.target.value;
@@ -50,8 +53,10 @@ export class BasketsComponent extends BaseComponent implements OnInit {
     basketItem.basketItemId = basketItemId;
     basketItem.quantity = quantity;
     await this.basketService.update(basketItem)
+    this.basketItems = await this.basketService.get()
     this.hideSpinner(SpinnerType.Clock)
-    this.calculate();
+    this.calculateTotalBasketPrice();
+    abc.quantity=quantity;
 
   }
   async removeBasketItem(basketItemId: string) {
@@ -64,15 +69,14 @@ export class BasketsComponent extends BaseComponent implements OnInit {
       afterClosed: async () => {
         this.showSpinner(SpinnerType.Clock)
         await this.basketService.remove(basketItemId)
+        this.basketItems = await this.basketService.get()
         this.hideSpinner(SpinnerType.Clock)
         $("." + basketItemId).fadeOut(400);
         $("#basketModal").modal("show")
         $(".modal-backdrop").show()
-
       }
 
     })
-    this.calculate();
   }
   async completeShopping() {
     if (this.address.address == false) {
@@ -93,8 +97,12 @@ export class BasketsComponent extends BaseComponent implements OnInit {
         afterClosed: async () => {
           this.showSpinner(SpinnerType.Clock)
           const order: Create_Order = new Create_Order();
-          order.address = "Kahramanmaraş/Dulkadiroğlu Bağlarbaşı Mahallesi..."
-          order.description = "Ketçap mayonez olmasın :)"
+          order.address = `${this.address.address.addressInfo}-
+           ${this.address.address.directions} - 
+           ${this.address.address.city}/${this.address.address.county}
+           ${this.address.address.telNumber}
+           `
+          order.description = this.userMessage
           await this.orderService.create(order);
           this.hideSpinner(SpinnerType.Clock);
           this.toastr.message("Sipariş Tamamlandı", "Siparişiniz oluşturulmuştur bizi tercih ettiğiniz için teşekkürler.", ToastrMessageType.Success, ToastrPosition.TopRight);
@@ -104,14 +112,8 @@ export class BasketsComponent extends BaseComponent implements OnInit {
     }
 
   }
-  //! BURDA KALDIM
-  calculate() {
-
-    for (let index = 0; index < this.basketItems.length; index++) {
-      this.totalPrice =  (this.basketItems[index].price * this.basketItems[index].quantity)
-
-    }
-    console.log(this.totalPrice);
-
+  calculateTotalBasketPrice() {
+    this.totalBasketPrice = this.basketItems.reduce((total, item) => total + item.totalPrice, 0);
   }
+
 }

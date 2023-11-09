@@ -47,7 +47,6 @@ export class AddressService {
     promiseData.then(()=>{
       succesCallBack()
     }).catch((error=>{
-      errorCallBack(error)
     }))
     return promiseData;
   }
