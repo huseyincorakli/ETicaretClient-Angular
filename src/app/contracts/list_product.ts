@@ -9,4 +9,5 @@ export class List_Product{
     updatedDate:Date;
     imagePath:string;
     productImageFiles?:List_Product_Image[];
+    categoryName:string;
 }

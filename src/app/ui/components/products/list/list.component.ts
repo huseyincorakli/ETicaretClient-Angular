@@ -17,19 +17,18 @@ import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/
 })
 export class ListComponent extends BaseComponent implements OnInit {
   constructor(
-    private productService: ProductService, 
-    private activatedRoute: ActivatedRoute, 
+    private productService: ProductService,
+    private activatedRoute: ActivatedRoute,
     private fileService: FileService,
-    spinner:NgxSpinnerService,
-    private basketService:BasketService,
-    private toastr:CustomToastrService
-    ) 
-  {
+    spinner: NgxSpinnerService,
+    private basketService: BasketService,
+    private toastr: CustomToastrService
+  ) {
     super(spinner)
-   }
+  }
 
   products: List_Product[];
-
+  productName: string;
   currentPageNo: number;
   totalProductCount: number;
   totalPageCount: number;
@@ -43,8 +42,6 @@ export class ListComponent extends BaseComponent implements OnInit {
     this.activatedRoute.params.subscribe(async params => {
       this.showSpinner(SpinnerType.Classic)
       const deneme = params["pageNo"]
-      console.log(deneme);
-      
 
       if (parseInt(params["pageNo"]) <= 0 || params["pageNo"] == undefined) {
         this.currentPageNo = 1
@@ -54,12 +51,8 @@ export class ListComponent extends BaseComponent implements OnInit {
         this.currentPageNo = parseInt(params["pageNo"])
       }
 
-      const data: { totalProductCount: number, products: List_Product[] } = 
-      await this.productService.read(this.currentPageNo - 1, this.pageSize, () => {
-
-      }, errorMessage => {
-
-      })
+      const data: { totalProductCount: number, products: List_Product[] } =
+        await this.productService.read(this.currentPageNo - 1, this.pageSize, '',)
 
 
 
@@ -77,6 +70,7 @@ export class ListComponent extends BaseComponent implements OnInit {
           updatedDate: p.updatedDate,
           productImageFiles: p.productImageFiles,
           imagePath: p.productImageFiles.length ? p.productImageFiles.find(p => p.showcase).path : '',
+          categoryName:p.categoryName
         }
 
 
@@ -111,16 +105,39 @@ export class ListComponent extends BaseComponent implements OnInit {
       this.hideSpinner(SpinnerType.Classic)
     });
 
+    
+
+  }
+  async searchProducts() {
+    if (this.productName) {
+      
+  
+      // Assuming you have a method in productService to search by product name
+      const data: { totalProductCount: number, products: List_Product[] } = await this.productService.read(
+         // Pass the productName to the search method
+        this.currentPageNo - 1,
+        this.pageSize,
+        this.productName
+      );
+  
+      this.products = data.products;
+      // ... Other processing and pagination logic
+      
+    } else {
+      // If the search input is empty, you might want to display all products or handle this case differently
+      // For instance, fetching all products again
+      this.ngOnInit(); // Call ngOnInit or the method responsible for fetching all products
+    }
   }
 
   async addToBasket(product: List_Product) {
     this.showSpinner(SpinnerType.Clock)
-    let _basketItem:Create_Basket_Item = new Create_Basket_Item();
-    _basketItem.productId=product.id;
-    _basketItem.quantity=1;
+    let _basketItem: Create_Basket_Item = new Create_Basket_Item();
+    _basketItem.productId = product.id;
+    _basketItem.quantity = 1;
     await this.basketService.add(_basketItem);
     this.hideSpinner(SpinnerType.Clock);
-    this.toastr.message('BAŞARILI','ÜRÜN SEPETE EKLENDİ',ToastrMessageType.Success,ToastrPosition.TopRight);
+    this.toastr.message('BAŞARILI', 'ÜRÜN SEPETE EKLENDİ', ToastrMessageType.Success, ToastrPosition.TopRight);
   }
 
 }

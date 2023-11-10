@@ -25,15 +25,12 @@ export class GetProductByCategoryComponent extends BaseComponent implements OnIn
     spinner: NgxSpinnerService,
     private basketService: BasketService,
     private toastr: CustomToastrService
-
-
   ) {
     super(spinner)
-
   }
 
   products: any;
-
+  productName:string;
   currentPageNo: number;
   totalProductCount: number;
   totalPageCount: number;
@@ -58,25 +55,16 @@ export class GetProductByCategoryComponent extends BaseComponent implements OnIn
       }
 
       const data: { totalProductCount: number, products: List_Product[] } =
-        await this.productService.readByCategory(this.currentPageNo - 1, this.pageSize, this.categoryId, () => {
+        await this.productService.readByCategory(this.currentPageNo - 1, this.pageSize, this.categoryId,'', () => {
           this.hideSpinner(SpinnerType.Classic)
         }, errorMessage => {
 
         })
 
 
-
-
       this.products = data.products
       this.totalProductCount = data.totalProductCount
       console.log(this.totalProductCount);
-
-     
-
-     
-
-
-
 
       this.hideSpinner(SpinnerType.Classic)
     });
@@ -85,12 +73,35 @@ export class GetProductByCategoryComponent extends BaseComponent implements OnIn
   }
   async addToBasket(product: List_Product) {
     this.showSpinner(SpinnerType.Clock)
-    let _basketItem:Create_Basket_Item = new Create_Basket_Item();
-    _basketItem.productId=product.id;
-    _basketItem.quantity=1;
+    let _basketItem: Create_Basket_Item = new Create_Basket_Item();
+    _basketItem.productId = product.id;
+    _basketItem.quantity = 1;
     await this.basketService.add(_basketItem);
     this.hideSpinner(SpinnerType.Clock);
-    this.toastr.message('BAŞARILI','ÜRÜN SEPETE EKLENDİ',ToastrMessageType.Success,ToastrPosition.TopRight);
+    this.toastr.message('BAŞARILI', 'ÜRÜN SEPETE EKLENDİ', ToastrMessageType.Success, ToastrPosition.TopRight);
+  }
+   async searchProducts(){
+    if (this.productName) {
+      
+  
+      // Assuming you have a method in productService to search by product name
+      const data: { totalProductCount: number, products: List_Product[] } = await this.productService.readByCategory(
+         // Pass the productName to the search method
+        this.currentPageNo - 1,
+        this.pageSize,
+        this.categoryId,
+        this.productName
+      );
+  
+      this.products = data.products;
+      // ... Other processing and pagination logic
+      
+    } else {
+      // If the search input is empty, you might want to display all products or handle this case differently
+      // For instance, fetching all products again
+      this.ngOnInit(); // Call ngOnInit or the method responsible for fetching all products
+    }
+
   }
 
 

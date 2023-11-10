@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from './services/ui/custom-toastr.service';
 import { AuthService } from './services/common/auth.service';
 import { Router } from '@angular/router';
@@ -7,6 +7,8 @@ import { SpinnerType } from './base/base.component';
 import { HttpClientService } from './services/common/http-client.service';
 import { ComponentType, DynamicLoadComponentService } from './services/common/dynamic-load-component.service';
 import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
+import { DialogService } from './services/common/dialog.service';
+import { CampaignDialogComponent } from './dialogs/campaign-dialog/campaign-dialog.component';
 
 // declare var $:any;
 
@@ -15,7 +17,7 @@ import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
  
   @ViewChild(DynamicLoadComponentDirective,{static:true})
   dynamicLoadComponentDirective:DynamicLoadComponentDirective
@@ -25,10 +27,20 @@ export class AppComponent {
     private toastr: CustomToastrService, 
     private router: Router, 
     private spinner: NgxSpinnerService,
-    private dynamicLoadComponentService:DynamicLoadComponentService
+    private dynamicLoadComponentService:DynamicLoadComponentService,
+    private dialogService:DialogService
     ) {
 
     authService.identityCheck();
+  }
+  modalOpened:boolean=false;
+  ngOnInit(): void {
+    // if(!this.modalOpened){
+    //   this.dialogService.openDialog({
+    //     componentType:CampaignDialogComponent
+    //   })
+    //   this.modalOpened=true;
+    // }
   }
   
   toggleNavbarContent() {

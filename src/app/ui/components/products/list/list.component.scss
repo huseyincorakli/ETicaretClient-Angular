@@ -1,0 +1,14 @@
+.card:hover{
+    transform: scale(1.03);
+}
+.card{
+    transition: transform 0.3s ease-in-out;
+    margin: 5px;
+}
+.lineHeight{
+    line-height: 1.2;
+    text-align: justify; 
+    font-size: 14px;
+    padding: 3px;
+    text-overflow: ellipsis;
+}

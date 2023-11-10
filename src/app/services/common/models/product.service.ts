@@ -34,23 +34,32 @@ export class ProductService {
   }
 // /GetProductsByCategory?CategoryId=d4229dcf-9a81-4906-8531-2a1823fec79b&PageNo=0&PageSize=5
   //READ PRODUCT
-  async read(page: number = 0, size: number = 5, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
+  async read(page: number = 0, size: number = 5,productName?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
+    let _queryString = `page=${page}&size=${size}`;
+
+    if (productName) {
+        _queryString += `&productName=${productName}`; // Ürün ismine göre filtreleme
+    }
     const promiseData: Promise<{ totalProductCount: number, products: List_Product[] }> = this.httpClientService.get
       <{ totalProductCount: number, products: List_Product[] }>({
         controller: 'products',
-        queryString: `page=${page}&size=${size}`
+        queryString: _queryString
       }).toPromise();
     promiseData.then(d => succesCallBack())
       .catch((errorResponse: HttpErrorResponse) => errorCallBack(errorResponse.message))
 
     return await promiseData;
   }
-  async readByCategory(page: number = 0, size: number = 5,categoryId:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
+  async readByCategory(page: number = 0, size: number = 5 ,categoryId:string,productName?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
+    let _queryString=`CategoryId=${categoryId}&page=${page}&size=${size}`
+    if (productName){
+      _queryString=`CategoryId=${categoryId}&page=${page}&size=${size}&ProductName=${productName}`
+    }
     const promiseData: Promise<{ totalProductCount: number, products: List_Product[] }> = this.httpClientService.get
       <{ totalProductCount: number, products: List_Product[] }>({
         controller: 'products',
         action:'GetProductsByCategory',
-        queryString: `CategoryId=${categoryId}&page=${page}&size=${size}`
+        queryString: _queryString
       }).toPromise();
     promiseData.then(d => succesCallBack())
       .catch((errorResponse: HttpErrorResponse) => errorCallBack(errorResponse.message))
