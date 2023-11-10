@@ -10,4 +10,5 @@ export class List_Product{
     imagePath:string;
     productImageFiles?:List_Product_Image[];
     categoryName:string;
+    isActive:boolean;
 }

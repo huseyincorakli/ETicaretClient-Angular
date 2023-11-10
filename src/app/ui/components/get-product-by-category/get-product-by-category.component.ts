@@ -62,9 +62,25 @@ export class GetProductByCategoryComponent extends BaseComponent implements OnIn
         })
 
 
-      this.products = data.products
+      this.products = data.products.map<List_Product>(p => {
+
+
+        const listProduct: List_Product = {
+
+          id: p.id,
+          createDate: p.createDate,
+          name: p.name,
+          price: p.price,
+          stock: p.stock,
+          updatedDate: p.updatedDate,
+          productImageFiles: p.productImageFiles,
+          imagePath: p.productImageFiles.length ? p.productImageFiles.find(p => p.showcase).path : '',
+          categoryName:p.categoryName,
+          isActive:p.isActive
+        }
+      return listProduct
+      })
       this.totalProductCount = data.totalProductCount
-      console.log(this.totalProductCount);
 
       this.hideSpinner(SpinnerType.Classic)
     });
@@ -83,23 +99,22 @@ export class GetProductByCategoryComponent extends BaseComponent implements OnIn
    async searchProducts(){
     if (this.productName) {
       
-  
-      // Assuming you have a method in productService to search by product name
-      const data: { totalProductCount: number, products: List_Product[] } = await this.productService.readByCategory(
-         // Pass the productName to the search method
+      const data: { totalProductCount: number, products: List_Product[] } = await this.productService.read(
         this.currentPageNo - 1,
         this.pageSize,
-        this.categoryId,
-        this.productName
+       this.productName,()=>{},()=>{}
       );
   
-      this.products = data.products;
-      // ... Other processing and pagination logic
+      this.products = data.products.map(p => {
+        return {
+          ...p,
+          imagePath: p.productImageFiles.length ? p.productImageFiles.find(img => img.showcase).path : ''
+        };
+      });
+      
       
     } else {
-      // If the search input is empty, you might want to display all products or handle this case differently
-      // For instance, fetching all products again
-      this.ngOnInit(); // Call ngOnInit or the method responsible for fetching all products
+      this.ngOnInit(); 
     }
 
   }

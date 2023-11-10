@@ -28,6 +28,7 @@ export class ListComponent extends BaseComponent implements OnInit {
   }
 
   products: List_Product[];
+  
   productName: string;
   currentPageNo: number;
   totalProductCount: number;
@@ -70,9 +71,9 @@ export class ListComponent extends BaseComponent implements OnInit {
           updatedDate: p.updatedDate,
           productImageFiles: p.productImageFiles,
           imagePath: p.productImageFiles.length ? p.productImageFiles.find(p => p.showcase).path : '',
-          categoryName:p.categoryName
+          categoryName:p.categoryName,
+          isActive:p.isActive
         }
-
 
 
         return listProduct
@@ -111,22 +112,22 @@ export class ListComponent extends BaseComponent implements OnInit {
   async searchProducts() {
     if (this.productName) {
       
-  
-      // Assuming you have a method in productService to search by product name
       const data: { totalProductCount: number, products: List_Product[] } = await this.productService.read(
-         // Pass the productName to the search method
         this.currentPageNo - 1,
         this.pageSize,
-        this.productName
+       this.productName,()=>{},()=>{}
       );
   
-      this.products = data.products;
-      // ... Other processing and pagination logic
+      this.products = data.products.map(p => {
+        return {
+          ...p,
+          imagePath: p.productImageFiles.length ? p.productImageFiles.find(img => img.showcase).path : ''
+        };
+      });
+      
       
     } else {
-      // If the search input is empty, you might want to display all products or handle this case differently
-      // For instance, fetching all products again
-      this.ngOnInit(); // Call ngOnInit or the method responsible for fetching all products
+      this.ngOnInit(); 
     }
   }
 

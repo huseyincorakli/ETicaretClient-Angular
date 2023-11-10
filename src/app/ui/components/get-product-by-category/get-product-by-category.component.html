@@ -5,33 +5,43 @@
       <div class="row">
 
         <div class="col-md-3 mb-2 mr-2" *ngFor="let product of products">
-          <div class="card" style="width: 16rem">
-            <img
+          <div  class="card productCard" style="width: 16rem">
+            <a href="abc">
+              <img
+            
               *ngIf="!product.productImageFiles.length"
-              width="250"
-              height="250"
+              width="250px"
+              height="250px"
               class="card-img-top"
               src="../../../../../assets/default-product-image.png"
               alt="Card image cap"
             />
-            <img
+            </a>
+            <a href="xyz">
+              <img
               *ngIf="product.productImageFiles.length"
-              width="250"
-              height="250"
-              class="card-img-top"
+              width="250px"
+              height="250px"
+              class="card-img-top "
               src="{{ baseUrl.url }}/{{ product.imagePath }}"
               alt="Card image cap"
             />
+            </a>
+            <span class="badge bg-success position-absolute top-0 start-0 translate-left m-2 ">
+              {{product.categoryName}}
+            </span>
             <div class="card-body">
-              <h3 class="card-title">{{ product.name }}</h3>
-              <p class="card-text">
-                FİYAT: {{ product.price | currency: '₺' }} <br />
-                STOK: {{ product.stock }}
-              </p>
-              <a (click)="addToBasket(product)" class="btn btn-primary">Sepete Ekle</a>
+              <h3 class="card-title  lineHeight">{{ (product.name)}}</h3>
+              
+              <div class="card-text m-2 d-flex justify-content-between">
+                <span class="badge bg-primary">PRICE: {{ product.price | currency }}</span> <br />
+                <span class="badge bg-secondary">STOCK: {{ product.stock }}</span>
+              </div>
+              <a (click)="addToBasket(product)" class="btn btn-warning w-100"><span class="text-black fw-normal">Add to Basket</span></a>
             </div>
           </div>
         </div>
+        
       </div>
     </div>
   

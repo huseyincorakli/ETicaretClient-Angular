@@ -31,7 +31,7 @@
                   id="quantityInput"
                   style="width: 60px; "
                   class="form-control-sm"
-                  min="0"
+                  min="1"
                   type="number"
                   [value]="basketItem.quantity"
                   data-id="{{basketItem.basketItemId}}"
@@ -46,7 +46,7 @@
           </table>
         </div>
         <div *ngIf="address.address!=false" class="container">
-          <div class="card bg-info">
+          <div class="card bg-primary">
             <div class="card-body">
               <h5 class="card-title text-light">Address Information</h5>
               <p class="card-text text-light"><b>Address Info:</b> {{address.address.addressInfo}}</p>
@@ -57,8 +57,9 @@
               
               <textarea [(ngModel)]="userMessage" placeholder="Text your message" class="form-control" aria-label="With textarea"></textarea>
               <br>
-              <p class="card-text text-light text-end bold">
-                <b>Total Price:</b> {{totalBasketPrice}}$</p>
+              <p class="card-text fs-5 text-light text-end bold">
+                <b>Total Price:</b> {{totalBasketPrice}}$
+              </p>
 
             </div>
           </div>
