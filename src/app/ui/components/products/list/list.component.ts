@@ -82,32 +82,32 @@ export class ListComponent extends BaseComponent implements OnInit {
 
 
 
-
       this.totalProductCount = data.totalProductCount;
       this.totalPageCount = Math.ceil(this.totalProductCount / this.pageSize);
 
       this.pageList = [];
 
-      if (this.currentPageNo - 2 <= 0) {
-        for (let i = 0; i <= 7; i++) {
+      if (this.currentPageNo - 3 <= 0)
+        for (let i = 1; i <= 7; i++)
           this.pageList.push(i);
-        }
-      }
-      else if (this.currentPageNo + 2 >= this.totalPageCount) {
-        for (let i = this.totalPageCount - 6; i <= this.totalPageCount; i++) {
+
+      else if (this.currentPageNo + 3 >= this.totalPageCount)
+        for (let i = this.totalPageCount - 6; i <= this.totalPageCount; i++)
           this.pageList.push(i);
-        }
-      }
-      else {
-        for (let i = this.currentPageNo - 2; i <= this.currentPageNo + 2; i++) {
+
+      else
+        for (let i = this.currentPageNo - 3; i <= this.currentPageNo + 3; i++)
           this.pageList.push(i);
-        }
-      }
       this.hideSpinner(SpinnerType.Classic)
     });
 
     
 
+  }
+  changePage(pageNumber: number) {
+    this.currentPageNo = pageNumber;
+    // Add your logic to fetch products for the new page here
+    this.ngOnInit();
   }
   async searchProducts() {
     if (this.productName) {

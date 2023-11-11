@@ -3,14 +3,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
-import { List_Product } from 'src/app/contracts/list_product';
 import { List_Order } from 'src/app/contracts/order/list_order';
 import { OrderDetailDialogComponent, OrderDetailDialogState } from 'src/app/dialogs/order-detail-dialog/order-detail-dialog.component';
-import { SelectProductImageDialogComponent } from 'src/app/dialogs/select-product-image-dialog/select-product-image-dialog.component';
 import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
 import { DialogService } from 'src/app/services/common/dialog.service';
 import { OrderService } from 'src/app/services/common/models/order.service';
-import { ProductService } from 'src/app/services/common/models/product.service';
 
 @Component({
   selector: 'app-list',
@@ -18,6 +15,7 @@ import { ProductService } from 'src/app/services/common/models/product.service';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent extends BaseComponent {
+  orderComplete:boolean=true;
   constructor(
     private orderService: OrderService,
     spinner: NgxSpinnerService,
@@ -28,31 +26,35 @@ export class ListComponent extends BaseComponent {
     super(spinner)
   }
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  displayedColumns: string[] = ['orderCode', 'userName', 'totalPrice', 'createDate','completed' ,'viewDetail', 'delete'];
+  displayedColumns: string[] = ['orderCode', 'userName', 'totalPrice', 'createDate','completed' ,'viewDetail'];
   dataSource: MatTableDataSource<List_Order> = null;
 
+  changeComplete() {
+    this.orderComplete = !this.orderComplete; 
+    this.getOrders(this.orderComplete); 
+  }
+
+  async getOrders(completed:boolean) {
+    this.showSpinner(SpinnerType.Clock);
+    const allOrders: { totalOrderCount: number; orders: List_Order[] } = await this.orderService.getAllOrders(
+      this.paginator ? this.paginator.pageIndex : 0,
+      this.paginator ? this.paginator.pageSize : 5,
+      completed,
+      () => this.hideSpinner(SpinnerType.Clock),
+      errorMessage => {
+        this.alertify.message(errorMessage, { dismissOthers: true, messageType: MessageType.Error, position: Position.TopRight });
+      }
+    );
   
-  async getOrders() {
-    this.showSpinner(SpinnerType.Clock)
-    const allOrders: { totalOrderCount: number, orders: List_Order[] } =
-      await this.orderService.getAllOrders(
-        this.paginator ? this.paginator.pageIndex : 0,
-        this.paginator ? this.paginator.pageSize : 5,
-        () => this.hideSpinner(SpinnerType.Clock),
-        errorMessage => {
-          this.alertify.message(errorMessage,
-            { dismissOthers: true, messageType: MessageType.Error, position: Position.TopRight })
-        })
-      
-    this.dataSource = new MatTableDataSource<List_Order>(allOrders.orders)
-    this.paginator.length = allOrders.totalOrderCount
+    this.dataSource = new MatTableDataSource<List_Order>(allOrders.orders);
+    this.paginator.length = allOrders.totalOrderCount;
   }
   async pageChange() {
-    await this.getOrders();
+    await this.getOrders(this.orderComplete);
   }
 
   async ngOnInit() {
-    await this.getOrders();
+    await this.getOrders(this.orderComplete);
   }
   showDetail(id:string){
     this.dialogService.openDialog({
@@ -63,5 +65,7 @@ export class ListComponent extends BaseComponent {
       }
     })
   }
+
+  
   
 }

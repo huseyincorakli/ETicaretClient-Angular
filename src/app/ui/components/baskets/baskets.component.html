@@ -45,14 +45,14 @@
             
           </table>
         </div>
-        <div *ngIf="address.address!=false" class="container">
+        <div *ngIf="address?.address!=false" class="container">
           <div class="card bg-primary">
             <div class="card-body">
               <h5 class="card-title text-light">Address Information</h5>
-              <p class="card-text text-light"><b>Address Info:</b> {{address.address.addressInfo}}</p>
-              <p class="card-text text-light"><b>Directions:</b> {{address.address.directions}}</p>
-              <p class="card-text text-light"><b>City/County:</b> {{address.address.city}}/{{address.address.county}}</p>
-              <p class="card-text text-light"><b>Tel Number:</b> {{address.address.telNumber}}</p>
+              <p class="card-text text-light"><b>Address Info:</b> {{address?.address?.addressInfo}}</p>
+              <p class="card-text text-light"><b>Directions:</b> {{address?.address?.directions}}</p>
+              <p class="card-text text-light"><b>City/County:</b> {{address?.address?.city}}/{{address?.address?.county}}</p>
+              <p class="card-text text-light"><b>Tel Number:</b> {{address?.address?.telNumber}}</p>
               <hr class="text-light">
               
               <textarea [(ngModel)]="userMessage" placeholder="Text your message" class="form-control" aria-label="With textarea"></textarea>

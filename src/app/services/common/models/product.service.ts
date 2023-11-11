@@ -45,8 +45,8 @@ export class ProductService {
         controller: 'products',
         queryString: _queryString
       }).toPromise();
-    promiseData.then(d => succesCallBack())
-      .catch((errorResponse: HttpErrorResponse) => errorCallBack(errorResponse.message))
+    promiseData.then(d => succesCallBack && succesCallBack())
+    .catch((errorResponse: HttpErrorResponse) => errorCallBack && errorCallBack(errorResponse.message));
 
     return await promiseData;
   }
