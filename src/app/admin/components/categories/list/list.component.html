@@ -2,13 +2,13 @@
   <table mat-table [dataSource]="dataSource">
 
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <th mat-header-cell *matHeaderCellDef>Kategori Adı</th>
       <td mat-cell *matCellDef="let element">{{element.categoryName}}</td>
     </ng-container>
 
 
     <ng-container  matColumnDef="isactive">
-      <th mat-header-cell *matHeaderCellDef>Is Active</th>
+      <th mat-header-cell *matHeaderCellDef>Durum</th>
       <td mat-cell  *matCellDef="let element">
         <img  (click)="changeCategoryStatus(element.id,element.isActive)" style="margin-right: 10px; cursor: pointer;" src="../../../../../assets/exchange.png" alt="">
         <img style="width: 15px;" *ngIf="element.isActive" src="../../../../../assets/check.png" alt="">
@@ -18,12 +18,12 @@
 
 
     <ng-container matColumnDef="createDate">
-      <th mat-header-cell *matHeaderCellDef>Created Date</th>
+      <th mat-header-cell *matHeaderCellDef>Oluşturulma Tarihi</th>
       <td mat-cell *matCellDef="let element">{{element.createDate | date:'dd/MM/yyyy' }}</td>
     </ng-container>
 
     <ng-container matColumnDef="updatedDate">
-      <th mat-header-cell *matHeaderCellDef>Updated Date</th>
+      <th mat-header-cell *matHeaderCellDef>Güncelleme Tarihi</th>
       <td mat-cell *matCellDef="let element">{{element.updatedDate | date:'dd/MM/yyyy' }}</td>
     </ng-container>
 
