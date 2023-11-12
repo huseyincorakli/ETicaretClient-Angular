@@ -32,7 +32,6 @@ export class ProductService {
         errorCallBack(message)
       })
   }
-// /GetProductsByCategory?CategoryId=d4229dcf-9a81-4906-8531-2a1823fec79b&PageNo=0&PageSize=5
   //READ PRODUCT
   async read(page: number = 0, size: number = 5,productName?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
     let _queryString = `page=${page}&size=${size}`;

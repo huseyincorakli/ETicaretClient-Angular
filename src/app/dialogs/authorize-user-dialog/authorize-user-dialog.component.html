@@ -4,7 +4,7 @@
    
     <p>İlgili endpointe aşağıdan rolleri atayınız.</p>
     <mat-selection-list #rolesComponent>
-      {{isLoading?"Loading...":""}}
+      {{isLoading?"Yükleniyor...":""}}
       <mat-list-option *ngFor="let role of listRoles" selected="{{role.selected}}">
         {{role.name}}
       </mat-list-option>
@@ -14,5 +14,5 @@
 
 <div mat-dialog-actions>
   <button mat-button (click)="close()">No</button>
-  <button disabled="{{isLoading}}" mat-button  cdkFocusInitial (click)="assignRoles(rolesComponent)">{{isLoading?'Waiting..':'Rolleri Ata'}} </button>
+  <button disabled="{{isLoading}}" mat-button  cdkFocusInitial (click)="assignRoles(rolesComponent)">{{isLoading?'Bekleyiniz..':'Rolleri Ata'}} </button>
 </div>

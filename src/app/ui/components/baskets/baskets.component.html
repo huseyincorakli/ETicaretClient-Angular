@@ -48,17 +48,17 @@
         <div *ngIf="address?.address!=false" class="container">
           <div class="card bg-primary">
             <div class="card-body">
-              <h5 class="card-title text-light">Address Information</h5>
-              <p class="card-text text-light"><b>Address Info:</b> {{address?.address?.addressInfo}}</p>
-              <p class="card-text text-light"><b>Directions:</b> {{address?.address?.directions}}</p>
-              <p class="card-text text-light"><b>City/County:</b> {{address?.address?.city}}/{{address?.address?.county}}</p>
-              <p class="card-text text-light"><b>Tel Number:</b> {{address?.address?.telNumber}}</p>
+              <h5 class="card-title text-light">Adres Bilgileri</h5>
+              <p class="card-text text-light"><b>Adres:</b> {{address?.address?.addressInfo}}</p>
+              <p class="card-text text-light"><b>Adres Tarifi:</b> {{address?.address?.directions}}</p>
+              <p class="card-text text-light"><b>Şehir/İlçe:</b> {{address?.address?.city}}/{{address?.address?.county}}</p>
+              <p class="card-text text-light"><b>Telefon Numarası:</b> {{address?.address?.telNumber}}</p>
               <hr class="text-light">
               
-              <textarea [(ngModel)]="userMessage" placeholder="Text your message" class="form-control" aria-label="With textarea"></textarea>
+              <textarea [(ngModel)]="userMessage" placeholder="Mesajınızı yazınız." class="form-control" aria-label="With textarea"></textarea>
               <br>
               <p class="card-text fs-5 text-light text-end bold">
-                <b>Total Price:</b> {{totalBasketPrice}}$
+                <b>Sepet Tutarı:</b> {{totalBasketPrice}}$
               </p>
 
             </div>

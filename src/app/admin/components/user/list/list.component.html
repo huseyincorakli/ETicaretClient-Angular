@@ -2,25 +2,25 @@
     <table mat-table [dataSource]="dataSource">
   
       <ng-container  matColumnDef="userName">
-        <th  mat-header-cell *matHeaderCellDef>Username</th>
+        <th  mat-header-cell *matHeaderCellDef>Kullanıcı Adı</th>
         <td mat-cell *matCellDef="let element">{{ element.userName }}</td>
       </ng-container>
   
   
       <ng-container matColumnDef="nameSurname">
-        <th mat-header-cell *matHeaderCellDef>Name Surname</th>
+        <th mat-header-cell *matHeaderCellDef>Ad Soyad</th>
         <td mat-cell *matCellDef="let element">{{ element.nameSurname }}</td>
       </ng-container>
   
   
       <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <th mat-header-cell *matHeaderCellDef>Mail</th>
         <td mat-cell *matCellDef="let element">{{ element.email }}</td>
       </ng-container>
       
   
       <ng-container matColumnDef="twoFactorEnabled">
-        <th mat-header-cell *matHeaderCellDef>Two Factor Enabled</th>
+        <th mat-header-cell *matHeaderCellDef>Doğrulama</th>
         <td mat-cell *matCellDef="let element">
           <p class="twoFactor" *ngIf="element.twoFactorEnabled"><img class="tFimage" src="../../../../../assets/enable_user.png" alt=""> <span class="twoFactorTrueSpan">Doğrulanmış</span></p>
           <p  class="twoFactor" *ngIf="!element.twoFactorEnabled"><img class="tFimage"  src="../../../../../assets/disable_user.png" alt=""> <span class="twoFactorFalseSpan">Doğrulanmamış</span></p>

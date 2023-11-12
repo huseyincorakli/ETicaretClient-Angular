@@ -4,8 +4,9 @@ import { User } from '../../../entities/user';
 import { UserService } from 'src/app/services/common/models/user.service';
 import { Create_User } from 'src/app/contracts/users/create_user';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
-import { BaseComponent } from 'src/app/base/base.component';
+import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +19,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private toastrService: CustomToastrService,
+    private router:Router,
     spinner:NgxSpinnerService
   ) { super(spinner)}
 
@@ -67,6 +69,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     this.submitted = true;
     if (this.frm.invalid)
       return;
+    this.showSpinner(SpinnerType.Classic)
     const result: Create_User = await this.userService.create(user)
     if (result.succeeded) {
       this.toastrService.message(
@@ -75,14 +78,19 @@ export class RegisterComponent extends BaseComponent implements OnInit {
         ToastrMessageType.Success,
         ToastrPosition.TopRight
       )
+    this.hideSpinner(SpinnerType.Classic)
+
+      this.router.navigate(['login'])
     }
     else{
       this.toastrService.message(
-        'Kayıt Hatası 👎',
+        'Kayıt Başarısız 👎',
         result.message,
         ToastrMessageType.Error,
         ToastrPosition.TopRight
       )
+    this.hideSpinner(SpinnerType.Classic)
+
     }
   }
 }

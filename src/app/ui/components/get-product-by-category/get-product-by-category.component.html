@@ -1,6 +1,6 @@
 <div class="mt-2 p-2">
     <div class="container">
-    <input  [(ngModel)]="productName" (input)="searchProducts()" type="text" placeholder="Search" class="form-control mb-2 " style="width: 200px;">
+    <input  [(ngModel)]="productName" (input)="searchProducts()" type="text" placeholder="Ürün Ara" class="form-control mb-2 " style="width: 200px;">
 
       <div class="row">
 
@@ -34,10 +34,10 @@
               <h3 class="card-title  lineHeight">{{ (product.name)}}</h3>
               
               <div class="card-text m-2 d-flex justify-content-between">
-                <span class="badge bg-primary">PRICE: {{ product.price | currency }}</span> <br />
-                <span class="badge bg-secondary">STOCK: {{ product.stock }}</span>
+                <span class="badge bg-primary">Fiyat: {{ product.price | currency:'TRY' }}</span> <br />
+                <span class="badge bg-secondary">Stok: {{ product.stock }}</span>
               </div>
-              <a (click)="addToBasket(product)" class="btn btn-warning w-100"><span class="text-black fw-normal">Add to Basket</span></a>
+              <a (click)="addToBasket(product)" class="btn btn-warning w-100"><span class="text-black fw-normal">Sepete Ekle</span></a>
             </div>
           </div>
         </div>

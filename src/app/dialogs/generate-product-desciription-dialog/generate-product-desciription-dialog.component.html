@@ -1,12 +1,12 @@
 <div class="container mt-2">
     <div  class="d-flex justify-content-center">
-        <p><b>PRODUCT DESCRIPTION GENERATOR</b></p>
+        <p><b>Ürün Açıklama Oluşturucu</b></p>
     </div>
   <div class="form-group mt-1">
-    <input type="text" class="form-control" id="brand" placeholder="Brand" #txtBrand />
+    <input type="text" class="form-control" id="brand" placeholder="Marka" #txtBrand />
   </div>
   <div class="form-group mt-1">
-    <input class="form-control" id="productName" placeholder="Product Name" #txtProductName />
+    <input class="form-control" id="productName" placeholder="Ürün Adı" #txtProductName />
   </div>
 
   <div class="form-group mt-1">
@@ -14,7 +14,7 @@
       type="text"
       class="form-control"
       id="category"
-      placeholder="Category"
+      placeholder="Ürün Kategorisi"
       #txtCategory
     />
   </div>
@@ -24,22 +24,22 @@
       type="text"
       class="form-control"
       id="description"
-      placeholder="Description"
+      placeholder="Açıklama"
       #txtDescription
     />
   </div>
 
   <div class="form-group mt-1">
-    <input #txtKeywords class="form-control w-full" id="keywords" placeholder="Keywords"  />
+    <input #txtKeywords class="form-control w-full" id="keywords" placeholder="Anahtar Kelimeler"  />
   </div>
 
   <div class="d-grid gap-2  mt-2">
     <button *ngIf="!isLoading" class="btn btn-primary btn-sm" type="button"
-     (click)="generate(txtBrand,txtCategory,txtDescription,txtKeywords,txtProductName)">Generate
+     (click)="generate(txtBrand,txtCategory,txtDescription,txtKeywords,txtProductName)">Üret
     </button>
     <button *ngIf="isLoading" class="btn btn-primary btn-sm" type="button" disabled>
       <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-     Generating...
+     Üretiliyor...
     </button>
   </div>
 

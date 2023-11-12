@@ -1,23 +1,24 @@
 <mat-form-field class="product-create">
-  <mat-label>Name</mat-label>
+  <mat-label>Ürün Adı</mat-label>
   <input matInput  #txtName/>
 </mat-form-field>
 <mat-form-field class="product-create">
-  <mat-label>Stock</mat-label>
+  <mat-label>Stok</mat-label>
   <input matInput type="number" min="0" value="0"   #txtStock/>
 </mat-form-field>
 <mat-form-field>
-  <mat-label>Select a category</mat-label>
+  <mat-label>Kategori Seçiniz</mat-label>
   <mat-select [(value)]="selected">
     <mat-option *ngFor="let ctg of categoryNameArr" value="{{ctg.id}}">{{ctg.categoryName}}</mat-option>
   </mat-select>
 </mat-form-field>
 <mat-form-field class="product-create">
-  <mat-label>Price</mat-label>
+  <mat-label>Fiyat</mat-label>
   <input matInput type="number" min="0" value="0"   #txtPrice/>
 </mat-form-field>
 <mat-form-field class="product-create">
-  <mat-label>Desciription</mat-label>
+  <mat-label>Açıklama</mat-label>
   <input matInput type="text" #txtDescription/>
 </mat-form-field>
-<button mat-raised-button color="primary" (click)="create(txtName,txtPrice,txtStock,txtDescription)">Create Product</button>
+<button mat-raised-button color="warn" (click)="create(txtName,txtPrice,txtStock,txtDescription)">Ürün Oluştur</button>
+

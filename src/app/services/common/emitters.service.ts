@@ -7,5 +7,4 @@ export class CategoryEmitterService {
 
   public updateCategory:EventEmitter<void> = new EventEmitter<void>();
   
-  // Diğer servis fonksiyonları ve işlemleri
 }

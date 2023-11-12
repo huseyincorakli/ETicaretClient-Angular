@@ -1,7 +1,7 @@
 <div class="container p-3">
-    <h3><b>Update Category</b></h3>
+    <h3><b>Kategori Güncelle</b></h3>
   <div class="form-group row">
-    <label for="name" class="col-sm-2 col-form-label">Name</label>
+    <label for="name" class="col-sm-2 col-form-label">Adı</label>
     <div class="col-sm-10">
       <input
         type="text"
@@ -16,7 +16,7 @@
   <br />
   <fieldset class="form-group">
     <div class="row">
-      <legend class="col-form-label col-sm-2 pt-0">Is Active</legend>
+      <legend class="col-form-label col-sm-2 pt-0">Durum</legend>
       <div class="col-sm-10">
         <div class="form-check">
           <input
@@ -27,7 +27,7 @@
             [checked]="data.isActive === true"
             (change)="data.isActive = true"
           />
-          <label class="form-check-label" for="gridRadios1"> Enable </label>
+          <label class="form-check-label" for="gridRadios1"> Aktif </label>
         </div>
         <div class="form-check">
           <input
@@ -38,7 +38,7 @@
             [checked]="data.isActive === false"
             (change)="data.isActive = false"
           />
-          <label class="form-check-label" for="gridRadios2"> Disable </label>
+          <label class="form-check-label" for="gridRadios2"> İnaktif </label>
         </div>
       </div>
     </div>
@@ -50,7 +50,7 @@
         (click)="updateCategory(data.id, txtCategoryname, data.isActive)"
         class="btn btn-primary btn-sm"
       >
-        Update
+        Güncelle
       </button>
     </div>
   </div>

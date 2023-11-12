@@ -1,35 +1,35 @@
 <div class="mat-elevation-z8">
   <div style="float: right; margin: 10px;">
-    <button class="btn btn-primary btn-sm "*ngIf="orderComplete" (click)="changeComplete()">InCompleted Order</button>
-    <button class="btn btn-primary btn-sm" *ngIf="!orderComplete" (click)="changeComplete()">Completed Order</button>
+    <button class="btn btn-danger btn-sm "*ngIf="orderComplete" (click)="changeComplete()">Tamamlanmamış Siparişler</button>
+    <button class="btn btn-success btn-sm" *ngIf="!orderComplete" (click)="changeComplete()">Tamamlanmış Siparişler</button>
   </div>
     <table mat-table [dataSource]="dataSource">
     
       <ng-container matColumnDef="orderCode">
-        <th mat-header-cell *matHeaderCellDef>Order Code</th>
+        <th mat-header-cell *matHeaderCellDef>Sipariş Kodu</th>
         <td mat-cell *matCellDef="let element">{{ element.orderCode }}</td>
       </ng-container>
   
   
       <ng-container matColumnDef="userName">
-        <th mat-header-cell *matHeaderCellDef>Username</th>
+        <th mat-header-cell *matHeaderCellDef>Kullanıcı Adı</th>
         <td mat-cell *matCellDef="let element">{{ element.userName }}</td>
       </ng-container>
   
   
       <ng-container matColumnDef="totalPrice">
-        <th mat-header-cell *matHeaderCellDef>Total Price</th>
+        <th mat-header-cell *matHeaderCellDef>Toplam Fiyat</th>
         <td mat-cell *matCellDef="let element">{{ element.totalPrice }}</td>
       </ng-container>
   
   
       <ng-container matColumnDef="createDate">
-        <th mat-header-cell *matHeaderCellDef>Created Date</th>
+        <th mat-header-cell *matHeaderCellDef>Oluşturulma Tarihi</th>
         <td mat-cell *matCellDef="let element">{{ element.createdDate  | date:'dd/MM/yyyy HH:mm'}}</td>
       </ng-container>
   
       <ng-container matColumnDef="completed">
-        <th mat-header-cell *matHeaderCellDef>Completed</th>
+        <th mat-header-cell *matHeaderCellDef>Durum</th>
         <td  mat-cell *matCellDef="let element"><img *ngIf="element.completed"   style=" margin-left: 5px; width:40px;" src="../../../../../assets/shop-completed.png" alt="completed">
           <img *ngIf="!element.completed"   style=" margin-left: 5px; width:40px;" src="../../../../../assets/shop-wait.png" alt="waiting">
         </td>

@@ -1,12 +1,23 @@
-<div class="d-flex flex-row mt-2">
-  <div class="mx-2 my-1"><button mat-raised-button color="primary" (click)="showProductQrCodeReading()">Read QRCODE</button></div>
-<div class="mx-2 my-1"><button mat-raised-button color="primary" (click)="generateProductDescriptionGenerator()">Generate Product Description</button></div>
-</div>
+
 <mat-drawer-container class="product-container">
-  <mat-drawer mode="side" opened>
+  
+  <mat-drawer #drawer mode="over" >
     <app-create (createdProduct)="createdProduct($event)" ></app-create>
   </mat-drawer>
-  <mat-drawer-content>    
+  <mat-drawer-content>  
+    
+      <div class="contianer">
+        <button class="mx-2 my-1" type="button" mat-raised-button (click)="drawer.toggle()">
+          Ürün Oluştur
+        </button>
+        <button class="mx-2 my-1" type="button" mat-raised-button (click)="showProductQrCodeReading()">
+          QR Code Stok Güncelle
+        </button>
+        <button class="mx-2 my-1" type="button" mat-raised-button (click)="generateProductDescriptionGenerator()">
+          Ürün Açıklama Oluşturucu
+        </button>
+      </div>
+    
     <app-list></app-list>
   </mat-drawer-content>
 </mat-drawer-container>

@@ -97,11 +97,11 @@ export class AddressSettingsComponent extends BaseComponent implements OnInit {
     uAddress.telNumber = telNumber.value;
     await this.addressService.updateAddress(uAddress, () => {
       this.hideSpinner(SpinnerType.Classic)
-      this.toastr.message('Update is success', 'Address is updated', ToastrMessageType.Success, ToastrPosition.TopRight)
+      this.toastr.message('Güncelleme Başarılı', 'Adres güncellendi!', ToastrMessageType.Success, ToastrPosition.TopRight)
     }, () => {
       this.hideSpinner(SpinnerType.Classic)
+      this.toastr.message('Güncelleme Başarısız', 'Adres güncellenirken bir hata oluştu!', ToastrMessageType.Error, ToastrPosition.TopRight)
 
-      alert("hata")
     })
   }
 
@@ -117,12 +117,13 @@ export class AddressSettingsComponent extends BaseComponent implements OnInit {
     createAddress.userId = localStorage.getItem('userId');
     this.addressService.addAddress(createAddress, () => {
       this.hideSpinner(SpinnerType.Classic)
-      this.toastr.message('Added!', 'Address is added!', ToastrMessageType.Success, ToastrPosition.TopRight)
+      this.toastr.message('Eklendi!', 'Adres başarılı şekilde eklendi!', ToastrMessageType.Success, ToastrPosition.TopRight)
       this.emitterService.addressAdded.emit();
       this.requestLocationPermission();
     }, () => {
       this.hideSpinner(SpinnerType.Classic)
-      alert('hata')
+      this.toastr.message('Başarısız!', 'Adres ekleme işlemi başarısız!', ToastrMessageType.Error, ToastrPosition.TopRight)
+
     })
 
   }
@@ -164,7 +165,6 @@ export class AddressSettingsComponent extends BaseComponent implements OnInit {
   }
 
   addIcon(coordinates: number[]) {
-    // Önce mevcut simgeleri temizle
     this.vectorSource.clear();
 
     const iconFeature = new Feature({
@@ -174,7 +174,7 @@ export class AddressSettingsComponent extends BaseComponent implements OnInit {
     const iconStyle = new Style({
       image: new Icon({
         anchor: [0.5, 1],
-        src: '../../../../../assets/placeholder (1).png', // Kullanmak istediğiniz simge dosyasının yolunu verin
+        src: '../../../../../assets/placeholder (1).png', 
       }),
     });
 
@@ -202,12 +202,10 @@ export class AddressSettingsComponent extends BaseComponent implements OnInit {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          // Kullanıcının konumunu başarıyla aldık
           const lat = position.coords.latitude;
           const lon = position.coords.longitude;
           this.generateMap(lat, lon);
 
-          // Konum izni aldıktan sonra yapılacak işlemleri burada gerçekleştirebilirsiniz.
           this.getAddressFromCoordinates(lat, lon);
         },
         (error) => {

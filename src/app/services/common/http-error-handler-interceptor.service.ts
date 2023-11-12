@@ -54,9 +54,8 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
           break;
 
         case HttpStatusCode.InternalServerError:
-          debugger
             this.toastr.message(
-              'Error',
+              'Hata',
               err.error.Message,
               ToastrMessageType.Error,
               ToastrPosition.BottomFull);
@@ -95,7 +94,6 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
             ToastrPosition.BottomFull);
           break;
 
-        // Diğer durumlar için varsayılan mesaj
         default:
           
           this.toastr.message(

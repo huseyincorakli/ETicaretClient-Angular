@@ -30,14 +30,14 @@ export class UpdateCategoryDialogComponent extends BaseDialog<UpdateCategoryDial
   }
   async updateCategory(id: string, name: HTMLInputElement, isActive: boolean) {
     await this.categoryService.updateCategory(id, name.value, isActive, () => {
-      this.alertify.message("Update is success!",{
+      this.alertify.message("Güncelleme başarılı!",{
         messageType:MessageType.Success,
         position:Position.BottomRight
       })
       this.ctgEmitService.categoryStatusChanged.emit();
       this.ctgEmitService.updateCategory.emit();
     }, () => {
-      this.alertify.message("Error",{
+      this.alertify.message("Hata",{
         position:Position.BottomRight,
         messageType:MessageType.Error
       })

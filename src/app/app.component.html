@@ -9,12 +9,12 @@
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
               <a id="deneme" class="cta nav-link active" aria-current="page" routerLink="products">
-                <span class="hover-underline-animation"><span style="font-weight: 500">ALL PRODUCTS</span></span>
+                <span class="hover-underline-animation"><span style="font-weight: 500">Tüm Ürünler</span></span>
               </a>
             </li>
             <li class="nav-item dropdown">
               <a id="deneme" class="cta nav-link active" aria-current="page" data-bs-toggle="dropdown" aria-expanded="false">
-                <span class="hover-underline-animation"><span style="font-weight: 500">Categories</span></span>
+                <span class="hover-underline-animation"><span style="font-weight: 500">Kategoriler</span></span>
                 <app-categories  ></app-categories>
               </a>
             </li>
@@ -23,7 +23,7 @@
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
               <button class="signupBtn" routerLink="register" *ngIf="!authService.isAuthenticated">
-                SIGN UP
+                Kayıt Ol
                 <span class="arrow">
                   <img class="registerIcon" src="../assets/add-person.png" alt="" />
                 </span>
@@ -31,7 +31,7 @@
             </li>
             <li class="nav-item">
               <button class="signinBtn" routerLink="login" *ngIf="!authService.isAuthenticated">
-                LOGIN
+                Giriş Yap
                 <span class="arrow">
                   <img class="registerIcon" src="../assets/login (1).png" alt="" />
                 </span>
@@ -41,7 +41,7 @@
           <ul class="navbar-nav">
             <li>
               <button class="basketBtn" *ngIf="authService.isAuthenticated" data-bs-toggle="modal" data-bs-target="#basketModal" (click)="loadComponent()">
-                <span style="font-weight: 500; font-size: 15px;">Basket</span>
+                <span style="font-weight: 500; font-size: 15px;">Sepet</span>
                 <span class="arrow">
                   <img class="registerIcon" src="../assets/shopping-online.png" alt="" />
                 </span>
@@ -49,7 +49,7 @@
             </li>
             <li>
               <button class="basketBtn" routerLink="settings" *ngIf="authService.isAuthenticated">
-                <span style="font-weight: 500; font-size: 15px;">Settings</span>
+                <span style="font-weight: 500; font-size: 15px;">Ayarlar</span>
                 <span class="arrow">
                   <img class="registerIcon" src="../assets/settings.png" alt="" />
                 </span>
@@ -57,7 +57,7 @@
             </li>
             <li class="nav-item">
               <button class="dashBoardBtn" aria-current="page" routerLink="admin" *ngIf="authService.isAuthenticated && authService.hasRole">
-                Dashboard
+                 Panel
                 <span class="arrow">
                   <img class="dashboardIcon" src="../assets/dashboard.png" alt="" />
                 </span>
@@ -65,7 +65,7 @@
             </li>
             <li class="nav-item">
               <button class="logoutBtn" aria-current="page" routerLink="admin" *ngIf="authService.isAuthenticated" (click)="signOut()">
-                Logout
+                Çıkış Yap
                 <span class="arrow">
                   <img class="registerIcon" src="../assets/power-button.png" alt="" />
                 </span>
@@ -73,7 +73,6 @@
             </li>
           </ul>
         </div>
-        <!-- Basket, Yönetim Paneli, and Çıkış Yap links on the right -->
         
       </div>
     </nav>
@@ -82,6 +81,7 @@
     </div>
   </div>
   <ngx-spinner name="clock" type="timer"></ngx-spinner>
+  
   <ngx-spinner name="classic" type="ball-clip-rotate"></ngx-spinner>
   <div class="modal fade" id="basketModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">

@@ -32,7 +32,7 @@ super(spinner)
       this.hideSpinner(SpinnerType.Classic)
     }, () => {
       this.hideSpinner(SpinnerType.Classic)
-      this.toastr.message("Error","An error occurred while fetching user information",ToastrMessageType.Error,ToastrPosition.BottomFull)
+      this.toastr.message("Hata","Kullanıcı bilgileri çekilirken bir hata oluştu.",ToastrMessageType.Error,ToastrPosition.BottomFull)
     })
     this.updateProfile.email = data.updateProfile.email;
     this.updateProfile.nameSurname=data.updateProfile.nameSurname;
@@ -55,10 +55,10 @@ super(spinner)
 
     this.userService.updateProfile(updateProfile, () => {
       this.hideSpinner(SpinnerType.Classic)
-      this.toastr.message("Successful","Update successful",ToastrMessageType.Success,ToastrPosition.TopRight)
+      this.toastr.message("Başarılı","Güncelleme Başarılı.",ToastrMessageType.Success,ToastrPosition.TopRight)
     }), () => {
       this.hideSpinner(SpinnerType.Classic)
-      this.toastr.message("Error","Update is not successful",ToastrMessageType.Error,ToastrPosition.BottomFull)
+      this.toastr.message("Başarısız","Güncelleme Başarısız",ToastrMessageType.Error,ToastrPosition.BottomFull)
 
     }
 

@@ -106,7 +106,6 @@ export class ListComponent extends BaseComponent implements OnInit {
   }
   changePage(pageNumber: number) {
     this.currentPageNo = pageNumber;
-    // Add your logic to fetch products for the new page here
     this.ngOnInit();
   }
   async searchProducts() {
