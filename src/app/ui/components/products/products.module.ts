@@ -4,12 +4,16 @@ import { ProductsComponent } from './products.component';
 import { RouterModule } from '@angular/router';
 import { ListComponent } from './list/list.component';
 import { FormsModule } from '@angular/forms';
+import { ProductDetailComponent } from './product-detail/product-detail.component';
 
 @NgModule({
-  declarations: [ProductsComponent, ListComponent],
+  declarations: [ProductsComponent, ListComponent, ProductDetailComponent],
   imports: [
     CommonModule,
-    RouterModule.forChild([{ path: '', component: ProductsComponent }]),
+    RouterModule.forChild([{ path: '', component: ProductsComponent },
+    { path: 'detail/:productId', component: ProductDetailComponent }
+    ]),
+    
     FormsModule
   ],
 })

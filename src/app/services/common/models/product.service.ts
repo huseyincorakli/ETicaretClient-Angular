@@ -6,6 +6,7 @@ import { List_Product } from 'src/app/contracts/list_product';
 import { firstValueFrom,Observable } from 'rxjs';
 import { List_Product_Image } from 'src/app/contracts/list_product_image';
 import { GenerateProductDescription } from 'src/app/contracts/products/generate_products_desciription';
+import { Product_Details } from 'src/app/contracts/products/product_detail';
 
 
 @Injectable({
@@ -48,6 +49,14 @@ export class ProductService {
     .catch((errorResponse: HttpErrorResponse) => errorCallBack && errorCallBack(errorResponse.message));
 
     return await promiseData;
+  }
+
+  async readById(productId:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise< Product_Details> {
+   const promiseData:Observable<Product_Details> = this.httpClientService.get({
+    controller:'products'
+   },productId)
+    
+   return await firstValueFrom(promiseData)
   }
   async readByCategory(page: number = 0, size: number = 5 ,categoryId:string,productName?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
     let _queryString=`CategoryId=${categoryId}&page=${page}&size=${size}`

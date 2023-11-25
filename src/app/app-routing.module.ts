@@ -4,6 +4,7 @@ import { LayoutComponent } from './admin/layout/layout.component';
 import { DashboardComponent } from './admin/components/dashboard/dashboard.component';
 import { HomeComponent } from './ui/components/home/home.component';
 import { AuthGuard } from './guards/common/auth.guard';
+import { ProductDetailComponent } from './ui/components/products/product-detail/product-detail.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,7 @@ const routes: Routes = [
             (module) => module.ProductsModule
           ),canActivate:[AuthGuard]
       },
+      
       {
         path: 'orders',
         loadChildren: () =>
@@ -79,6 +81,11 @@ const routes: Routes = [
         (module) => module.ProductsModule
       ),
   },
+  {
+        path: 'products/detail/:productId',
+        component:ProductDetailComponent,
+        canActivate:[AuthGuard]
+      },
   {
     path: 'products-by-category/:categoryId',
     loadChildren: () =>

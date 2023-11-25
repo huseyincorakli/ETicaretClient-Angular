@@ -11,4 +11,5 @@ export class List_Product{
     productImageFiles?:List_Product_Image[];
     categoryName:string;
     isActive:boolean;
+    description?:string;
 }
