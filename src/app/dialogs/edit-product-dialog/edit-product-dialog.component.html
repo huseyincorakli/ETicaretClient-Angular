@@ -1,0 +1,45 @@
+<div class="container">
+    <h3>Ürün Güncelle</h3>
+    <div class="container mt-3 mb-3">
+        <div class="form-group">
+            <label for="productName">Ürün Adı</label>
+            <input #txtName value="{{data.name}}" type="text" class="form-control" id="productName" aria-describedby="emailHelp" placeholder="Ürün adını giriniz">
+        </div>
+        <div class="form-group">
+            <label for="stock">Ürün Stoğu</label>
+            <input #txtStock value="{{data.stock}}" type="text" class="form-control" id="stock" aria-describedby="emailHelp" placeholder="Ürün stoğunu giriniz">
+        </div>
+        <div class="form-group">
+            <label for="price">Ürün Fiyatı</label>
+            <input #txtPrice type="text" value="{{data.price}}" class="form-control" id="price" aria-describedby="emailHelp" placeholder="Ürün fiyatını giriniz">
+        </div>
+        <div class="form-group">
+            <label for="description">Ürün Açıklaması</label>
+            <textarea #txtDesciription type="text" rows="5" value="{{data.desciription}}" class="form-control" id="description" aria-describedby="emailHelp" placeholder="Ürün açıklmasını giriniz"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="shortDescription">Ürün Kısa Açıklaması</label>
+            <input #txtShortDesc type="text" value="{{data.shortDesciription}}" class="form-control" id="shortDescription" aria-describedby="emailHelp" placeholder="Ürün kısa açıklamasını giriniz">
+        </div>
+        <div class="form-group">
+            <label for="brand">Marka</label>
+            <input #txtBrand type="text" value="{{data.brand}}" class="form-control" id="brand" aria-describedby="emailHelp" placeholder="Markayı giriniz">
+        </div>
+        <div class="form-group">
+            <label for="spesification">Ürün Özellikleri</label>
+            <input #txtSpesification type="text" value="{{spesification}}" class="form-control" id="spesification" aria-describedby="emailHelp" placeholder="Ürün özelliklerini giriniz">
+        </div>
+        <br>
+        <div class="form-group">
+            <button [hidden]="isLoading" (click)="Update(txtName, txtStock, txtPrice, txtDesciription, txtShortDesc, txtBrand, txtSpesification)" class="btn btn-success">
+                Güncelle
+              </button>
+              
+              <button [hidden]="!isLoading" class="btn btn-primary" type="button" disabled>
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                Güncelleniyor...
+              </button>
+              
+        </div>
+    </div>
+</div>

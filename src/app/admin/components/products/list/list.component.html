@@ -46,7 +46,7 @@
     
     <ng-container matColumnDef="edit">
       <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element"><img style="cursor: pointer; width:25px;" src="../../../../../assets/edit.png" alt=""></td>
+      <td mat-cell *matCellDef="let element"><img (click)="editProduct(element)" style="cursor: pointer; width:25px;" src="../../../../../assets/edit.png" alt=""></td>
     </ng-container>
     
     <ng-container matColumnDef="delete">

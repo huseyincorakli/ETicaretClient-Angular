@@ -9,7 +9,7 @@
       <p style="margin-left: 38%;">{{image.showcase?'MEVCUT':''}}</p>
       <input type="radio" name="img" (click)="showCase(image.id)"  >
       <br>
-      <img  mat-card-image [src]="image.path" [alt]="image.fileName">
+      <img class="productImage"  mat-card-image [src]="image.path" [alt]="image.fileName">
       
       <mat-card-actions>
         <button  mat-button class="product-image-button w-100"  (click)="deleteImage(image.id,$event)" mat-button>DELETE</button>

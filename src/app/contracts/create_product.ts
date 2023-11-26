@@ -4,4 +4,7 @@ export class Create_Product {
     price:number; 
     description:string;
     categoryId:string;
+    shortDesciription:string;
+    brand:string;
+    specifications:string[];
 }

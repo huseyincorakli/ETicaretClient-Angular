@@ -148,5 +148,20 @@ export class ProductService {
       }
     }
   }
+
+  async UpdateProduct(id:string,name:string,price:number,
+    stock:number,description:string,shortDesciription:string,brand:string,spesification:string[],
+    succesCallBack?:()=>void,errorCallBack?:()=>void){
+     const observable:Observable<any> =  this.httpClientService.put({
+        controller:'products'
+      },{
+        id,name,price,stock,description,shortDesciription,brand,spesification
+      })
+      await firstValueFrom(observable).then(()=>{
+        succesCallBack()
+      }).catch(()=>{
+        errorCallBack();
+      })
+    }
 }
 

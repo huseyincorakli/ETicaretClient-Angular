@@ -4,8 +4,12 @@
     justify-content: space-around;
     margin-top: 10px;
 }
+.mat-typography{
+    overflow: hidden;
 
+}
 .product-image-card {
+
     max-width: 300px;
     margin-top: 8px;
     background-color: #ddd;
@@ -17,5 +21,5 @@
 }
 img{
     width: 250px;
-    height: 260px;
+    height: 160px;
 }

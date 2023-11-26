@@ -72,7 +72,8 @@ export class ListComponent extends BaseComponent implements OnInit {
           productImageFiles: p.productImageFiles,
           imagePath: p.productImageFiles.length ? p.productImageFiles.find(p => p.showcase).path : '',
           categoryName:p.categoryName,
-          isActive:p.isActive
+          isActive:p.isActive,
+          brand:p.brand
         }
 
 

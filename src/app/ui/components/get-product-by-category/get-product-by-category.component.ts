@@ -76,7 +76,8 @@ export class GetProductByCategoryComponent extends BaseComponent implements OnIn
           productImageFiles: p.productImageFiles,
           imagePath: p.productImageFiles.length ? p.productImageFiles.find(p => p.showcase).path : '',
           categoryName:p.categoryName,
-          isActive:p.isActive
+          isActive:p.isActive,
+          brand:p.brand
         }
       return listProduct
       })

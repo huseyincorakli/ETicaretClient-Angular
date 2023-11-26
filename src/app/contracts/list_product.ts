@@ -12,4 +12,5 @@ export class List_Product{
     categoryName:string;
     isActive:boolean;
     description?:string;
+    brand:string;
 }

@@ -25,6 +25,7 @@ import {  MatFormFieldModule } from '@angular/material/form-field';
 import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { GenerateProductDesciriptionDialogComponent } from './generate-product-desciription-dialog/generate-product-desciription-dialog.component';
 import { UpdateCategoryDialogComponent } from './update-category-dialog/update-category-dialog.component';
+import { EditProductDialogComponent } from './edit-product-dialog/edit-product-dialog.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { UpdateCategoryDialogComponent } from './update-category-dialog/update-c
     QrcodeDialogComponent,
     QrcodeReadingDialogComponent,
     GenerateProductDesciriptionDialogComponent,
-    UpdateCategoryDialogComponent
+    UpdateCategoryDialogComponent,
+    EditProductDialogComponent
   ],
   imports: [
     CommonModule,
@@ -56,7 +58,8 @@ import { UpdateCategoryDialogComponent } from './update-category-dialog/update-c
     MatInputModule,
     MatFormFieldModule,
     MatInputModule,
-    NgxScannerQrcodeModule
+    NgxScannerQrcodeModule,
+    
   ]
 })
 export class DialogModule { }

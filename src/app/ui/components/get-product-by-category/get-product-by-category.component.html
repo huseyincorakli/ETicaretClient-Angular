@@ -6,7 +6,7 @@
 
         <div class="col-md-3 mb-2 mr-2" *ngFor="let product of products">
           <div  class="card productCard" style="width: 16rem">
-            <a href="abc">
+            <a [routerLink]="['/products/detail/',product.id]">
               <img
             
               *ngIf="!product.productImageFiles.length"
@@ -17,8 +17,8 @@
               alt="Card image cap"
             />
             </a>
-            <a href="xyz">
-              <img
+            <a [routerLink]="['/products/detail/',product.id]">
+              <img 
               *ngIf="product.productImageFiles.length"
               width="250px"
               height="250px"
@@ -29,6 +29,9 @@
             </a>
             <span class="badge bg-success position-absolute top-0 start-0 translate-left m-2 ">
               {{product.categoryName}}
+            </span>
+            <span class="badge bg-danger position-absolute top-0 end-0 translate-left m-2 ">
+              {{product.brand}}
             </span>
             <div class="card-body">
               <h3 class="card-title  lineHeight">{{ (product.name)}}</h3>
