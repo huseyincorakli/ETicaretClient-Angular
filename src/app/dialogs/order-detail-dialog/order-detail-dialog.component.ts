@@ -41,7 +41,7 @@ export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComp
   }
 
 completeOrder(){
-  this.dialogService.openDialog({
+ const dialogRef= this.dialogService.openDialog({
     componentType:CompleteOrderDialogComponent,
     data:CompleteOrderState.Yes,
     afterClosed:async()=>{
@@ -63,6 +63,9 @@ completeOrder(){
     }
   })
   
+}
+closeDialog(){
+  this.dialogService.closeDialog(this.dialogRef)
 }
 
 }

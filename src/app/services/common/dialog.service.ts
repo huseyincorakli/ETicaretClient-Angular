@@ -1,6 +1,6 @@
 import { ComponentType } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
-import { DialogPosition, MatDialog } from '@angular/material/dialog';
+import { DialogPosition, MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +21,12 @@ export class DialogService {
       dialogParameter.afterClosed();
     });
   }
+  closeDialog(dialogRef: MatDialogRef<any>): void {
+    dialogRef.close();
+  }
 }
+
+
 
 export class DialogParameters{
   componentType:ComponentType<any>;

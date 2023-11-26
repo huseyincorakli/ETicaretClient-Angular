@@ -26,6 +26,7 @@ import { NgxScannerQrcodeModule } from 'ngx-scanner-qrcode';
 import { GenerateProductDesciriptionDialogComponent } from './generate-product-desciription-dialog/generate-product-desciription-dialog.component';
 import { UpdateCategoryDialogComponent } from './update-category-dialog/update-category-dialog.component';
 import { EditProductDialogComponent } from './edit-product-dialog/edit-product-dialog.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import { EditProductDialogComponent } from './edit-product-dialog/edit-product-d
     MatFormFieldModule,
     MatInputModule,
     NgxScannerQrcodeModule,
+    RouterModule
     
   ]
 })
