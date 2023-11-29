@@ -1,0 +1,10 @@
+<form id="payment-form" (submit)="handleSubmit($event)">
+    <div id="payment-message" *ngIf="message">{{ message }}</div>
+    <div id="payment-element"></div>
+    <button [disabled]="isLoading || !stripe || !elements" id="submit">
+      <span id="button-text">
+        {{ isLoading ? 'Pay now' : 'Pay now' }}
+      </span>
+    </button>
+  </form>
+  <div id="payment-element"></div>

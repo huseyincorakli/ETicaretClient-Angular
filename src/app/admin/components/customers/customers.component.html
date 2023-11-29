@@ -1,1 +1,6 @@
-<p>customers works!</p>
+<div class="App">
+    <div *ngIf="clientSecret">
+      <app-checkout-form [clientSecret]="clientSecret" [stripePromise]="stripePromise"></app-checkout-form>
+    </div>
+  </div>
+  

@@ -33,6 +33,7 @@ export class ProductService {
         errorCallBack(message)
       })
   }
+ 
   //READ PRODUCT
   async read(page: number = 0, size: number = 5,productName?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
     let _queryString = `page=${page}&size=${size}`;

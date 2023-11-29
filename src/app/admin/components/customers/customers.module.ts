@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { CustomersComponent } from './customers.component';
 import { RouterModule } from '@angular/router';
 import { SignalRService } from 'src/app/services/common/signalr.service';
+import { CheckoutFormComponent } from './checkout-form/checkout-form.component';
 
 
 
 @NgModule({
   declarations: [
-    CustomersComponent
+    CustomersComponent,
+    CheckoutFormComponent
   ],
   imports: [
     CommonModule,
