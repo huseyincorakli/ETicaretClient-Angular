@@ -1,0 +1,57 @@
+
+.payment-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+}
+
+.container {
+  max-width: 800px;
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #5e5c5c;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+
+.StripeElement input{
+  font-size: xx-large;
+}
+
+#payment-form {
+  display: flex;
+  flex-direction: column;
+}
+.ElementsApp {
+  display: flex;
+  flex-direction: row;
+}
+
+#payment-message {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+#payment-element {
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.payment-form{
+  font-size: 1.2em;
+}
+button:disabled {
+  background-color: #ddd;
+  cursor: not-allowed;
+}

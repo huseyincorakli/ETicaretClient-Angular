@@ -14,7 +14,7 @@ export class ShoppingCompleteDialogComponent extends BaseDialog<ShoppingComplete
   }
   show:boolean=false;
   complete(){
-this.show=true
+    this.show=true
   }
 
   ngOnDestroy(): void {

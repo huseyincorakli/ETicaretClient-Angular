@@ -45,7 +45,7 @@ export class BasketsComponent extends BaseComponent implements OnInit {
   }
   ngAfterViewInit() {
   }
-  
+
   async changeQuantity(object: any, abc: List_Basket_Item) {
     this.showSpinner(SpinnerType.Clock)
     const basketItemId = object.target.attributes["id"].value;
@@ -58,7 +58,6 @@ export class BasketsComponent extends BaseComponent implements OnInit {
     this.hideSpinner(SpinnerType.Clock)
     this.calculateTotalBasketPrice();
     abc.quantity = quantity;
-
   }
   async removeBasketItem(basketItemId: string) {
     $("#basketModal").modal("hide")
@@ -82,7 +81,7 @@ export class BasketsComponent extends BaseComponent implements OnInit {
     })
   }
   async completeShopping() {
-    if(this.totalBasketPrice>0){
+    if (this.totalBasketPrice > 0) {
       if (this.address.address == false) {
         this.toastr.message("Address Error", "Please Fill Your Address, You are redirected to the address settings..", ToastrMessageType.Error, ToastrPosition.TopRight)
         setTimeout(() => {
@@ -90,7 +89,7 @@ export class BasketsComponent extends BaseComponent implements OnInit {
           $(".modal-backdrop").hide()
           this.router.navigate(['/settings'])
         }, 3500);
-  
+
       }
       else {
         $("#basketModal").modal("hide")
@@ -99,18 +98,40 @@ export class BasketsComponent extends BaseComponent implements OnInit {
           componentType: ShoppingCompleteDialogComponent,
           data: ShoppingCompleteState.Yes,
           afterClosed: async () => {
-            this.showSpinner(SpinnerType.Clock)
-            const order: Create_Order = new Create_Order();
-            order.address = `${this.address.address.addressInfo}-
-             ${this.address.address.directions} - 
-             ${this.address.address.city}/${this.address.address.county}
-             ${this.address.address.telNumber}
-             `
-            order.description = this.userMessage
-            await this.orderService.create(order);
-            this.hideSpinner(SpinnerType.Clock);
-            this.toastr.message("Sipariş Tamamlandı", "Siparişiniz oluşturulmuştur bizi tercih ettiğiniz için teşekkürler.", ToastrMessageType.Success, ToastrPosition.TopRight);
-  
+            
+              const order: Create_Order = new Create_Order();
+              order.address = `${this.address.address.addressInfo}-
+               ${this.address.address.directions} - 
+               ${this.address.address.city}/${this.address.address.county}
+               ${this.address.address.telNumber}
+               `
+              order.description = this.userMessage
+             const totalAmount= this.totalBasketPrice;
+
+             const dataToSend ={order:order,totalAmount:totalAmount} ;
+             
+             this.toastr.message("💸Ödeme Sayfasına Yönlendiriliyorsunuz...", "", ToastrMessageType.Info, ToastrPosition.BottomFull);
+             setTimeout(() => {
+          
+             this.router.navigate(['/checkouts'], {
+               queryParams: { data: JSON.stringify(dataToSend) }
+             });
+             }, 2000);
+
+
+
+            //  this.showSpinner(SpinnerType.Clock)
+            //  const order: Create_Order = new Create_Order();
+            //  order.address = `${this.address.address.addressInfo}-
+            //   ${this.address.address.directions} - 
+            //   ${this.address.address.city}/${this.address.address.county}
+            //   ${this.address.address.telNumber}
+            //   `
+            //  order.description = this.userMessage
+            //  await this.orderService.create(order);
+            //  this.hideSpinner(SpinnerType.Clock);
+            //  this.toastr.message("Sipariş Tamamlandı", "Siparişiniz oluşturulmuştur bizi tercih ettiğiniz için teşekkürler.", ToastrMessageType.Success, ToastrPosition.TopRight);
+
           }
         })
       }

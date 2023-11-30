@@ -10,6 +10,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { GetProductByCategoryModule } from './get-product-by-category/get-product-by-category.module';
 import { SettingsModule } from './settings/settings.module';
 import { FormsModule } from '@angular/forms';
+import { CheckoutModule } from './checkout/checkout.module';
 
 
 
@@ -31,6 +32,7 @@ import { FormsModule } from '@angular/forms';
     CategoriesModule,
     GetProductByCategoryModule,
     SettingsModule,
+    CheckoutModule,
     FormsModule
   ],
   exports: [

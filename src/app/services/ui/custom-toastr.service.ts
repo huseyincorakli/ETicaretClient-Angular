@@ -9,7 +9,7 @@ export class CustomToastrService {
   constructor(private toastr: ToastrService) { }
 
   message(title: string, message: string,messageType:ToastrMessageType,position:ToastrPosition) {
-    this.toastr[messageType](message,title,{positionClass:position})
+    this.toastr[messageType](message,title,{positionClass:position,timeOut:1750})
   }
 }
 export enum ToastrMessageType {
