@@ -1,6 +1,16 @@
 <div class="payment-container">
+  <div class="containers">
     <div class="container">
-        abc
+        <div *ngFor="let basketItem of basketItems" class="item-container">
+            <img  src="{{ baseUrl?.url }}/{{basketItem.imagePath}}" alt="Item Image" class="item-image">
+            <a [routerLink]="['/products/detail/',basketItem.productId]" class="item-name">{{basketItem.name}}</a>
+            <div class="item-price">{{basketItem.price | currency:'TRY'}}x</div>
+            <div class="item-price">{{basketItem.quantity}}</div>
+            <div class="item-price"> = {{basketItem.totalPrice | currency:'TRY'}} </div>
+        </div>
+        
+            
+        
     </div>
     <div class="container">
       <form id="payment-form" (submit)="handleSubmit($event)">
@@ -14,4 +24,24 @@
       </form>
     </div>
   </div>
-  
+  <div class="addresContainer">
+    <div>
+        <div>
+            <h3 style="font-weight: 500;">Ad Soyad: <span>{{user.updateProfile.nameSurname}}</span></h3>
+            
+        </div>
+        <div>
+            <h3 style="font-weight: 500;">Toplam Sepet Tutarı: <span>{{totalAmount | currency:'TRY'}}</span></h3>
+        </div>
+      <div>
+        <h3 style="font-weight: 500">Teslimat Adresi</h3>
+        <h4>{{ order.address }}</h4>
+      </div>
+      <div>
+        <h3 style="font-weight: 500">Sipariş Notunuz</h3>
+        <h4 style="color: red;" *ngIf="order.description==''">Sipariş Notunuz Girilmemiş</h4>
+        <h4>{{ order.description }}</h4>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,26 +1,28 @@
-.card:hover{
+.card:hover {
     transform: scale(1.03);
     border: 1px solid #070101;
-}
-.card{
+  }
+
+  .card {
     transition: transform 0.3s ease-in-out;
     margin: 5px;
-}
-.lineHeight{
+  }
+
+  .lineHeight {
     line-height: 1.2;
-    text-align: justify; 
+    text-align: justify;
     font-size: 12px;
     font-weight: 800;
     padding: 3px;
     text-overflow: ellipsis;
     height: 50px;
-}
-.productImage{
-    width: 250px;
-    width: 250px;
-    max-height: 250px;
-}
-.productCard {
-    max-width: 250px;
-}
+  }
 
+  .productImage {
+    width: 100%;
+    max-height: 250px;
+  }
+
+  .productCard {
+    max-width: 100%;
+  }

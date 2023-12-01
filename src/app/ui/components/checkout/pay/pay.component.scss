@@ -1,19 +1,37 @@
 
 .payment-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 60vh;
+  height: 100%;
+}
+.containers{
+  max-width: 800px;
+  width: 100%;
+  padding: 20px;
+}
+.addresContainer{
+  max-width: 400px;
+  padding: 20px;
+  width: 30%;
+  height: 95%;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  background: linear-gradient(145deg, #e0d4ff, #dfccff);
+  box-shadow:  20px 20px 60px #b1a2d9,
+             -20px -20px 60px #efdcff;
 }
 
 .container {
   max-width: 800px;
   width: 100%;
   padding: 20px;
-  border: 1px solid #5e5c5c;
   border-radius: 8px;
-  margin-bottom: 5px;
+  margin-bottom: 20px;
+  background: linear-gradient(145deg, #e0d4ff, #dfccff);
+box-shadow:  20px 20px 60px #b1a2d9,
+             -20px -20px 60px #efdcff;
 }
 
 .StripeElement input{
@@ -55,3 +73,50 @@ button:disabled {
   background-color: #ddd;
   cursor: not-allowed;
 }
+
+.item-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.item-container>a{
+  color: #007bff; /* Blue color for the link */
+  text-decoration: none; /* Remove underlines by default */
+  transition: color 0.3s ease;
+}
+.item-container>a:hover{
+  color: #0056b3;
+}
+
+.item-image {
+  width: 100px;
+  height: 80px;
+  object-fit: contain;
+  margin-right: 10px;
+}
+
+.item-name {
+  font-size: 1rem;
+  flex-grow: 1;
+  text-align: center;
+  margin-right: 10px;
+}
+
+.item-price {
+  font-size: 0.9rem;
+  text-align: right;
+}
+@media (max-width: 600px) {
+  .payment-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .addresContainer,
+  .containers,
+  .container {
+    width: 100%;
+  }}
+
+

@@ -24,7 +24,8 @@
             <tbody>
               <tr class="{{basketItem.basketItemId}}" *ngFor="let basketItem of basketItems; let i= index">
                 <th scope="row">{{i+1}}</th>
-                <td>{{basketItem.name}}</td>
+                <td><a style="cursor: pointer;" (click)="route(basketItem.productId)"  >{{basketItem.name}}</a></td>
+               
                 <td id="priceValue" >{{basketItem.price}} $</td>
                 <td>
                   <input

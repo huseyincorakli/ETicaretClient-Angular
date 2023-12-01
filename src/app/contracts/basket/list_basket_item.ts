@@ -4,4 +4,6 @@ export class List_Basket_Item {
     price:number;
     quantity:number;
     totalPrice:number;
+    productId:string;
+    imagePath:string;
 }

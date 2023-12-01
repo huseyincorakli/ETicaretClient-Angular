@@ -10,13 +10,13 @@ import { BasketService } from 'src/app/services/common/models/basket.service';
 import { FileService } from 'src/app/services/common/models/file.service';
 import { ProductService } from 'src/app/services/common/models/product.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
-
+import { take } from 'rxjs/operators';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
   styleUrls: ['./product-detail.component.scss']
 })
-export class ProductDetailComponent extends BaseComponent implements OnInit {
+export class ProductDetailComponent extends BaseComponent implements OnInit  {
   constructor(
     spinner: NgxSpinnerService,
     private activatedRoute: ActivatedRoute,
@@ -31,24 +31,37 @@ export class ProductDetailComponent extends BaseComponent implements OnInit {
   product: Product_Details
   baseUrl: BaseUrl;
   selectedImage:any;
+  productId:string;
 
   async ngOnInit(): Promise<void> {
     this.showSpinner(SpinnerType.Classic)
 
     this.baseUrl = await this.fileService.getBaseStorageUrl()
-    var productId = this.activatedRoute.snapshot.paramMap.get('productId')
-    this.product = await this.productService.readById(productId)
+    this.productId= this.activatedRoute.snapshot.paramMap.get('productId')
+    this.product = await this.productService.readById(this.productId)
 
     if (this.product && this.product.imageFiles && this.product.imageFiles.length > 0) {
       this.selectedImage = this.product.imageFiles[0].path;
     }
-
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.updateProductDetails(params.get('productId'))
+    });
     this.hideSpinner(SpinnerType.Classic)
+  }
+
+  private async updateProductDetails(productId: string) {
+    console.log("burası çalıştı");
+    this.product = await this.productService.readById(productId);
+
+    if (this.product && this.product.imageFiles && this.product.imageFiles.length > 0) {
+      this.selectedImage = this.product.imageFiles[0].path;
+    }
   }
 
   changeSelectedImage(index: number): void {
     this.selectedImage = this.product.imageFiles[index].path;    
   }
+  
   async addToBasket(txtQuantityValue:HTMLInputElement){
     this.showSpinner(SpinnerType.Classic)
   var productId = this.activatedRoute.snapshot.paramMap.get('productId')

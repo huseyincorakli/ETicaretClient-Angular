@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { List_Basket_Item } from 'src/app/contracts/basket/list_basket_item';
@@ -80,6 +80,14 @@ export class BasketsComponent extends BaseComponent implements OnInit {
 
     })
   }
+  route(id: string) {
+    $("#basketModal").modal("hide")
+    $(".modal-backdrop").hide()
+    const state: RouterStateSnapshot = this.router.routerState.snapshot;
+    const root: ActivatedRouteSnapshot = state.root;
+    const productDetailRoute = root.firstChild;
+    this.router.navigate([`products/detail/${id}`]);
+  }
   async completeShopping() {
     if (this.totalBasketPrice > 0) {
       if (this.address.address == false) {
@@ -98,25 +106,25 @@ export class BasketsComponent extends BaseComponent implements OnInit {
           componentType: ShoppingCompleteDialogComponent,
           data: ShoppingCompleteState.Yes,
           afterClosed: async () => {
-            
-              const order: Create_Order = new Create_Order();
-              order.address = `${this.address.address.addressInfo}-
+
+            const order: Create_Order = new Create_Order();
+            order.address = `${this.address.address.addressInfo}-
                ${this.address.address.directions} - 
                ${this.address.address.city}/${this.address.address.county}
                ${this.address.address.telNumber}
                `
-              order.description = this.userMessage
-             const totalAmount= this.totalBasketPrice;
+            order.description = this.userMessage
+            const totalAmount = this.totalBasketPrice;
 
-             const dataToSend ={order:order,totalAmount:totalAmount} ;
-             
-             this.toastr.message("💸Ödeme Sayfasına Yönlendiriliyorsunuz...", "", ToastrMessageType.Info, ToastrPosition.BottomFull);
-             setTimeout(() => {
-          
-             this.router.navigate(['/checkouts'], {
-               queryParams: { data: JSON.stringify(dataToSend) }
-             });
-             }, 2000);
+            const dataToSend = { order: order, totalAmount: totalAmount };
+
+            this.toastr.message("💸Ödeme Sayfasına Yönlendiriliyorsunuz...", "", ToastrMessageType.Info, ToastrPosition.BottomFull);
+            setTimeout(() => {
+
+              this.router.navigate(['/checkouts'], {
+                queryParams: { data: JSON.stringify(dataToSend) }
+              });
+            }, 2000);
 
 
 
