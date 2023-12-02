@@ -7,6 +7,8 @@ import { firstValueFrom,Observable } from 'rxjs';
 import { List_Product_Image } from 'src/app/contracts/list_product_image';
 import { GenerateProductDescription } from 'src/app/contracts/products/generate_products_desciription';
 import { Product_Details } from 'src/app/contracts/products/product_detail';
+import { Best_Selling_Product } from 'src/app/contracts/products/best_selling_product';
+import { Low_Stock_Product } from 'src/app/contracts/products/low_stock_product';
 
 
 @Injectable({
@@ -15,7 +17,7 @@ import { Product_Details } from 'src/app/contracts/products/product_detail';
 export class ProductService {
 
   constructor(private httpClientService: HttpClientService) { }
-  //CREATE PRODUCT
+  
   create(product: Create_Product, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void) {
     this.httpClientService.post({
       controller: 'products'
@@ -34,7 +36,7 @@ export class ProductService {
       })
   }
  
-  //READ PRODUCT
+  
   async read(page: number = 0, size: number = 5,productName?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
     let _queryString = `page=${page}&size=${size}`;
 
@@ -50,6 +52,65 @@ export class ProductService {
     .catch((errorResponse: HttpErrorResponse) => errorCallBack && errorCallBack(errorResponse.message));
 
     return await promiseData;
+  }
+  async getBestSellingProduct(succesCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void):Promise<{bestSellingProduct:Best_Selling_Product[]}>{
+    try {
+      const promiseData = this.httpClientService.get({
+        controller: 'products',
+        queryString: '',
+        action:'GetBestSellingProducts'
+      });
+  
+      const result = await firstValueFrom(promiseData) as Best_Selling_Product[];
+  
+      if (succesCallBack) {
+        succesCallBack();
+      }
+  
+      return { bestSellingProduct: result };
+    } catch (e) {
+      if (errorCallBack) {
+        errorCallBack(e);
+      }
+      throw e;
+    }
+  }
+  async getDailySales(year:number,mounth:number,day:number,errorCallBack?:(errorMessage:string)=>void):Promise<any>{
+    try {
+        const promiseData=this.httpClientService.get({
+          controller:'products',
+          action:'GetDailySale',
+          queryString:`year=${year}&mounth=${mounth}&day=${day}`
+        });
+        const result=await firstValueFrom(promiseData)
+        return result
+    } catch (error) {
+      if(errorCallBack){
+        errorCallBack(error)
+      }
+      throw error;
+    }
+  }
+
+  async getLowStockProducts(succesCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void):Promise<{lowStockProducts:Low_Stock_Product[]}>{
+    try {
+      const promiseData=this.httpClientService.get({
+        controller:'products',
+        queryString:'',
+        action:'GetLowStockProducts'
+      });
+
+      const result = await firstValueFrom(promiseData) as Low_Stock_Product[];
+      if (succesCallBack) {
+        succesCallBack()
+      }
+      return {lowStockProducts:result};
+    } catch (error) {
+      if (errorCallBack) {
+        errorCallBack(error)
+      }
+      throw error;
+    }
   }
 
   async readById(productId:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise< Product_Details> {
@@ -76,7 +137,7 @@ export class ProductService {
     return await promiseData;
   }
 
-  //DELETE PRODUCT
+  
   async delete(id: string) {
     await this.httpClientService.delete({
       controller: 'products'
@@ -163,6 +224,6 @@ export class ProductService {
       }).catch(()=>{
         errorCallBack();
       })
-    }
+  }
 }
 

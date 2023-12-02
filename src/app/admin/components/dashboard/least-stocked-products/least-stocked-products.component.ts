@@ -1,12 +1,23 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { Low_Stock_Product } from 'src/app/contracts/products/low_stock_product';
+import { ProductService } from 'src/app/services/common/models/product.service';
 
 @Component({
   selector: 'app-least-stocked-products',
   templateUrl: './least-stocked-products.component.html',
   styleUrls: ['./least-stocked-products.component.scss']
 })
-export class LeastStockedProductsComponent implements AfterViewInit {
+export class LeastStockedProductsComponent implements AfterViewInit,OnInit {
+  
+  constructor(private productService:ProductService) {
+    
+  }
+  products:Low_Stock_Product[]
+  async ngOnInit(): Promise<void> {
+     this.products= (await this.productService.getLowStockProducts()).lowStockProducts
+  }
+
   @ViewChild('barCanvas') barCanvas!: ElementRef;
   barChart: any;
 

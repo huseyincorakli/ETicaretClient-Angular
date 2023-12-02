@@ -1,8 +1,26 @@
-<div class="colContent">
-           
-    <canvas #doughnutCanvas></canvas>
-    
+<div  class="colContent">
+    <canvas #doughnutCanvas>
+    </canvas>
     <div class="canvasContent">
-        abc
+
+        <h2 *ngIf="!isLoading">En Çok Satılan Ürünler</h2>
+      <div class="chartLegend">
+        <div>
+            <h2 style="cursor: pointer; color: blue;" [routerLink]="['/products/detail/', productId1]">{{productName1}}</h2>
+
+        </div>
+      </div>
+      <div class="chartLegend">
+        <div>
+            <h2 style="cursor: pointer; color: blue;" [routerLink]="['/products/detail/', productId2]">{{productName2}}</h2>
+
+        </div>
+      </div>
+      <div class="chartLegend">
+        <div>
+            <h2 style="cursor: pointer; color: blue;" [routerLink]="['/products/detail/', productId3]">{{productName3}}</h2>
+        </div>
+      </div>
     </div>
-</div>
+  </div>
+  

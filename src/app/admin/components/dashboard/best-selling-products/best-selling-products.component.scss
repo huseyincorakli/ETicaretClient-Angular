@@ -1,13 +1,32 @@
-.colContent{
+.colContent {
+    background-color: #dddd;
     display: flex;
     justify-content: space-between;
-    border: 2px solid #dddd;
-    padding: 5px;
+    padding: 10px; /* Increased padding for better spacing */
     width: auto;
-    height: 200px;
+    height: 300px; /* Increased height for better visualization */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
-.canvasContent{
-    border: 2px solid #dddd;
 
+.canvasContent {
+    border-left: 2px solid #000;
     width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align content to the top */
+}
+
+.chartLegend {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; /* Align legend items to the right */
+    span {
+        margin-bottom: 5px; /* Add some spacing between legend items */
+    }
+}
+
+#doughnutCanvas {
+    max-width: 100%; /* Ensure canvas is responsive within its container */
+    height: auto;
 }
