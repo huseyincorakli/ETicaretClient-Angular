@@ -32,6 +32,7 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.7.1",
     "leaflet": "^1.9.4",
+    "ngx-bar-rating": "^6.0.0",
     "ngx-file-drop": "^13.0.0",
     "ngx-scanner-qrcode": "^1.1.4",
     "ngx-spinner": "^15.0.1",

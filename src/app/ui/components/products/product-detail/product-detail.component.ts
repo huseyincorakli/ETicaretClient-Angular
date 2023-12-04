@@ -32,7 +32,7 @@ export class ProductDetailComponent extends BaseComponent implements OnInit  {
   baseUrl: BaseUrl;
   selectedImage:any;
   productId:string;
-
+  
   async ngOnInit(): Promise<void> {
     this.showSpinner(SpinnerType.Classic)
 

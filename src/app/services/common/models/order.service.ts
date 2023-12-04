@@ -19,7 +19,8 @@ export class OrderService {
     await firstValueFrom(observable);
   }
 
-  async getAllOrders(page: number = 0, size: number = 5,isCompleted:boolean,orderCode?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void):
+  async getAllOrders(page: number = 0, size: number = 5,isCompleted:boolean,
+    orderCode?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void):
     
   Promise<{ totalOrderCount: number, orders: List_Order[] }> {
       let queryStringx:string;

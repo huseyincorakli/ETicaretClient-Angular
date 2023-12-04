@@ -107,7 +107,7 @@
 
 
 
-<div *ngIf="product.specifications" class="container p-3 mb-3 productDetail">
+<div *ngIf="product?.specifications" class="container p-3 mb-3 productDetail">
   <div class="row">
     <div class="col">
       <h2>{{product.name}} Özellikleri</h2>
@@ -124,4 +124,7 @@
   </div>
 </div>
 <br>
+<div class="container p-3 mb-3 productDetail">
+  <app-comments></app-comments>
+</div>
 <br>
