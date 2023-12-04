@@ -19,17 +19,38 @@ export class OrderService {
     await firstValueFrom(observable);
   }
 
-  async getAllOrders(page: number = 0, size: number = 5,isCompleted:boolean, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void):
-    Promise<{ totalOrderCount: number, orders: List_Order[] }> {
+  async getAllOrders(page: number = 0, size: number = 5,isCompleted:boolean,orderCode?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void):
+    
+  Promise<{ totalOrderCount: number, orders: List_Order[] }> {
+      let queryStringx:string;
+      if (orderCode) {
+        queryStringx= `page=${page}&size=${size}&IsCompleted=${isCompleted}&OrderCode=${orderCode}`
+      }
+      else{
+        queryStringx=`page=${page}&size=${size}&IsCompleted=${isCompleted}`
+      }
     const observable: Observable<{ totalOrderCount: number, orders: List_Order[] }> = this.httpClientService.get({
       controller: 'orders',
-      queryString: `page=${page}&size=${size}&IsCompleted=${isCompleted}`
+      queryString:queryStringx
     })
     const promiseData = firstValueFrom(observable)
     promiseData.then(value => {
       succesCallBack()
     })
       .catch(error => errorCallBack(error))
+    return await promiseData;
+  }
+
+  async getUnCompletedOrders(size:number,errorCallBack?:(errorMessage:string)=>void):Promise<any>{
+    const observable= this.httpClientService.get({
+      action:'GetUnCompletedOrders',
+      controller:'orders',
+      queryString:`Size=${size}`
+    })
+    const promiseData=firstValueFrom(observable)
+    promiseData.then(value=>{
+      
+    }).catch(error=>errorCallBack(error))
     return await promiseData;
   }
 
@@ -54,5 +75,23 @@ export class OrderService {
 
 
     await firstValueFrom(observable);
+  }
+  async getDailySale(year:number,month:number,day:number,errorCallBack?:()=>void,succesCallBack?:()=>void):Promise<any>{
+    const observable=this.httpClientService.get({
+      action:'GetDailySale',
+      controller:'orders',
+      queryString:`Year=${year}&Month=${month}&Day=${day}`
+    })
+    const promiseData=firstValueFrom(observable)
+    promiseData.then(val=>{
+      if (succesCallBack) {
+        succesCallBack();
+      }
+    }).catch(err=>{
+        if (errorCallBack) {
+          errorCallBack()
+        }
+    })
+    return await promiseData;
   }
 }

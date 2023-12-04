@@ -27,14 +27,19 @@ export class ListComponent extends BaseComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   displayedColumns: string[] = ['userName','nameSurname','email','twoFactorEnabled','role', 'delete'];
   dataSource: MatTableDataSource<List_User> = null;
-
-
+  userName:string=""
+  
+  getUserByName(data:any){
+    this.userName=data.target.value
+    this.getUsers();
+  }
   async getUsers() {
     this.showSpinner(SpinnerType.Clock)
     const allUsers: { totalUsersCount: number, users: List_User[] } =
       await this.userService.getAllUsers(
         this.paginator ? this.paginator.pageIndex : 0,
         this.paginator ? this.paginator.pageSize : 5,
+        this.userName,
         () => this.hideSpinner(SpinnerType.Clock),
         errorMessage => {
           this.alertify.message(errorMessage,

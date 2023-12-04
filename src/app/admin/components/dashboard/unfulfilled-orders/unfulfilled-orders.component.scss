@@ -1,8 +1,11 @@
-.colContent{
+.colContent {
+    background-color: #dddd;
     display: flex;
-    justify-content: space-between;
-    border: 2px solid #dddd;
-    padding: 5px;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px; /* Increased padding for better spacing */
     width: auto;
-    height: 200px;
+    min-height: 300px;
+    height: auto; /* Increased height for better visualization */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }

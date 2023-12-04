@@ -4,8 +4,8 @@ import { DashboardComponent } from './dashboard.component';
 import { RouterModule } from '@angular/router';
 import { BestSellingProductsComponent } from './best-selling-products/best-selling-products.component';
 import { LeastStockedProductsComponent } from './least-stocked-products/least-stocked-products.component';
-import { WeeklySalesComponent } from './weekly-sales/weekly-sales.component';
 import { UnfulfilledOrdersComponent } from './unfulfilled-orders/unfulfilled-orders.component';
+import { WeeklySalesComponent } from './weekly-sales/weekly-sales.component';
 
 
 
@@ -14,8 +14,8 @@ import { UnfulfilledOrdersComponent } from './unfulfilled-orders/unfulfilled-ord
     DashboardComponent,
     BestSellingProductsComponent,
     LeastStockedProductsComponent,
+    UnfulfilledOrdersComponent,
     WeeklySalesComponent,
-    UnfulfilledOrdersComponent
   ],
   imports: [
     CommonModule,

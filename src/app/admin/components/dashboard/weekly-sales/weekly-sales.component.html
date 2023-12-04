@@ -1,6 +1,28 @@
 <div class="colContent">
-    <canvas #lineCanvas></canvas>
-    <div class="canvasContent">
-        abc
+    <button (click)="createPDFReport()" *ngIf="!isloading" class="btn btn-sm btn-success" style="margin-left: auto;">Rapor oluştur</button>
+    <div *ngIf="isloading" style="margin-top:100px;" class="spinner-border" role="status">
     </div>
+    <h3 *ngIf="isloading">Yükleniyor...</h3>
+    <canvas #lineCanvas></canvas>
+  
+  
 </div>
+
+<div style="display: none;">
+    <table id="salesTable">
+      <thead>
+        <tr>
+          <th>Tarih</th>
+          <th>Satis Miktari</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let index of datesArr; let i = index">
+          <td>{{ datesArr[i] }}</td>
+          <td>{{ lineDatas[i] }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="createPDFReport()">Raporu Oluştur</button>
+  </div>
+  

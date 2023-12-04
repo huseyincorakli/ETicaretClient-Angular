@@ -38,11 +38,11 @@ export class UserService {
     await promiseData;
   }
 
-  async getAllUsers(page: number = 0, size: number = 5, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void):
+  async getAllUsers(page: number = 0, size: number = 5,searchName:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void):
     Promise<{ totalUsersCount: number, users: List_User[] }> {
     const observable: Observable<{ totalUsersCount: number, users: List_User[] }> = this.httpClientService.get({
       controller: 'users',
-      queryString: `page=${page}&size=${size}`
+      queryString: `page=${page}&size=${size}&searchName=${searchName}`
     })
     const promiseData = firstValueFrom(observable)
     promiseData.then(value => {

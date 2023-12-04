@@ -1,26 +1,26 @@
-<div  class="colContent">
-    <canvas #doughnutCanvas>
-    </canvas>
-    <div class="canvasContent">
-
-        <h2 *ngIf="!isLoading">En Çok Satılan Ürünler</h2>
+<div class="colContent">
+  
+  <canvas #doughnutCanvas> </canvas>
+  <div class="canvasContent">
+    <h2 *ngIf="!isLoading">En Çok Satılan Ürünler</h2>
+    <div class="chartLegend">
       <div class="chartLegend">
-        <div>
-            <h2 style="cursor: pointer; color: blue;" [routerLink]="['/products/detail/', productId1]">{{productName1}}</h2>
-
-        </div>
-      </div>
-      <div class="chartLegend">
-        <div>
-            <h2 style="cursor: pointer; color: blue;" [routerLink]="['/products/detail/', productId2]">{{productName2}}</h2>
-
-        </div>
-      </div>
-      <div class="chartLegend">
-        <div>
-            <h2 style="cursor: pointer; color: blue;" [routerLink]="['/products/detail/', productId3]">{{productName3}}</h2>
-        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col">Ürün Adı</th>
+              <th scope="col"> Miktar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let product of products?.bestSellingProducts">
+              <th ><a [routerLink]="['/products/detail/', product.id]" >{{product.name.slice(0,10)}}...</a></th>
+              <td>{{product.quantitySold}}</td>
+              
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-  
+</div>

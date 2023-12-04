@@ -16,6 +16,7 @@ import { OrderService } from 'src/app/services/common/models/order.service';
 })
 export class ListComponent extends BaseComponent {
   orderComplete:boolean=true;
+  orderCode:string
   constructor(
     private orderService: OrderService,
     spinner: NgxSpinnerService,
@@ -28,7 +29,10 @@ export class ListComponent extends BaseComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   displayedColumns: string[] = ['orderCode', 'userName', 'totalPrice', 'createDate','completed' ,'viewDetail'];
   dataSource: MatTableDataSource<List_Order> = null;
-
+  getOrderByOrderCode(data:any){
+    this.orderCode=data.target.value;
+    this.getOrders(this.orderComplete);
+  }
   changeComplete() {
     this.orderComplete = !this.orderComplete; 
     this.getOrders(this.orderComplete); 
@@ -39,7 +43,7 @@ export class ListComponent extends BaseComponent {
     const allOrders: { totalOrderCount: number; orders: List_Order[] } = await this.orderService.getAllOrders(
       this.paginator ? this.paginator.pageIndex : 0,
       this.paginator ? this.paginator.pageSize : 5,
-      completed,
+      completed,this.orderCode,
       () => this.hideSpinner(SpinnerType.Clock),
       errorMessage => {
         this.alertify.message(errorMessage, { dismissOthers: true, messageType: MessageType.Error, position: Position.TopRight });

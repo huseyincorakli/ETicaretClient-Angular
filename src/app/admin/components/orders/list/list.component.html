@@ -1,8 +1,14 @@
 <div class="mat-elevation-z8">
+<div style="float: left; margin-top: 10px;">
+  <input class="form-control mb-2 float" placeholder="Sipariş Kodunu Giriniz" (change)="getOrderByOrderCode($event)" type="text" name="" id="">
+
+</div>
   <div style="float: right; margin: 10px;">
+    
     <button class="btn btn-danger btn-sm "*ngIf="orderComplete" (click)="changeComplete()">Tamamlanmamış Siparişler</button>
     <button class="btn btn-success btn-sm" *ngIf="!orderComplete" (click)="changeComplete()">Tamamlanmış Siparişler</button>
   </div>
+  
     <table mat-table [dataSource]="dataSource">
     
       <ng-container matColumnDef="orderCode">

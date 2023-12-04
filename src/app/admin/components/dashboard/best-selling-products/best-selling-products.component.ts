@@ -10,28 +10,18 @@ import { ProductService } from 'src/app/services/common/models/product.service';
 })
 export class BestSellingProductsComponent implements OnInit, AfterViewInit{
   isLoading:boolean=false;
-  productName1:string
-  productName2:string
-  productName3:string
-  productId1:string
-  productId2:string
-  productId3:string
+
   
   constructor(private productService:ProductService) {
   }
-  products:any
+  products:Best_Selling_Product
   async ngOnInit(): Promise<void> {
     this.isLoading=true
-     this.products= (await this.productService.getBestSellingProduct()).bestSellingProduct
-     this.productName1=this.products.bestSellingProducts[0].name
-     this.productName2=this.products.bestSellingProducts[1].name
-     this.productName3=this.products.bestSellingProducts[2].name
-     this.productId1=this.products.bestSellingProducts[0].id
-     this.productId2=this.products.bestSellingProducts[1].id
-     this.productId3=this.products.bestSellingProducts[2].id
+     this.products= (await this.productService.getBestSellingProduct()).bestSellingProduct     
      this.isLoading=false
+    if (!this.isLoading) {
     this.createDoughnutChart();
-
+    }
   }
 
 
@@ -44,13 +34,15 @@ export class BestSellingProductsComponent implements OnInit, AfterViewInit{
 
   createDoughnutChart(): void {
     const doughnutCanvas = this.doughnutCanvas.nativeElement.getContext('2d');
+    const truncatedLabels = this.products.bestSellingProducts.map(product => product.name.slice(0, 10) + '...');
+    const productData=this.products.bestSellingProducts.map(product=>product.quantitySold)
     this.doughnutChart = new Chart(doughnutCanvas, {
       type: 'doughnut',
       data: {
-        labels: [this.products.bestSellingProducts[0].name.slice(0,10)+'...', this.products.bestSellingProducts[1].name.slice(0,10)+'...', this.products.bestSellingProducts[2].name],
+        labels:truncatedLabels,
         datasets: [{
-          data: [this.products.bestSellingProducts[0].quantitySold, this.products.bestSellingProducts[1].quantitySold, this.products.bestSellingProducts[2].quantitySold],
-          backgroundColor: ['red', 'green', 'blue']
+          data: productData,
+          backgroundColor: ['red', 'green', 'blue','yellow','purple']
         }]
       }
     });

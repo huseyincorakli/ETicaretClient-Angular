@@ -1,33 +1,45 @@
 <div class="colContent">
-        <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">First</th>
-                <th scope="col">Last</th>
-                <th scope="col">Handle</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-              </tr>
-              <tr>
-                <th scope="row">2</th>
-                <td>Jacob</td>
-                <td>Thornton</td>
-                <td>@fat</td>
-              </tr>
-              <tr>
-                <th scope="row">3</th>
-                <td>Larry</td>
-                <td>the Bird</td>
-                <td>@twitter</td>
-              </tr>
-            </tbody>
-          </table>
-   
+  <div>
+    <h2>Tamamlanmamış Siparişler</h2>
+  </div>
+  <div *ngIf="isLoading" style="margin-top:100px;" class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  
+</div>
+  <table *ngIf="!isLoading" class="table">
+    <thead>
+      <label for="size">Sipariş Sayısı:</label>
+      <input
+        (change)="getData($event)"
+        style="width: 50px"
+        min="0"
+        type="number"
+        value="{{startValue}}"
+        name=""
+        id="size"
+      />
+      <br />
+      <br />
+      <tr>
+        <th scope="col">Sipariş Kodu</th>
+        <th scope="col">Ad Soyad</th>
+        <th scope="col">Fiyat</th>
+        <th scope="col">Tarih</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngIf="isLoading">
+        <td>Yükleniyor....</td>
+        <td>Yükleniyor....</td>
+        <td>Yükleniyor....</td>
+        <td>Yükleniyor....</td>
+      </tr>
+      <tr *ngFor="let order of UnCompletedOrder">
+        <th scope="row">{{ order.orderCode }}</th>
+        <td>{{ order.userName }}</td>
+        <td>{{ order.totalPrice }}</td>
+        <td>{{ order.createdDate | date: 'dd/MM/yyyy' }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

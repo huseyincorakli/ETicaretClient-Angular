@@ -17,6 +17,7 @@ import { FileUploadModule } from 'src/app/services/common/file-upload/file-uploa
 import { DialogModule } from '@angular/cdk/dialog';
 import { DeleteModule } from 'src/app/directives/admin/delete.module';
 import {MatSelectModule} from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {MatSelectModule} from '@angular/material/select';
     DialogModule,
     FileUploadModule,
     DeleteModule,
-    MatSelectModule
+    MatSelectModule,
+    FormsModule
   ]
 })
 

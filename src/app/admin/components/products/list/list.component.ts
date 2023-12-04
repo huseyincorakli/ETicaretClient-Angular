@@ -29,7 +29,12 @@ export class ListComponent extends BaseComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   displayedColumns: string[] = ['name', 'price', 'stock',"categoryName", 'createDate', 'updatedDate', 'photos','qrcode','edit', 'delete'];
   dataSource: MatTableDataSource<List_Product> = null;
-
+  productName:string=''
+  
+  setProductName(data:any){
+    this.productName=data.target.value
+    this.getProducts();
+  }
   
   async getProducts() {
     this.showSpinner(SpinnerType.Clock)
@@ -37,7 +42,7 @@ export class ListComponent extends BaseComponent implements OnInit {
       await this.productService.read(
         this.paginator ? this.paginator.pageIndex : 0,
         this.paginator ? this.paginator.pageSize : 5,
-        '',
+        this.productName,
         () => this.hideSpinner(SpinnerType.Clock),
         errorMessage => {
           this.alertify.message(errorMessage,

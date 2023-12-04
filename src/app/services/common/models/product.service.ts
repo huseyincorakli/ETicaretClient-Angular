@@ -53,7 +53,7 @@ export class ProductService {
 
     return await promiseData;
   }
-  async getBestSellingProduct(succesCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void):Promise<{bestSellingProduct:Best_Selling_Product[]}>{
+  async getBestSellingProduct(succesCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void):Promise<{bestSellingProduct:Best_Selling_Product}>{
     try {
       const promiseData = this.httpClientService.get({
         controller: 'products',
@@ -61,7 +61,7 @@ export class ProductService {
         action:'GetBestSellingProducts'
       });
   
-      const result = await firstValueFrom(promiseData) as Best_Selling_Product[];
+      const result = await firstValueFrom(promiseData) as Best_Selling_Product;
   
       if (succesCallBack) {
         succesCallBack();
@@ -92,7 +92,7 @@ export class ProductService {
     }
   }
 
-  async getLowStockProducts(succesCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void):Promise<{lowStockProducts:Low_Stock_Product[]}>{
+  async getLowStockProducts(succesCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void):Promise<{lowStockProducts:Low_Stock_Product}>{
     try {
       const promiseData=this.httpClientService.get({
         controller:'products',
@@ -100,7 +100,7 @@ export class ProductService {
         action:'GetLowStockProducts'
       });
 
-      const result = await firstValueFrom(promiseData) as Low_Stock_Product[];
+      const result = await firstValueFrom(promiseData) as Low_Stock_Product;
       if (succesCallBack) {
         succesCallBack()
       }

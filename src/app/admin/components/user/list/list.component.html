@@ -1,4 +1,6 @@
 <div class="mat-elevation-z8">
+  <input style="float: right; width: max-content;" class="form-control m-2 " placeholder="Kullanıcı Ara" (change)="getUserByName($event)" type="text" name="" id="">
+  
     <table mat-table [dataSource]="dataSource">
   
       <ng-container  matColumnDef="userName">

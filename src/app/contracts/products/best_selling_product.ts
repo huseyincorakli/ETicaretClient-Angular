@@ -1,4 +1,9 @@
 
 export class Best_Selling_Product{
-   bestSellingProducts
+   bestSellingProducts:obj[]
+}
+export class obj{
+   id:string;
+  name:string;
+  quantitySold:string;
 }
