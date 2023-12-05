@@ -1,7 +1,7 @@
 <div class="mt-2 p-2">
   <div class="container">
-    <input [(ngModel)]="productName" (input)="searchProducts()" type="text" placeholder="Ürün Ara" class="form-control mb-2 float" style="width: 100%; max-width: 200px;">
-
+    <input [(ngModel)]="productName" (input)="searchProducts()" type="text" placeholder="Ürün Ara" class="form-control mb-2 float searchInput" style="width: 100%; max-width: 200px;">
+    
     <div class="row">
       <div class="col-md-3 mb-2" *ngFor="let product of products">
         <div class="card productCard" style="width: 100%;">
@@ -14,27 +14,27 @@
           <span class="badge bg-success position-absolute top-0 start-0 translate-left m-2">
             {{product.categoryName}}
           </span>
-          <span class="badge bg-danger position-absolute top-0 end-0 translate-left m-2">
+          <span class="badge bg-danger text-lg position-absolute top-0 end-0 translate-left m-2">
             {{product.brand}}
           </span>
           <div class="card-body">
             <h3 class="card-title lineHeight"><b style="color: red;">{{product.brand}}</b> {{ (product.name)}}</h3>
 
-            <div class="card-text m-2 d-flex justify-content-between">
-              <span class="badge bg-primary">Fiyat: {{ product.price | currency:'TRY' }}</span> <br />
-              <span class="badge bg-secondary"> Stok: {{ product.stock }}</span>
+            <div class="card-text mb-2 d-flex justify-content-between">
+              <span style="font-size: 12px;" class="badge  bg-primary">Fiyat: {{ product.price | currency:'TRY' }}</span> <br />
+              <span style="font-size: 12px;" class="badge bg-secondary"> Stok: {{ product.stock }}</span>
             </div>
-            <a (click)="addToBasket(product)" class="btn btn-warning w-100"><span class="text-black fw-normal">Sepete Ekle</span></a>
+            <a (click)="addToBasket(product)"  class="btn btn-warning  w-100"><span class="text-black fw-normal">Sepete Ekle</span></a>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <nav aria-label="...">
-    <ul class="pagination justify-content-center">
+  <nav  aria-label="...">
+    <ul class=" pagination justify-content-center">
       <li class="page-item">
-        <a class="page-link">
+        <a class=" page-link">
           {{currentPageNo}}/{{totalPageCount}}
         </a>
       </li>
