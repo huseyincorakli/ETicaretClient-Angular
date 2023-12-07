@@ -32,5 +32,15 @@ export class CommentService {
       action:'AddComment',
       controller:'comments'
     },{createComment:createComment})
+    const promiseData = firstValueFrom(observable)
+    promiseData.then(value=>{
+      if(successCallBack){
+        successCallBack();
+      }
+    }).catch(e=>{
+      if (errorCallback) {
+        errorCallback(e)
+      }
+    })
   }
 }

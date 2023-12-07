@@ -1,48 +1,54 @@
-<div class="contaier">
-<app-create></app-create>
-</div>
-
-<div class="container mt-4">
-    <h2>Product Comments</h2>
+<div class="comment">
+  <div class="contaier">
+    <app-create></app-create>
+    </div>
     
-    <!-- Display comments -->
-    <div *ngFor="let comment of comments" class="card mb-3">
-        <div class="card-body">
-          <div class="d-flex justify-content-between mb-2">
-            <h5 class="card-title"><b>{{ comment.userCommentTitle }}</b></h5>
-            <ng-container *ngFor="let star of generateStars(comment.userScore)">
-                ⭐
-              </ng-container>
+    <div class="container mt-4">
+    <hr>
+
+        <h2>Ürün Yorumları</h2>
+        
+        <!-- Display comments -->
+        <div *ngFor="let comment of comments" class="card mb-1">
+            <div class="card-body">
+              <div class="d-flex justify-content-between mb-1">
+                <h5 class="card-title"><b>{{ comment.userCommentTitle }}</b></h5>
+                <span style="color:red" *ngIf="comment.userScore<1">Yıldız Yok 😞</span>
+                <ng-container *ngFor="let star of generateStars(comment.userScore)">
+                  ⭐
+              
+                </ng-container>                
+              </div>
+              <p class="card-text">{{ comment.userCommentContent }}</p>
+              <div class="d-flex justify-content-between">
+                <p class="card-text"><small class="text-muted">By: {{ comment.userNameSurname }}</small></p>
+                <p class="card-text"><small class="text-muted">{{ comment.createDate | date }}</small></p>
+              </div>
+            </div>
           </div>
-          <p class="card-text">{{ comment.userCommentContent }}</p>
-          <div class="d-flex justify-content-between">
-            <p class="card-text"><small class="text-muted">By: {{ comment.userNameSurname }}</small></p>
-            <p class="card-text"><small class="text-muted">{{ comment.createDate | date }}</small></p>
-          </div>
-        </div>
+          
+          
+        
+        <!-- Pagination -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li class="page-item" [class.disabled]="page === 0">
+                <a style="cursor: pointer;" class="page-link" (click)="changePage(-1)" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              
+              <li *ngFor="let pageIndex of getPageIndexes()" class="page-item" [class.active]="pageIndex === page">
+                <a  (click)="changePage(pageIndex)"></a>
+              </li>
+              
+              <li class="page-item" [class.disabled]="page === totalPages - 1">
+                <a  style="cursor: pointer;" class="page-link" (click)="changePage(1)" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
       </div>
       
-      
-    
-    <!-- Pagination -->
-    <nav aria-label="Page navigation">
-        <ul class="pagination">
-          <li class="page-item" [class.disabled]="page === 0">
-            <a style="cursor: pointer;" class="page-link" (click)="changePage(-1)" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          
-          <li *ngFor="let pageIndex of getPageIndexes()" class="page-item" [class.active]="pageIndex === page">
-            <a  (click)="changePage(pageIndex)"></a>
-          </li>
-          
-          <li class="page-item" [class.disabled]="page === totalPages - 1">
-            <a  style="cursor: pointer;" class="page-link" (click)="changePage(1)" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-  </div>
-  
+</div>

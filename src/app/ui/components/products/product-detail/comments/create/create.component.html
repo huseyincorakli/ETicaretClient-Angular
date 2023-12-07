@@ -1,1 +1,32 @@
-<p>create works!</p>
+<div class="container">
+    <div class="mb-3">
+      <label for="commentTitle" class="form-label">Yorum Başlığı:</label>
+      <input #txtCommentTitle type="text" class="form-control" id="commentTitle" placeholder="Yorum başlığını giriniz.">
+    </div>
+  
+    <div class="mb-3">
+      <label for="commentContent" class="form-label">Yorum:</label>
+      <textarea #txtCommentContent class="form-control" id="commentContent" rows="3"></textarea>
+    </div>
+  
+    <div class="mb-3">
+      <label class="form-label">Puanınız:</label>
+      <div class="rating-stars">
+        <span
+          class="star"
+          *ngFor="let star of generateStars(5)"
+          (click)="selectRating(star)"
+          [ngClass]="{'selected': star <= selectedRating}"
+        >
+          ⭐
+        </span>
+        <!-- Display selected rating -->
+        <span>{{ selectedRating }} Puan</span>
+      </div>
+    </div>
+  
+    <div class="mb-3 d-flex justify-content-end">
+      <button (click)="submitComment(txtCommentTitle,txtCommentContent)" class="btn btn-warning btn-sm">Yorum Yap</button>
+    </div>
+  </div>
+  

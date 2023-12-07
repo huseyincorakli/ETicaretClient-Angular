@@ -1,0 +1,56 @@
+.container {
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .form-label {
+    font-weight: bold;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .rating {
+    font-size: 24px;
+  }
+  
+  .rating span {
+    cursor: pointer;
+    margin-right: 5px;
+  }
+  
+  .btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .btn-warning {
+    background-color: #ffc107;
+    color: #333;
+  }
+  
+
+  .rating-stars {
+    font-size: 18px;
+  }
+  
+  .star {
+    cursor: pointer;
+  }
+  
+  .star.selected {
+    background-color: yellow;
+    border-radius: 3px;
+  }
+  
