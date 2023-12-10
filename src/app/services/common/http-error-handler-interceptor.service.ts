@@ -54,11 +54,16 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
           break;
 
         case HttpStatusCode.InternalServerError:
+           if(url.includes('/products/detail')){
+
+           }
+           else{
             this.toastr.message(
               'Hata',
               err.error.Message,
               ToastrMessageType.Error,
               ToastrPosition.BottomFull);
+           }
           
           break;
 

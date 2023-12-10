@@ -1,6 +1,28 @@
 <div class="comment">
   <div class="contaier">
-    <app-create></app-create>
+    <app-create *ngIf="!hasComment"></app-create>
+    <div *ngIf="hasComment" class="container">
+      <b>Sizin Yorumunuz:</b>
+      <div class="card mb-1">
+        <div class="card-body">
+          <div class="d-flex justify-content-between mb-1">
+            <h5 class="card-title"><b>{{ userComment.userCommentTitle }}</b></h5>
+            <span style="color:red" *ngIf="userComment.userScore<1">Yıldız Yok 😞</span>
+            <ng-container *ngFor="let star of generateStars(userComment.userScore)">
+              ⭐
+          
+            </ng-container>                
+          </div>
+          <p class="card-text">{{ userComment.userCommentContent }}</p>
+          <div class="d-flex justify-content-between">
+            <p class="card-text"><small class="text-muted">By: {{ userComment.userNameSurname }}</small></p>
+            <p class="card-text"><small class="text-muted">{{ userComment.createDate | date }}</small></p>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    
     </div>
     
     <div class="container mt-4">
@@ -10,7 +32,7 @@
         
         <!-- Display comments -->
         <div *ngFor="let comment of comments" class="card mb-1">
-            <div class="card-body">
+            <div  class="card-body">
               <div class="d-flex justify-content-between mb-1">
                 <h5 class="card-title"><b>{{ comment.userCommentTitle }}</b></h5>
                 <span style="color:red" *ngIf="comment.userScore<1">Yıldız Yok 😞</span>
@@ -50,5 +72,3 @@
             </ul>
           </nav>
       </div>
-      
-</div>

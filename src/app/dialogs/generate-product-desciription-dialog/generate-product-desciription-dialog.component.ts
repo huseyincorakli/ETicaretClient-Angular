@@ -4,6 +4,9 @@ import { BaseDialog } from '../base/base-dialog';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProductService } from 'src/app/services/common/models/product.service';
 import { GenerateProductDescription } from 'src/app/contracts/products/generate_products_desciription';
+import { ClipboardService } from 'src/app/services/ui/clipboard.service';
+import { CustomToastrService } from 'src/app/services/ui/custom-toastr.service';
+import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
 
 declare var $:any
 
@@ -17,6 +20,8 @@ export class GenerateProductDesciriptionDialogComponent extends BaseDialog<Gener
   isLoading:boolean;
   constructor(dialogRef: MatDialogRef<GenerateProductDesciriptionDialogComponent>,
     private productService: ProductService,
+    private clipboard:ClipboardService,
+    private alertfy:AlertifyService,
     @Inject(MAT_DIALOG_DATA) public data: GenerateProductDesciriptionDialogState | string,) {
     super(dialogRef)
   }
@@ -39,7 +44,6 @@ export class GenerateProductDesciriptionDialogComponent extends BaseDialog<Gener
     obj.keywords = txtKeywords.value.split(/\s+/).filter(k => k.trim() !== '');
     obj.name = txtProductName.value;
     this.isLoading=true;
-    console.log(this.isLoading);
     
     this.generatedData = await this.productService.GenerateProductDescription(obj, () => {
 
@@ -53,19 +57,13 @@ export class GenerateProductDesciriptionDialogComponent extends BaseDialog<Gener
 
 
   }
-  CopyToClipBoard() {
-    var copyText:any = document.getElementById("copyText");
-
-  // Select the text field
-  copyText.select();
-  copyText.setSelectionRange(0, 99999); // For mobile devices
-
-   // Copy the text inside the text field
-  navigator.clipboard.writeText(copyText.value);
-
-  // Alert the copied text
-  alert("Copied the text: " + copyText.value);
-    
+  copy(text:string){
+    this.clipboard.copyTextToClipboard(text);
+    this.alertfy.message("Kopyalandı",{
+      messageType:MessageType.Success,
+      dismissOthers:true,
+      position:Position.TopRight
+    })
   }
 }
 export enum GenerateProductDesciriptionDialogState {

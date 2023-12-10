@@ -27,6 +27,23 @@ export class CommentService {
       return await promiseData;
   }
 
+  async getComment(productId:string,userId:string,errorCallback?:(error:string)=>void):Promise<any>{
+    let _queryString=`UserId=${userId}&ProductId=${productId}`;
+    const observable = this.httpClientService.get({
+      action:'GetUserComment',
+      controller:'comments',
+      queryString:_queryString
+    })
+    const promiseData = firstValueFrom(observable)
+    promiseData.then(val=>{
+
+    }).catch(err=>{
+      if (errorCallback) {
+        errorCallback(err);
+      }
+    })
+    return await promiseData;
+  }
   async createComment(createComment:Create_Comment,successCallBack?:()=>void,errorCallback?:(errMessage:string)=>void){
     const observable=this.httpClientService.post({
       action:'AddComment',

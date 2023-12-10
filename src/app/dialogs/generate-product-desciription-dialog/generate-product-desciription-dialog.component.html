@@ -45,6 +45,6 @@
 
   <div *ngIf="generatedData.description" class="alert alert-success mt-2" role="alert">
     <p id="copyText"  class="data">  {{generatedData.description}}</p>
-   
+    <button class="btn btn-primary btn-sm" (click)="copy(generatedData.description)">Kopyala</button>
   </div>
 </div>

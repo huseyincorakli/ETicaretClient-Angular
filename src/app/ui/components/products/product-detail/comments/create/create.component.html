@@ -26,7 +26,12 @@
     </div>
   
     <div class="mb-3 d-flex justify-content-end">
-      <button (click)="submitComment(txtCommentTitle,txtCommentContent)" class="btn btn-warning btn-sm">Yorum Yap</button>
+      <button *ngIf="!isLoading" (click)="submitComment(txtCommentTitle,txtCommentContent)" class="btn btn-warning btn-sm">Yorum Yap</button>
+      <button *ngIf="isLoading"  class="btn btn-warning btn-sm">
+        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+        <span role="status">Lütfen bekleyiniz...</span>
+      </button>
     </div>
   </div>
+  
   
