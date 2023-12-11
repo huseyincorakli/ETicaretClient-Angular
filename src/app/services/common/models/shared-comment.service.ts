@@ -8,8 +8,6 @@ export class SharedCommentService {
 
   commentSubmitted$ = this.commentSubmittedSource.asObservable();
 
-  
-
   notifyCommentSubmitted() {
     this.commentSubmittedSource.next();
   }

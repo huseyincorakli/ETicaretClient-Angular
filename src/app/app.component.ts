@@ -10,6 +10,7 @@ import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-
 import { DialogService } from './services/common/dialog.service';
 import { CampaignDialogComponent } from './dialogs/campaign-dialog/campaign-dialog.component';
 import { ClipboardService } from './services/ui/clipboard.service';
+import { CampaignService } from './services/common/models/campaign.service';
 
 declare var $: any;
 
@@ -41,8 +42,8 @@ export class AppComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-
+  async ngOnInit(): Promise<void> {
+    
   }
 
 

@@ -1,11 +1,9 @@
-<!-- <app-header></app-header> -->
 <mat-drawer-container class="admin-container">
     <mat-drawer #drawer mode="over" class="admin-left" closed><app-sidebar></app-sidebar></mat-drawer>
     
-    <mat-drawer-content>
+    <mat-drawer-content class="drawer">
       <button mat-raised-button color="primary"  class="btnMenu" (click)="drawer.toggle()">Menu</button>
       <router-outlet>
       </router-outlet>
     </mat-drawer-content>
   </mat-drawer-container>
-  <!-- <app-footer></app-footer> -->
