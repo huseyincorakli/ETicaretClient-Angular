@@ -21,14 +21,16 @@ export class CreateCampaignComponent  extends BaseDialog<CreateCampaignComponent
   }
 
   async createCampaign(txtTitle:HTMLInputElement,txtCode:HTMLInputElement,txtContent:HTMLInputElement
-    ,txtExpiredTime:HTMLInputElement){
+    ,txtDiscount:HTMLInputElement,txtExpiredTime:HTMLInputElement){
     
       const createCampaign = new Create_Campaign;
       createCampaign.title= txtTitle.value;
       createCampaign.code=txtCode.value;
       createCampaign.content=txtContent.value;
       createCampaign.expiredTime = new Date(txtExpiredTime.value);
+      createCampaign.discountPercentage=parseInt(txtDiscount.value)
 
+      debugger
       await this.campaignService.createCampaign(createCampaign,(err)=>{
         this.toastr.message("Hata","Kampanya eklenirken bir hata oluştu",ToastrMessageType.Error,ToastrPosition.BottomRight);
       },()=>{
@@ -37,6 +39,7 @@ export class CreateCampaignComponent  extends BaseDialog<CreateCampaignComponent
         txtCode.value="";
         txtContent.value="";
         txtExpiredTime.value="";
+        txtDiscount.value="0";
       })
   }
 

@@ -4,4 +4,5 @@ export class Create_Campaign {
     content: string;
     expiredTime: Date;
     showCase: boolean=false;
+    discountPercentage:number;
 }
