@@ -27,6 +27,7 @@ import { GenerateProductDesciriptionDialogComponent } from './generate-product-d
 import { UpdateCategoryDialogComponent } from './update-category-dialog/update-category-dialog.component';
 import { EditProductDialogComponent } from './edit-product-dialog/edit-product-dialog.component';
 import { RouterModule } from '@angular/router';
+import { CreateCampaignComponent } from './create-campaign/create-campaign.component';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { RouterModule } from '@angular/router';
     QrcodeReadingDialogComponent,
     GenerateProductDesciriptionDialogComponent,
     UpdateCategoryDialogComponent,
-    EditProductDialogComponent
+    EditProductDialogComponent,
+    CreateCampaignComponent
   ],
   imports: [
     CommonModule,

@@ -18,7 +18,6 @@ export class LeastStockedProductsComponent implements AfterViewInit,OnInit {
   async ngOnInit(): Promise<void> {
     this.isLoading=true;
      this.products= (await this.productService.getLowStockProducts()).lowStockProducts
-     console.log(this.products);
      this.isLoading=false
 if (!this.isLoading) {
   this.createBarChart();

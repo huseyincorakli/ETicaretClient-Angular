@@ -34,8 +34,6 @@ export class WeeklySalesComponent implements OnInit,AfterViewInit   {
     
     this.datesArr = this.dates.map(date => new Date(date.year, date.month - 1, date.day).toLocaleDateString());
     this.datesLen= this.datesArr.length-1;
-    console.log(this.datesArr);
-    console.log(this.lineDatas);
     
     this.createLineChart();
     this.isloading=false;

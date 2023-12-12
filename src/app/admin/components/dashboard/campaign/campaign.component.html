@@ -1,0 +1,96 @@
+<div class="colContent">
+  <div class="content-button-group">
+    <input
+    (change)="searchCampaign($event)"
+      class="form-control mb-2"
+      placeholder="Kampanya Ara"
+      style="width: 200px; display: inline"
+      type="text"
+      name=""
+      id=""
+    />
+    <button (click)="createCampaign()" class="btn btn-primary mx-2">Kampanya Ekle</button>
+    <button (click)="getActiveCampaign()" style="float: right" class="btn btn-primary mx-2">
+      Gösterimdeki Kampanya
+    </button>
+  </div>
+  <div class="container">
+    <div *ngIf="activeCampaign != null && activeCampaign" class="card">
+      <div class="card-body">
+        <h2>Gösterimdeki Kampanya:</h2>
+        <table class="table table-hover mt-1 mx-auto">
+          <thead>
+            <tr>
+              <th class="text-center" scope="col">Kod</th>
+              <th class="text-center" scope="col">Kampanya Başlığı</th>
+              <th class="text-center" scope="col">Kampanya İçeriği</th>
+              <th class="text-center" scope="col">Kampanya Durumu</th>
+              <th class="text-center" scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th class="text-center">{{ activeCampaign.code }}</th>
+              <td class="text-center">{{ activeCampaign.title }}</td>
+              <td class="text-center">{{ activeCampaign.content }}</td>
+              <td class="text-center" *ngIf="activeCampaign.showCase == true">
+                <img src="../../../../../assets/check.png" alt="" />
+              </td>
+              <td class="text-center" *ngIf="activeCampaign.showCase == false">
+                <img src="../../../../../assets/close.png" alt="" />
+              </td>
+              <td>
+                <img (click)="deleteCampaign(activeCampaign.id)"
+                  style="cursor: pointer; width: 25px"
+                  src="../../../../../assets/delete.png"
+                  alt=""
+                />
+              </td>
+             
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <br *ngIf="activeCampaign">
+    <h2>Tüm Kampanyalar</h2>
+    <div *ngIf="isloading && isloading==true" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Yükleniyor...</span>
+        </div>
+      </div>
+    <table *ngIf="getAllCampaign " class="table table-hover mt-1 mx-auto">
+      <thead>
+        <tr>
+          <th class="text-center" scope="col">Kod</th>
+          <th class="text-center" scope="col">Kampanya Başlığı</th>
+          <th class="text-center" scope="col">Kampanya İçeriği</th>
+          <th class="text-center" scope="col">Gösterim Durumu</th>
+          <th class="text-center" scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let campaign of campaignList" >
+          <th class="text-center">{{ campaign.code }}</th>
+          <td class="text-center">{{ campaign.title }}</td>
+          <td class="text-center">{{ campaign.content }}</td>
+          <td  class="text-center" *ngIf="campaign.showCase == true">
+            <img style="cursor: pointer;" (click)="changeShowcase(campaign.id,false)" src="../../../../../assets/check.png" alt="" />
+          </td>
+          <td class="text-center" *ngIf="campaign.showCase == false">
+            <img style="cursor: pointer;" (click)="changeShowcase(campaign.id,true)" src="../../../../../assets/close.png" alt="" />
+          </td>
+          <td>
+            <img (click)="deleteCampaign(campaign.id)"
+              style="cursor: pointer; width: 25px"
+              src="../../../../../assets/delete.png"
+              alt=""
+            />
+          </td>
+         
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="loadMoreCampaigns()" class="btn btn-sm btn-warning">Daha fazla yükle</button>
+  </div>
+</div>

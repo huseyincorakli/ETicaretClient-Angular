@@ -1,0 +1,10 @@
+.colContent {
+    background-color: #dddd;
+    display: flex;
+    flex-direction: column;
+    padding: 10px; /* Increased padding for better spacing */
+    width: auto;
+    min-height: 300px;
+    height: auto; /* Increased height for better visualization */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}

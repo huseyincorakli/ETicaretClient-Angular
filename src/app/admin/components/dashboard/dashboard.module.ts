@@ -6,6 +6,7 @@ import { BestSellingProductsComponent } from './best-selling-products/best-selli
 import { LeastStockedProductsComponent } from './least-stocked-products/least-stocked-products.component';
 import { UnfulfilledOrdersComponent } from './unfulfilled-orders/unfulfilled-orders.component';
 import { WeeklySalesComponent } from './weekly-sales/weekly-sales.component';
+import { CampaignComponent } from './campaign/campaign.component';
 
 
 
@@ -16,6 +17,7 @@ import { WeeklySalesComponent } from './weekly-sales/weekly-sales.component';
     LeastStockedProductsComponent,
     UnfulfilledOrdersComponent,
     WeeklySalesComponent,
+    CampaignComponent,
   ],
   imports: [
     CommonModule,

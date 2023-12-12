@@ -11,6 +11,7 @@ import { DialogService } from './services/common/dialog.service';
 import { CampaignDialogComponent } from './dialogs/campaign-dialog/campaign-dialog.component';
 import { ClipboardService } from './services/ui/clipboard.service';
 import { CampaignService } from './services/common/models/campaign.service';
+import { Campaign } from './contracts/campaign/campaign';
 
 declare var $: any;
 
@@ -22,6 +23,7 @@ declare var $: any;
 export class AppComponent implements OnInit {
   showCampaignCard: boolean = true;
   campaignCardClosed: boolean = false;
+  activeCampaign: Campaign = null;
   @ViewChild(DynamicLoadComponentDirective, { static: true })
   dynamicLoadComponentDirective: DynamicLoadComponentDirective
   @ViewChild('navbarSupportedContent') navbarContent: ElementRef;
@@ -32,6 +34,7 @@ export class AppComponent implements OnInit {
     private router: Router,
     private spinner: NgxSpinnerService,
     private dynamicLoadComponentService: DynamicLoadComponentService,
+    private campaignService: CampaignService
   ) {
 
     authService.identityCheck();
@@ -43,9 +46,12 @@ export class AppComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    
+    await this.getActiveCampaign()
   }
-
+  async getActiveCampaign() {
+    const data = await this.campaignService.getActiveCampaign();
+    this.activeCampaign = data.campaign
+  }
 
   closeCampaignCard(): void {
     this.showCampaignCard = false;
@@ -80,8 +86,8 @@ export class AppComponent implements OnInit {
     this.spinner.hide(SpinnerType.Classic)
     this.authService.identityCheck();
   }
-  copy() {
-    this.clipboard.copyTextToClipboard("123")
+  copy(value) {
+    this.clipboard.copyTextToClipboard(value)
   }
   loadComponent() {
     this.dynamicLoadComponentService.loadComponent(ComponentType.BasketComponent, this.dynamicLoadComponentDirective.viewContainerRef)

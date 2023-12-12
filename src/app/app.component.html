@@ -181,16 +181,15 @@
     <br />
     <div *ngIf="showCampaignCard" class="campaign-card">
       <div class="d-flex justify-content-between campaing-c">
-        <span class="title"><span style="font-size: 24px;">🎉 </span> <span style="font-size: 20px;">Kampanya Başlığı</span> <span style="font-size: 24px;"> 🎉</span></span> 
+        <span class="title"><span style="font-size: 24px;">🎉 </span> <span style="font-size: 20px;">{{activeCampaign.title}}</span> <span style="font-size: 24px;"> 🎉</span></span> 
         <span (click)="closeCampaignCard()" id="campaing-close" class="title">X</span>
       </div>
       <p class="description">
-        We use cookies to ensure that we give you the best experience on our
-        website.
+      {{activeCampaign.content}}
       </p>
       <div class="actions">
-        <input type="text" value="KAMPANYA50" disabled>
-        <button (click)="copy()" class="copy">
+        <input type="text" value={{activeCampaign.code}} disabled>
+        <button (click)="copy(activeCampaign.code)" class="copy">
           
           <span
             class="tooltip"

@@ -1,0 +1,32 @@
+<div class="container ">
+   <div class="container">
+    <br>
+<h2>Kampanya Ekle</h2>
+    <div class="form-group">
+        <label for="title">Kampanya Başlığı</label>
+        <input #txtTitle type="text" class="form-control" id="title" placeholder="Enter title" >
+    </div>
+    <br>
+
+    <div class="form-group">
+        <label for="code">Kampanya Kodu</label>
+        <input #txtCode type="text" class="form-control" id="code" placeholder="Enter code" >
+    </div>
+    <br>
+
+    <div class="form-group">
+        <label for="content">Kampanya İçeriği</label>
+        <input #txtContent type="text" class="form-control" id="content" placeholder="Enter content">
+    </div>
+    <br>
+
+    <div class="form-group">
+        <label for="expiredTime">Bitiş Tarihi</label>
+        <input #txtExpiredTime type="datetime-local" class="form-control" id="expiredTime">
+    </div>
+    <br>
+    <button (click)="createCampaign(txtTitle,txtCode,txtContent,txtExpiredTime)" type="submit" class="btn btn-primary">Ekle</button>
+   </div>
+    <br>
+    <br>
+</div>
