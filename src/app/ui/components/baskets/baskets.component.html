@@ -46,6 +46,10 @@
             
           </table>
         </div>
+        <div>
+          <input #txtCampaingCode type="text">
+          <button (click)="acceptCampaignCode(txtCampaingCode)">Uygula</button>
+        </div>
         <div *ngIf="address?.address!=false" class="container">
           <div class="card bg-primary">
             <div class="card-body">

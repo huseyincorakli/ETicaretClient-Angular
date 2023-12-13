@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Stripe, StripeElements, StripeError } from '@stripe/stripe-js';
 import { BaseUrl } from 'src/app/contracts/base_url';
 import { List_Basket_Item } from 'src/app/contracts/basket/list_basket_item';
@@ -23,6 +23,7 @@ export class PayComponent implements OnDestroy, OnInit {
   elements: StripeElements | undefined;
   basketItems: List_Basket_Item[];
   totalAmount:number;
+  campaignId:string;
 
   constructor(
     private orderService: OrderService,
@@ -30,7 +31,8 @@ export class PayComponent implements OnDestroy, OnInit {
     private toastr: CustomToastrService,
     private basketService:BasketService,
     private fileService: FileService,
-    private router: Router) {
+    private router: Router,
+    private route: ActivatedRoute) {
 
 
   }
@@ -42,11 +44,22 @@ export class PayComponent implements OnDestroy, OnInit {
   userId: string;
   user: any;
   baseUrl: BaseUrl;
-
+  campaignCode:string;
   async ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params['data']) {
+        // Parse the JSON data
+        const jsonData = JSON.parse(params['data']);
+        this.campaignCode=jsonData.campaingCode;
+        this.totalAmount= (jsonData.totalAmount);
+        debugger
+      }
+    });
+
+   this.campaignId=  await this.orderService.getCampaignIdByCode(this.campaignCode);
+
     this.baseUrl = await this.fileService.getBaseStorageUrl()
   this.basketItems= await this.basketService.get()
-  this.totalAmount= this.basketItems.reduce((total, item) => total + item.totalPrice, 0);
   if (this.basketItems.length==0) {
     this.toastr.message('Sepet Boş','Sepette ürün olmadan ödeme yapılamaz.',ToastrMessageType.Error,ToastrPosition.TopRight)
     this.router.navigate(['/products'])
@@ -105,6 +118,7 @@ export class PayComponent implements OnDestroy, OnInit {
               this.message = 'Ödeme Başarılı';
               await this.orderService.create(this.order);
               this.order = null;
+              await this.orderService.createCampaignUsage(this.userId,this.campaignId)
 
               debugger;
               break;
@@ -126,6 +140,7 @@ export class PayComponent implements OnDestroy, OnInit {
         // Handle success
         this.message = 'Ödeme Başarılı';
         await this.orderService.create(this.order);
+        await this.orderService.createCampaignUsage(this.userId,this.campaignId)
         this.order = null;
 
         setTimeout(() => {

@@ -12,9 +12,14 @@ export class BasketService {
 
   constructor(private httpClientService: HttpClientService) { }
 
-  async get(): Promise<List_Basket_Item[]> {
+  async get(CampaignCode?:string,userId?:string): Promise<List_Basket_Item[]> {
+    let  _querystring:string;
+    if (CampaignCode) {
+       _querystring=`CampaignCode=${CampaignCode}&UserId=${userId}`
+    }
     const observable: Observable<List_Basket_Item[]> = this.httpClientService.get({
-      controller: 'baskets'
+      controller: 'baskets',
+      queryString:_querystring
     });
 
 

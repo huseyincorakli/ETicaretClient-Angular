@@ -24,7 +24,8 @@
               <th class="text-center" scope="col">Kod</th>
               <th class="text-center" scope="col">Kampanya Başlığı</th>
               <th class="text-center" scope="col">Kampanya İçeriği</th>
-              <th class="text-center" scope="col">Kampanya Durumu</th>
+              <th class="text-center" scope="col">Gösterim Durumu</th>
+              <th class="text-center" scope="col">İndirim Yüzdesi</th>
               <th class="text-center" scope="col"></th>
             </tr>
           </thead>
@@ -39,6 +40,8 @@
               <td class="text-center" *ngIf="activeCampaign.showCase == false">
                 <img src="../../../../../assets/close.png" alt="" />
               </td>
+              <td class="text-center">%{{ activeCampaign.discountPercentage }}</td>
+
               <td>
                 <img (click)="deleteCampaign(activeCampaign.id)"
                   style="cursor: pointer; width: 25px"
@@ -46,7 +49,6 @@
                   alt=""
                 />
               </td>
-             
             </tr>
           </tbody>
         </table>
@@ -66,6 +68,7 @@
           <th class="text-center" scope="col">Kampanya Başlığı</th>
           <th class="text-center" scope="col">Kampanya İçeriği</th>
           <th class="text-center" scope="col">Gösterim Durumu</th>
+          <th class="text-center" scope="col">İndirim Yüzdesi</th>
           <th class="text-center" scope="col"></th>
         </tr>
       </thead>
@@ -80,6 +83,7 @@
           <td class="text-center" *ngIf="campaign.showCase == false">
             <img style="cursor: pointer;" (click)="changeShowcase(campaign.id,true)" src="../../../../../assets/close.png" alt="" />
           </td>
+          <td class="text-center">%{{ campaign.discountPercentage }}</td>
           <td>
             <img (click)="deleteCampaign(campaign.id)"
               style="cursor: pointer; width: 25px"

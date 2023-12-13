@@ -36,6 +36,7 @@ export class BasketsComponent extends BaseComponent implements OnInit {
   }
 
   basketItems: List_Basket_Item[];
+  campaignCode:string;
   async ngOnInit() {
     this.showSpinner(SpinnerType.Clock)
     this.basketItems = await this.basketService.get()
@@ -45,7 +46,12 @@ export class BasketsComponent extends BaseComponent implements OnInit {
   }
   ngAfterViewInit() {
   }
+  async acceptCampaignCode(txtCampaingCode:HTMLInputElement){
+    this.campaignCode=txtCampaingCode.value;
+    this.basketItems=await this.basketService.get(this.campaignCode,this.userId)
+    this.calculateTotalBasketPrice();
 
+  }
   async changeQuantity(object: any, abc: List_Basket_Item) {
     this.showSpinner(SpinnerType.Clock)
     const basketItemId = object.target.attributes["id"].value;
@@ -115,8 +121,9 @@ export class BasketsComponent extends BaseComponent implements OnInit {
                `
             order.description = this.userMessage
             const totalAmount = this.totalBasketPrice;
-
-            const dataToSend = { order: order, totalAmount: totalAmount };
+            const usageCampaignCode= this.campaignCode;
+            debugger
+            const dataToSend = { order: order, totalAmount: totalAmount,campaingCode:this.campaignCode };
 
             this.toastr.message("💸Ödeme Sayfasına Yönlendiriliyorsunuz...", "", ToastrMessageType.Info, ToastrPosition.BottomFull);
             setTimeout(() => {
@@ -127,18 +134,6 @@ export class BasketsComponent extends BaseComponent implements OnInit {
             }, 2000);
 
 
-
-            //  this.showSpinner(SpinnerType.Clock)
-            //  const order: Create_Order = new Create_Order();
-            //  order.address = `${this.address.address.addressInfo}-
-            //   ${this.address.address.directions} - 
-            //   ${this.address.address.city}/${this.address.address.county}
-            //   ${this.address.address.telNumber}
-            //   `
-            //  order.description = this.userMessage
-            //  await this.orderService.create(order);
-            //  this.hideSpinner(SpinnerType.Clock);
-            //  this.toastr.message("Sipariş Tamamlandı", "Siparişiniz oluşturulmuştur bizi tercih ettiğiniz için teşekkürler.", ToastrMessageType.Success, ToastrPosition.TopRight);
 
           }
         })

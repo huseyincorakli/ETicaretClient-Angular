@@ -36,19 +36,18 @@ export class CheckoutComponent  {
       this.router.navigate(['/products'])
     }
     this.calculateTotalBasketPrice()
-    this.totalAmount= this.basketItems.reduce((total, item) => total + item.totalPrice, 0)*100;
 
     this.route.queryParams.subscribe(params => {
-      // Check if the 'data' parameter is present
       if (params['data']) {
         // Parse the JSON data
         const jsonData = JSON.parse(params['data']);
         
         this.order=jsonData.order;
+        this.totalAmount= jsonData.totalAmount
+        
       }
     });
-    console.log("CO",this.order);
-    console.log("CO",this.totalAmount);
+  
     
     this.http.post<any>('https://localhost:7229/api/PaymentIntentApi', { items: [{ id: 'test-payment',amount:(this.totalAmount).toString() }] })
       .subscribe(data => {

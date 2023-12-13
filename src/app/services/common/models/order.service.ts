@@ -19,6 +19,26 @@ export class OrderService {
     await firstValueFrom(observable);
   }
 
+  async createCampaignUsage( userId:string,  campaignId:string): Promise<void> {
+    const observable: Observable<Create_Order> = this.httpClientService.get({
+      controller: 'PaymentIntentApi',
+      action:'SetCampaignUsage',
+      queryString:`userId=${userId}&campaignId=${campaignId}`
+    },)
+    await firstValueFrom(observable);
+  }
+
+  async getCampaignIdByCode(code:string):Promise<any>{
+    const observable = this.httpClientService.get({
+      action:'GetCampaignIdByCode',
+      controller:'PaymentIntentApi',
+      queryString:`code=${code}`
+    })
+
+    return await firstValueFrom(observable)
+  }
+  
+
   async getAllOrders(page: number = 0, size: number = 5,isCompleted:boolean,
     orderCode?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void):
     
@@ -95,4 +115,5 @@ export class OrderService {
     })
     return await promiseData;
   }
+
 }
