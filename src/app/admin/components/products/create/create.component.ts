@@ -51,6 +51,14 @@ export class CreateComponent extends BaseComponent implements OnInit {
           messageType: MessageType.Success,
           position: Position.TopRight
         });
+        name.value="";
+        price.value="";
+        stock.value="";
+        description.value="";
+        brand.value="";
+        shortDesc.value="";
+        spesification.value="";
+        
       this.createdProduct.emit(create_product)
     }, errorMessage => {
       setTimeout(() => {

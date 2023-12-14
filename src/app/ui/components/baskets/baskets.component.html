@@ -46,10 +46,7 @@
             
           </table>
         </div>
-        <div>
-          <input #txtCampaingCode type="text">
-          <button (click)="acceptCampaignCode(txtCampaingCode)">Uygula</button>
-        </div>
+       
         <div *ngIf="address?.address!=false" class="container">
           <div class="card bg-primary">
             <div class="card-body">
@@ -62,9 +59,23 @@
               
               <textarea [(ngModel)]="userMessage" placeholder="Mesajınızı yazınız." class="form-control" aria-label="With textarea"></textarea>
               <br>
-              <p class="card-text fs-5 text-light text-end bold">
-                <b>Sepet Tutarı:</b> {{totalBasketPrice}}$
-              </p>
+              <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <input #txtCampaignCode type="text" class="form-control" placeholder="Kampanya Kodu">
+                            <button (click)="acceptCampaignCode(txtCampaignCode)" class="btn btn-warning">Uygula</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <p class="card-text mt-3 fs-5 text-light bold">
+                            <b>Cart Total:</b> {{totalBasketPrice}}$
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+             
 
             </div>
           </div>

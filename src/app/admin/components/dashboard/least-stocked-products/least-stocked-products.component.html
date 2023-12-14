@@ -17,7 +17,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let product of products?.lowStockProducts" >
-                <th ><a [routerLink]="['/products/detail/',product.id]" >{{product.name}}</a></th>
+                <th ><a [routerLink]="['/products/detail/',product.id]" >{{product.name.slice(0,10)}}</a></th>
                
                 <td>{{product.stock}} <img style="width: 20px; height: 20px;" *ngIf="product.stock<5" src="../../../../../assets/warningbadge.png" alt=""></td>
               </tr>

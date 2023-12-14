@@ -37,7 +37,7 @@ if (!this.isLoading) {
       type: 'bar',
       
       data: {
-        labels:this.products.lowStockProducts.map(product=>product.name),
+        labels:this.products.lowStockProducts.map(product=>product.name.slice(0,10)+'...'),
         datasets: [{
           barThickness:15,
           minBarLength:10,animation:{

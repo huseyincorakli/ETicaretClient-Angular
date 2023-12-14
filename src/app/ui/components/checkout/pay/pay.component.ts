@@ -44,7 +44,7 @@ export class PayComponent implements OnDestroy, OnInit {
   userId: string;
   user: any;
   baseUrl: BaseUrl;
-  campaignCode:string;
+  campaignCode?:string;
   async ngOnInit() {
     this.route.queryParams.subscribe(params => {
       if (params['data']) {
@@ -56,8 +56,9 @@ export class PayComponent implements OnDestroy, OnInit {
       }
     });
 
-   this.campaignId=  await this.orderService.getCampaignIdByCode(this.campaignCode);
-
+if (this.campaignCode) {
+  this.campaignId=  await this.orderService.getCampaignIdByCode(this.campaignCode);
+}
     this.baseUrl = await this.fileService.getBaseStorageUrl()
   this.basketItems= await this.basketService.get()
   if (this.basketItems.length==0) {
@@ -140,7 +141,9 @@ export class PayComponent implements OnDestroy, OnInit {
         // Handle success
         this.message = 'Ödeme Başarılı';
         await this.orderService.create(this.order);
-        await this.orderService.createCampaignUsage(this.userId,this.campaignId)
+        if (this.campaignCode) {
+          await this.orderService.createCampaignUsage(this.userId,this.campaignId)
+        }
         this.order = null;
 
         setTimeout(() => {

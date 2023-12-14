@@ -179,13 +179,14 @@
   </nav>
   <div class="main">
     <br />
+    
     <div  *ngIf="showCampaignCard && activeCampaign" class="campaign-card">
       <div class="d-flex justify-content-between campaing-c">
         <span class="title"><span style="font-size: 24px;">🎉 </span> <span style="font-size: 20px;">{{activeCampaign.title}}</span> <span style="font-size: 24px;"> 🎉</span></span> 
         <span (click)="closeCampaignCard()" id="campaing-close" class="title">X</span>
       </div>
       <p class="description">
-      {{activeCampaign.content}}
+      {{activeCampaign.content}}   <b>Son Tarih: {{activeCampaign.expiredTime | date:'dd.MM.yyyy  HH:mm'}}</b>
       </p>
       <div class="actions">
         <input type="text" value={{activeCampaign.code}} disabled>
