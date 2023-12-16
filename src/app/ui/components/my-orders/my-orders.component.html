@@ -1,0 +1,47 @@
+<div class="container axu">
+  <h1>Siparişlerim</h1>
+  <mat-accordion>
+    <mat-expansion-panel
+      *ngFor="let order of orders"
+      (opened)="getOrderDetail(panelOpenState,order.id)"
+      (closed)="panelOpenState = false"
+      style="margin-bottom: 5px;"
+    >
+      <mat-expansion-panel-header  *ngIf="order">
+        <mat-panel-title> Sipariş No: {{ order.orderCode }} </mat-panel-title>
+        <mat-panel-description>
+         <b> Sipariş Durumu: {{ order.completed == false ? 'Tedarik Aşamasında':'Sipariş Tamamlandı' }} </b>
+        </mat-panel-description>
+        <mat-panel-description>
+         <b> Oluşturulma Tarihi: {{ order.createdDate |  date:'dd/MM/yyyy HH:mm:ss'  }}</b>
+        </mat-panel-description>
+        <mat-panel-description>
+          <b>Sipariş Tutarı: {{ order.totalPrice }}</b>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div *ngIf="isLoading" class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <table  class="table" *ngIf="basketOrder && !isLoading">
+        <thead>
+          <tr>
+            <th scope="col">Ürün Adı</th>
+            <th scope="col">Fiyatı</th>
+            <th scope="col">Adet</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let basketItem of basketOrder.basketItems">
+            <th scope="row"><a [routerLink]="['/products/detail/', basketItem.productId]">{{basketItem.name}}</a></th>
+            <td> {{basketItem.price}}</td>
+            <td> {{basketItem.quantity}}</td>
+          </tr>
+        </tbody>
+      </table>
+      
+    </mat-expansion-panel>
+  </mat-accordion>
+  <button (click)="getMoreOrder()" class="btn btn-sm btn-warning">Daha Fazla Yükle</button>
+</div>

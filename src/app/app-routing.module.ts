@@ -75,6 +75,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'my-orders',
+    loadChildren: () =>
+      import('./ui/components/my-orders/my-orders.module').then(
+        (module) => module.MyOrdersModule
+      ),
+  },
+  {
     path: 'checkouts',
     loadChildren: () =>
       import('./ui/components/checkout/checkout.module').then(

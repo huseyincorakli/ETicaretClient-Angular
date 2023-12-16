@@ -24,16 +24,19 @@ export class CommentsComponent implements OnInit {
   totalPages: number;
   userComment: any;
   datax:any;
+  productId:string;
+  summarizedComment:any;
+  isLoading:boolean;
   async ngOnInit() {
     
-    const productId = this.activatedRoute.snapshot.paramMap.get('productId')
-    var data = await this.commentService.getCommentsByProductId(productId, this.page, this.size);
+    this.productId = this.activatedRoute.snapshot.paramMap.get('productId')
+    var data = await this.commentService.getCommentsByProductId(this.productId, this.page, this.size);
     this.comments = data.responseData
     this.totalCount = data.totalCount
     this.averageScore = data.avarageScore;
     this.totalPages = Math.ceil(this.totalCount / this.size);
     const userId = localStorage.getItem('userId');
-    this.datax = await this.commentService.getComment(productId, userId);
+    this.datax = await this.commentService.getComment(this.productId, userId);
     this.hasComment = this.datax.isHas;
     
     if (this.hasComment == true) {
@@ -41,7 +44,7 @@ export class CommentsComponent implements OnInit {
     }
     this.sharedComment.commentSubmitted$.subscribe(async ()=>{
       await this.fetchComments();
-     this.datax = await this.commentService.getComment(productId, userId);
+     this.datax = await this.commentService.getComment(this.productId, userId);
       this.hasComment = this.datax.isHas;
       if (this.hasComment == true) {
         this.userComment = this.datax.comment
@@ -57,6 +60,14 @@ export class CommentsComponent implements OnInit {
       this.page = newPage;
       this.fetchComments();
     }
+  }
+  async summarizeComment(){
+    this.isLoading=true;
+    const summarizeComment =  await this.commentService.summarizeComment(this.productId);
+    debugger
+    this.summarizedComment =JSON.parse(summarizeComment.responseData);
+    debugger;
+    this.isLoading=false;
   }
   generateStars(score: number): number[] {
     return Array.from({ length: score }, (_, index) => index + 1);

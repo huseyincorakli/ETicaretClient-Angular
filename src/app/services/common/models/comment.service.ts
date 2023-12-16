@@ -60,4 +60,23 @@ export class CommentService {
       }
     })
   }
+  async summarizeComment(productId:string,successCallBack?:()=>void,errorCallback?:(err:string)=>void):Promise<any>{
+    const observable = this.httpClientService.get({
+      action:'SummarizeCommentAPI',
+      controller:'Comments',
+      queryString:`ProductId=${productId}`
+    })
+    const promiseData= firstValueFrom(observable);
+    promiseData.then(()=>{
+      if (successCallBack) {
+        successCallBack();
+      }
+    }).catch((error)=>{
+      if (errorCallback) {
+        errorCallback(error);
+      }
+    })
+
+    return await promiseData;
+  }
 }

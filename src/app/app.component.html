@@ -44,7 +44,61 @@
             </a>
           </li>
         </ul>
+        
         <ul class="navbar-nav ms-auto">
+          <ul class="navbar-nav">
+            <li>
+              <button
+                class="signupBtn"
+                *ngIf="authService.isAuthenticated"
+                data-bs-toggle="modal"
+                data-bs-target="#basketModal"
+                (click)="loadComponent()"
+              >
+                <span style="font-weight: 500; font-size: 15px">Sepet</span>
+                <span class="arrow">
+                  <img
+                    class="registerIcon"
+                    src="../assets/shopping-online.png"
+                    alt=""
+                  />
+                </span>
+              </button>
+            </li>
+            <li>
+              <button
+                class="signinBtn"
+                *ngIf="authService.isAuthenticated"
+                routerLink="my-orders"
+              >
+                <span style="font-weight: 500; font-size: 15px">Siparişlerim</span>
+                <span class="arrow">
+                  <img
+                    class="registerIcon"
+                    src="../assets/order.png"
+                    alt=""
+                  />
+                </span>
+              </button>
+            </li>
+          </ul>
+          <li class="nav-item">
+            <button
+              class="signupBtn"
+              aria-current="page"
+              routerLink="admin"
+              *ngIf="authService.isAuthenticated && authService.hasRole"
+            >
+              Panel
+              <span class="arrow">
+                <img
+                  class="dashboardIcon"
+                  src="../assets/dashboard.png"
+                  alt=""
+                />
+              </span>
+            </button>
+          </li>
           <li>
             <div class="dropdown-center">
               <button
@@ -62,7 +116,7 @@
                     alt=""
                   />
                 </span>
-                <ul class="dropdown-menu xac">
+                <ul class="dropdown-menu dropdown-menu-end xac">
                   <li>
                     <button
                       class="signupBtn"
@@ -120,23 +174,7 @@
               </span>
             </button>
           </li>
-          <li class="nav-item">
-            <button
-              class="signupBtn"
-              aria-current="page"
-              routerLink="admin"
-              *ngIf="authService.isAuthenticated && authService.hasRole"
-            >
-              Panel
-              <span class="arrow">
-                <img
-                  class="dashboardIcon"
-                  src="../assets/dashboard.png"
-                  alt=""
-                />
-              </span>
-            </button>
-          </li>
+          
           <li class="nav-item">
             <button
               class="signinBtn"
@@ -154,26 +192,7 @@
             </button>
           </li>
         </ul>
-        <ul class="navbar-nav">
-          <li>
-            <button
-              class="signupBtn"
-              *ngIf="authService.isAuthenticated"
-              data-bs-toggle="modal"
-              data-bs-target="#basketModal"
-              (click)="loadComponent()"
-            >
-              <span style="font-weight: 500; font-size: 15px">Sepet</span>
-              <span class="arrow">
-                <img
-                  class="registerIcon"
-                  src="../assets/shopping-online.png"
-                  alt=""
-                />
-              </span>
-            </button>
-          </li>
-        </ul>
+       
       </div>
     </div>
   </nav>

@@ -28,8 +28,22 @@
     <div class="container mt-4">
     <hr>
 
-        <h2>Ürün Yorumları</h2>
+        <div>
+          <h2>Ürün Yorumları</h2>
+          <button *ngIf="!isLoading && comments.length>0" (click)="summarizeComment()" class="btn btn-sm btn-danger" style="float: right;">Yorumları Özetle</button>
+          <button *ngIf="isLoading"  class="btn btn-sm btn-danger" style="float: right;">
+            <span style="margin-right: 3px;" class="spinner-border spinner-border-sm" aria-hidden="true" disabled></span>
+            <span role="status">Lütfen Bekleyiniz...</span>
+          </button>
+        </div>
+        <br>
+        <br>
         
+        <div *ngIf="summarizedComment && !isLoading" class="alert alert-danger alert-dismissible  fade show" role="alert">
+          Tüm Yorumların Özeti : <strong>{{summarizedComment.summaryOfComments}} Ortalama: {{summarizedComment.score_avarage}}</strong>
+          
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>        
         <!-- Display comments -->
         <div *ngFor="let comment of comments" class="card mb-1">
             <div  class="card-body">

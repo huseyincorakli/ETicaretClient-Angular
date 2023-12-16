@@ -116,4 +116,24 @@ export class OrderService {
     return await promiseData;
   }
 
+  async getOrderByUserId(userId:string,size:number,succesCallBack?:()=>void,errorCallBack?:()=>void){
+     const observable=  this.httpClientService.get({
+        action:'GetOrdersByUserId',
+        controller:'WorkSpace',
+        queryString:`userId=${userId}&size=${size}`
+      })
+
+      const promiseData= firstValueFrom(observable)
+        promiseData.then(val=>{
+          if (succesCallBack) {
+            succesCallBack();
+          }
+        }).catch(err=>{
+            if (errorCallBack) {
+              errorCallBack()
+            }
+        })
+        return await promiseData;
+  }
+
 }
