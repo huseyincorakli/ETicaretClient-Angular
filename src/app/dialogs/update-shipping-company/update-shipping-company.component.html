@@ -1,0 +1,17 @@
+<div class="container p-3 ">
+    <h2>Kargo Şirketini Güncelle</h2>
+    <div class="mb-3">
+        <label for="name" class="form-label">Şirket Adı</label>
+        <input #txtName type="email" class="form-control" value="{{data.companyName}}" id="name">
+      </div>
+
+      <div class="mb-3">
+        <label for="url" class="form-label">Url</label>
+        <input #txtUrl type="email" class="form-control" id="url"  value="{{data.companyUrl}}">
+      </div>
+
+      <div class="mb-3">
+      <button (click)="updateCompany(txtName,txtUrl,data.id)" style="float: right;" class="btn btn-sm btn-primary">Güncelle</button>
+      </div>
+      <br>
+</div>

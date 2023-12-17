@@ -1,0 +1,84 @@
+<mat-drawer-container class="example-container" [hasBackdrop]="true">
+  <mat-drawer #drawer [mode]="'over'">
+    <div class="container">
+      <br />
+      <div class="input-group mb-3">
+        <h2>Kargo Şirketi Ekle</h2>
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default"
+          >Şirket Adı</span
+        >
+        <input
+          #txtCompanyName
+          type="text"
+          class="form-control"
+          aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default"
+        />
+      </div>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Url</span>
+        <input
+          #txtCompanyUrl
+          type="text"
+          class="form-control"
+          aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default"
+        />
+      </div>
+      <div class="input-group mb-3">
+        <button (click)="createCompany(txtCompanyName,txtCompanyUrl)" class="btn btn-primary w-100">Ekle</button>
+      </div>
+    </div>
+  </mat-drawer>
+  <mat-drawer-content>
+    <button mat-raised-button (click)="drawer.toggle()">
+      Kargo Şirketi Ekle
+    </button>
+    <br />
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">Şirket Adı</th>
+          <th scope="col">Şirket Url</th>
+          <th scope="col">
+           
+          </th>
+          <th scope="col">
+            <img (click)="refreshDatas()"  style="float: right; cursor: pointer; margin: 2px;" src="../../../../assets/refresh.png" alt="">
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let compainy of shippingCompanies">
+          <th scope="row">{{ compainy.companyName }}</th>
+          <td>
+            <a
+              class="btn btn-sm btn-danger"
+              target="_blank"
+              href="{{ compainy.companyUrl }}"
+              >Sayfayı Ziyaret Et</a
+            >
+          </td>
+          <td>
+            <img
+              style="cursor: pointer; width: 25px"
+              src="../../../../assets/edit.png"
+              alt=""
+              (click)="updateCompany(compainy)"
+            />
+          </td>
+          <td>
+            <img
+              style="cursor: pointer; width: 25px"
+              src="../../../../assets/delete.png"
+              (click)="deleteCompany(compainy.id)"
+              alt=""
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </mat-drawer-content>
+</mat-drawer-container>

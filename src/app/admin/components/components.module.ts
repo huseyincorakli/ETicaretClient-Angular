@@ -8,6 +8,7 @@ import { AuthorizeMenuModule } from './authorize-menu/authorize-menu.module';
 import { RolesModule } from './roles/roles.module';
 import { UserModule } from './user/user.module';
 import { CategoriesModule } from './categories/categories.module';
+import { ShippingModule } from './shipping/shipping.module';
 
 
 
@@ -23,6 +24,7 @@ import { CategoriesModule } from './categories/categories.module';
     RolesModule,
     UserModule,
     CategoriesModule,
+    ShippingModule
   ],
 })
 export class ComponentsModule {}

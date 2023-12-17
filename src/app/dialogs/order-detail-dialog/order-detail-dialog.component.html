@@ -1,4 +1,3 @@
-<h2 mat-dialog-title>Sipariş Detayı</h2>
 <mat-dialog-content class="mat-typography">
   <mat-toolbar>
     <span>Sipariş No:{{ singleOrder.orderCode }}</span>
@@ -56,10 +55,24 @@
   <div class="basketPrice">
     <p>Sepet Tutarı: {{ totalPrice | currency }}</p>
   </div>
+  <mat-form-field style="margin: 5px;">
+    <mat-label>Kargo Takip No</mat-label>
+    <input  [(ngModel)]="trackCode" matInput>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Kargo Şirketini Seçiniz</mat-label>
+    <mat-select [(ngModel)]="selectedCompanyId" name="food">
+      
+        <mat-option *ngFor="let company of shippingCompanies" [value]="company.id">{{company.companyName}}</mat-option>
+      
+    </mat-select>
+  </mat-form-field>
 
 </mat-dialog-content>
 <mat-dialog-actions align="end" style="margin-right: 5px;">
   <button mat-button mat-dialog-close>Kapat</button>
+  
   <button *ngIf="!singleOrder.completed"  (click)="completeOrder()" mat-button [mat-dialog-close]="data" cdkFocusInitial>
     Siparişi Tamamla
   </button>

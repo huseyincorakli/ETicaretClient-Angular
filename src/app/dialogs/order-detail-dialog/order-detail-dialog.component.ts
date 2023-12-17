@@ -8,6 +8,7 @@ import { CompleteOrderDialogComponent, CompleteOrderState } from '../complete-or
 import { NgxSpinner, NgxSpinnerService } from 'ngx-spinner';
 import { AlertifyService, MessageType, Position } from 'src/app/services/admin/alertify.service';
 import { SpinnerType } from 'src/app/base/base.component';
+import { ShippingService } from 'src/app/services/common/models/shipping.service';
 
 @Component({
   selector: 'app-order-detail-dialog',
@@ -21,22 +22,25 @@ export class OrderDetailDialogComponent extends BaseDialog<OrderDetailDialogComp
     private orderService: OrderService,
     private dialogService:DialogService,
     private spinner:NgxSpinnerService,
-    private alertify:AlertifyService
+    private alertify:AlertifyService,
+    private shippingService:ShippingService
     ) {
 
     super(dialogRef)
   }
-
+  selectedCompanyId: string;
+  trackCode:string;
   singleOrder: SingleOrder;
   displayedColumns: string[] = ['name', 'price', 'quantity', 'totalPrice'];
   dataSource = [];
   clickedRows = new Set<any>();
   totalPrice:number;
-
+  shippingCompanies:any=[]
   async ngOnInit() {
     this.singleOrder = await this.orderService.getOrderById(this.data as string)
     this.dataSource = this.singleOrder.basketItems
-
+     this.shippingCompanies= (await this.shippingService.getAll()).shippingCompanies
+    debugger
     this.totalPrice=this.singleOrder.basketItems.map((basketItem,index)=>basketItem.price*basketItem.quantity).reduce((price,current)=>price+current);
   }
 
@@ -44,9 +48,12 @@ completeOrder(){
  const dialogRef= this.dialogService.openDialog({
     componentType:CompleteOrderDialogComponent,
     data:CompleteOrderState.Yes,
+    options:{
+      width:'500px'
+    },
     afterClosed:async()=>{
       this.spinner.show(SpinnerType.Classic)
-     await this.orderService.completeOrder(this.data as string).then(value=>{
+     await this.orderService.completeOrder(this.data as string,this.selectedCompanyId,this.trackCode).then(value=>{
       this.spinner.hide(SpinnerType.Classic)
       this.alertify.message("Sipariş tamamlandı",{
        messageType:MessageType.Success,

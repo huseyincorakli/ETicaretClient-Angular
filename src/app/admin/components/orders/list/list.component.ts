@@ -65,7 +65,7 @@ export class ListComponent extends BaseComponent {
       componentType:OrderDetailDialogComponent,
       data:id,
       options:{
-        height:'550px',
+        height:'500px',
         width:'750px'
       }
     })

@@ -87,13 +87,11 @@ export class OrderService {
       .catch(error => errorCallBack(error))
     return await promiseData;
   }
-
-  async completeOrder(id:string) {
-    const observable: Observable<any> = this.httpClientService.get({
+  async completeOrder(id:string,companyId:string,trackCode:string) {
+    const observable: Observable<any> = this.httpClientService.post({
       controller: 'orders',
-      action:'complete-order'
-    }, id)
-
+      action:'CompleteOrder'
+    },{"id":id,"companyId":companyId,"trackCode":trackCode} )
 
     await firstValueFrom(observable);
   }

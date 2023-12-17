@@ -28,7 +28,8 @@ import { UpdateCategoryDialogComponent } from './update-category-dialog/update-c
 import { EditProductDialogComponent } from './edit-product-dialog/edit-product-dialog.component';
 import { RouterModule } from '@angular/router';
 import { CreateCampaignComponent } from './create-campaign/create-campaign.component';
-
+import { UpdateShippingCompanyComponent } from './update-shipping-company/update-shipping-company.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { CreateCampaignComponent } from './create-campaign/create-campaign.compo
     GenerateProductDesciriptionDialogComponent,
     UpdateCategoryDialogComponent,
     EditProductDialogComponent,
-    CreateCampaignComponent
+    CreateCampaignComponent,
+    UpdateShippingCompanyComponent
   ],
   imports: [
     CommonModule,
@@ -62,7 +64,8 @@ import { CreateCampaignComponent } from './create-campaign/create-campaign.compo
     MatFormFieldModule,
     MatInputModule,
     NgxScannerQrcodeModule,
-    RouterModule
+    RouterModule,
+    MatSelectModule
     
   ]
 })

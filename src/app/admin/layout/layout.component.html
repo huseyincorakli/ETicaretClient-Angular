@@ -2,7 +2,9 @@
     <mat-drawer #drawer mode="over" class="admin-left" closed><app-sidebar></app-sidebar></mat-drawer>
     
     <mat-drawer-content class="drawer">
-      <button mat-raised-button color="primary"  class="btnMenu" (click)="drawer.toggle()">Menu</button>
+      <button  (click)="drawer.toggle()" color="primary" style="margin: 3px;" mat-mini-fab  aria-label="Example icon button with a home icon">
+        <mat-icon>menu</mat-icon>
+      </button>
       <router-outlet>
       </router-outlet>
     </mat-drawer-content>
