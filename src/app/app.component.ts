@@ -59,7 +59,7 @@ export class AppComponent implements OnInit {
   }
   checkShowCampaignCard(): void {
     const currentRoute = this.router.url;
-    this.showCampaignCard = !this.campaignCardClosed && !currentRoute.includes('/admin') && !currentRoute.includes('/my-orders');
+    this.showCampaignCard = !this.campaignCardClosed && !currentRoute.includes('/admin') && !currentRoute.includes('/my-orders') &&!currentRoute.includes('/checkouts');
   }
 
   toggleNavbarContent() {

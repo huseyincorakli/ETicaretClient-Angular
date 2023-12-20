@@ -1,12 +1,14 @@
 <div class="payment-container">
-  <div class="containers">
+  <div class="container ">
     <div class="container">
         <div *ngFor="let basketItem of basketItems" class="item-container">
             <img  src="{{ baseUrl?.url }}/{{basketItem.imagePath}}" alt="Item Image" class="item-image">
             <a [routerLink]="['/products/detail/',basketItem.productId]" class="item-name">{{basketItem.name}}</a>
-            <div class="item-price">{{basketItem.price | currency:'TRY'}}x</div>
-            <div class="item-price">{{basketItem.quantity}}</div>
-            <div class="item-price"> = {{basketItem.totalPrice | currency:'TRY'}} </div>
+            <div class="item-price"><span style="color: rgb(255, 0, 0);">{{basketItem.price | currency:'TRY'}}</span><span style="color: rgb(38, 0, 255);">
+              x
+            </span></div>
+            <div class="item-price"><span style="color: brown;">{{basketItem.quantity}}</span></div>
+            <div class="item-price"> = <b>{{basketItem.totalPrice | currency:'TRY'}}</b> </div>
         </div>
         
             

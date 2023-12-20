@@ -117,7 +117,7 @@ export class OrderService {
   async getOrderByUserId(userId:string,size:number,succesCallBack?:()=>void,errorCallBack?:()=>void){
      const observable=  this.httpClientService.get({
         action:'GetOrdersByUserId',
-        controller:'WorkSpace',
+        controller:'orders',
         queryString:`userId=${userId}&size=${size}`
       })
 

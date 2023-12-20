@@ -1,26 +1,26 @@
-
 .payment-container {
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between;
+  align-items: flex-start;
   height: 100%;
 }
-.containers{
+
+.containers {
   max-width: 800px;
-  width: 100%;
+  width: 60%; 
   padding: 20px;
+  box-sizing: border-box;
 }
-.addresContainer{
+
+.addresContainer {
   max-width: 400px;
   padding: 20px;
   width: 30%;
-  height: 95%;
+  height: fit-content;
   border-radius: 8px;
   margin-bottom: 5px;
   background: linear-gradient(145deg, #e0d4ff, #dfccff);
-  box-shadow:  20px 20px 60px #b1a2d9,
-             -20px -20px 60px #efdcff;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .container {
@@ -30,18 +30,19 @@
   border-radius: 8px;
   margin-bottom: 20px;
   background: linear-gradient(145deg, #e0d4ff, #dfccff);
-box-shadow:  20px 20px 60px #b1a2d9,
-             -20px -20px 60px #efdcff;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
-.StripeElement input{
-  font-size: xx-large;
+.StripeElement input {
+  font-size: large;
 }
 
 #payment-form {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
+
 .ElementsApp {
   display: flex;
   flex-direction: row;
@@ -65,10 +66,14 @@ button {
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
 }
-.payment-form{
+
+.payment-form {
   font-size: 1.2em;
 }
+
 button:disabled {
   background-color: #ddd;
   cursor: not-allowed;
@@ -80,12 +85,14 @@ button:disabled {
   justify-content: space-between;
   margin-bottom: 10px;
 }
-.item-container>a{
-  color: #007bff; /* Blue color for the link */
-  text-decoration: none; /* Remove underlines by default */
+
+.item-container > a {
+  color: #007bff;
+  text-decoration: none;
   transition: color 0.3s ease;
 }
-.item-container>a:hover{
+
+.item-container > a:hover {
   color: #0056b3;
 }
 
@@ -107,6 +114,7 @@ button:disabled {
   font-size: 0.9rem;
   text-align: right;
 }
+
 @media (max-width: 600px) {
   .payment-container {
     flex-direction: column;
@@ -114,9 +122,31 @@ button:disabled {
   }
 
   .addresContainer,
-  .containers,
   .container {
     width: 100%;
-  }}
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
 
+  .item-container {
+    flex-direction: column;
+  }
+
+  .item-image {
+    width: 100%;
+    height: auto;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .item-name {
+    text-align: left;
+    margin: 10px 0;
+  }
+
+  .item-price {
+    text-align: left;
+    margin-bottom: 5px;
+  }
+}
 
