@@ -91,5 +91,12 @@ export class CreateComponent extends BaseComponent implements OnInit {
       content: 'Özellikleri yazarken aralarında boşluk bırakarak şu şekilde yazınız: <br> "Özellik Adı:Özellik"<br> Örneğin; <br> "Uzunluk:180cm Genişlik:400cm"',
       html:true
     });
+    $(document).on('click', function (e) {
+      const target = $(e.target);
+      if (!target.is(inputElement) && !target.closest('.popover').length) {
+        $(inputElement).popover('hide');
+      }
+    });
   }
+  
 }

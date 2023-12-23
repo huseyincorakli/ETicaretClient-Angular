@@ -28,6 +28,7 @@ export class GetProductByCategoryComponent extends BaseComponent implements OnIn
   ) {
     super(spinner)
   }
+  
 
   products: any;
   productName:string;

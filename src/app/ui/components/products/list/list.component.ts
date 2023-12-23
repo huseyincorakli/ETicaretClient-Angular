@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
@@ -10,12 +10,17 @@ import { FileService } from 'src/app/services/common/models/file.service';
 import { ProductService } from 'src/app/services/common/models/product.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 
+declare var $:any;
+
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent extends BaseComponent implements OnInit {
+ firstFilterPriceValue:number=0;
+ secondFilterPriceValue:number=500000;
   constructor(
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
@@ -26,7 +31,13 @@ export class ListComponent extends BaseComponent implements OnInit {
   ) {
     super(spinner)
   }
+  filterProduct(firstValue:HTMLInputElement,secondValue:HTMLInputElement){
+  this.firstFilterPriceValue=parseInt(firstValue.value);
+  this.secondFilterPriceValue=parseInt(secondValue.value);
 
+  console.log('changed',this.firstFilterPriceValue,this.secondFilterPriceValue);
+  
+  }
   products: List_Product[];
   
   productName: string;
@@ -37,6 +48,7 @@ export class ListComponent extends BaseComponent implements OnInit {
   baseUrl: BaseUrl;
   pageList: number[] = [];
 
+  
   async ngOnInit() {
     this.baseUrl = await this.fileService.getBaseStorageUrl()
 

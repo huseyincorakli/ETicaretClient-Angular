@@ -1,6 +1,8 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Stripe, StripeElements, StripeError } from '@stripe/stripe-js';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { BaseUrl } from 'src/app/contracts/base_url';
 import { List_Basket_Item } from 'src/app/contracts/basket/list_basket_item';
 import { Create_Order } from 'src/app/contracts/order/create_order';
@@ -15,7 +17,7 @@ import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/
   templateUrl: './pay.component.html',
   styleUrls: ['./pay.component.scss']
 })
-export class PayComponent implements OnDestroy, OnInit {
+export class PayComponent  extends BaseComponent implements OnDestroy, OnInit {
   @Input() clientSecret: string = '';
   @Input() stripePromise: Promise<Stripe> | undefined;
   @Input() order: Create_Order;
@@ -26,6 +28,7 @@ export class PayComponent implements OnDestroy, OnInit {
   campaignId:string;
 
   constructor(
+    spinner:NgxSpinnerService,
     private orderService: OrderService,
     private userService: UserService,
     private toastr: CustomToastrService,
@@ -34,7 +37,7 @@ export class PayComponent implements OnDestroy, OnInit {
     private router: Router,
     private route: ActivatedRoute) {
 
-
+      super(spinner)
   }
   ngOnDestroy(): void {
     this.order = null;
@@ -46,6 +49,7 @@ export class PayComponent implements OnDestroy, OnInit {
   baseUrl: BaseUrl;
   campaignCode?:string;
   async ngOnInit() {
+    this.showSpinner(SpinnerType.Clock)
     this.route.queryParams.subscribe(params => {
       if (params['data']) {
         // Parse the JSON data
@@ -80,10 +84,12 @@ if (this.campaignCode) {
       console.log("PAY", this.order);
 
     }
+    this.hideSpinner(SpinnerType.Clock)
   }
 
 
   handleSubmit(event: Event) {
+    
     event.preventDefault();
 
     if (!this.stripe || !this.elements) {
@@ -97,6 +103,7 @@ if (this.campaignCode) {
       console.error('Card Element is not mounted.');
       return;
     }
+    this.showSpinner(SpinnerType.Clock)
 
     this.isLoading = true;
 
@@ -149,10 +156,13 @@ if (this.campaignCode) {
         setTimeout(() => {
           this.toastr.message(this.message, "Bizi tercih ettiğiniz için teşekkürler...", ToastrMessageType.Success, ToastrPosition.BottomFull)
           this.router.navigate(['/'])
+          this.isLoading = false;
         }, 2000);
       }
 
-      this.isLoading = false;
     });
+
+    this.hideSpinner(SpinnerType.Clock)
+
   }
 }

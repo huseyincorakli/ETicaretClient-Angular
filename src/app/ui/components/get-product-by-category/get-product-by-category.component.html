@@ -1,6 +1,15 @@
 <div class="mt-2 p-2">
     <div class="container">
-    <input  [(ngModel)]="productName" (input)="searchProducts()" type="text" placeholder="Ürün Ara" class="form-control mb-2 " style="width: 200px;">
+      <input
+
+      [(ngModel)]="productName"
+      (input)="searchProducts()"
+      type="text"
+      placeholder="Ürün Ara"
+      class="form-control mb-2 float searchInput"
+      style="width: 100%; max-width: 200px; display: inline;"
+    />
+    
 
       <div class="row">
 

@@ -102,8 +102,15 @@ export class UserService {
     })
     const promiseData=firstValueFrom(observable)
     promiseData.then(value=>{
+      if (succesCallBack) {
       succesCallBack();
-    }).catch(error=>errorCallBack(error))
+        
+      }
+    }).catch(error=>{
+      if (errorCallBack) {
+        errorCallBack(error)
+      }
+    })
     return await promiseData;
   }
 }

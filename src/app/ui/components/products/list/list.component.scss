@@ -37,3 +37,56 @@
   .pag{
     box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em, rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
   }
+
+.form-range {
+    /* Set the track color */
+    --range-track-color: #0011ff;
+
+    /* Set the thumb color */
+    --range-thumb-color: #ece9cc;
+}
+
+/* Style the range input */
+input[type="range"] {
+    width: 100%;
+    margin: 8px 0;
+}
+
+/* Style the track */
+input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8.4px;
+    cursor: pointer;
+    background: var(--range-track-color);
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+/* Style the thumb */
+input[type="range"]::-webkit-slider-thumb {
+    box-sizing: border-box;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    background: var(--range-thumb-color);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -8px;
+}
+
+/* Adjust the thumb color on hover */
+input[type="range"]:hover::-webkit-slider-thumb {
+    background: #555;
+}
+
+/* Style the range values */
+.range-values {
+    display: none;
+    margin-top: 10px;
+}
+
+/* Show range values when the range input is hovered */
+input[type="range"]:hover + .range-values {
+    display: block;
+}

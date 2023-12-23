@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { AfterViewInit, Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Stripe, StripeElements, StripeError, loadStripe } from '@stripe/stripe-js';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { List_Basket_Item } from 'src/app/contracts/basket/list_basket_item';
 import { Create_Order } from 'src/app/contracts/order/create_order';
 import { BasketService } from 'src/app/services/common/models/basket.service';
@@ -13,7 +15,7 @@ import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/
   styleUrls: ['./checkout.component.scss'
   ],
 })
-export class CheckoutComponent  {
+export class CheckoutComponent extends BaseComponent {
   clientSecret: string = '';
   stripePromise = loadStripe("pk_test_51OHAF3FTVXhGXu7OqbO77sy4QgIiUPAyPyi8kRPNd6FHCmOrhTFvLOMbjRPBL9r64auT0mGHuSvYmPr5hthth6as00L2EId35t");
   totalAmount:number;
@@ -21,14 +23,19 @@ export class CheckoutComponent  {
   basketItems: List_Basket_Item[];
   stripe: Stripe | undefined;
   constructor(
+    spinner:NgxSpinnerService,
     private route: ActivatedRoute,
      private router: Router,private http: HttpClient,
     private basketService: BasketService,
     private toastr: CustomToastrService
      
-     ) { }
+     ) {
+
+      super(spinner)
+      }
   async ngOnInit() {
     
+    this.showSpinner(SpinnerType.Classic)
     
     this.basketItems = await this.basketService.get()
     if (this.basketItems.length==0) {
@@ -55,6 +62,7 @@ export class CheckoutComponent  {
    
         
       });
+    this.hideSpinner(SpinnerType.Classic)
      
   } 
   calculateTotalBasketPrice() {
