@@ -90,3 +90,21 @@ input[type="range"]:hover::-webkit-slider-thumb {
 input[type="range"]:hover + .range-values {
     display: block;
 }
+.productNameInput{
+  max-width: 200px;
+}
+
+@media only screen and (max-width: 600px) {
+  .sorting {
+  display: none;
+  }
+
+  .filters{
+    margin-bottom: 5px;
+  }
+
+  .productNameInput{
+    max-width: 100%;
+    width: auto;
+  }
+}

@@ -17,7 +17,8 @@ export class BestSellingProductsComponent implements OnInit, AfterViewInit{
   products:Best_Selling_Product
   async ngOnInit(): Promise<void> {
     this.isLoading=true
-     this.products= (await this.productService.getBestSellingProduct()).bestSellingProduct     
+     this.products= (await this.productService.getBestSellingProduct()).bestSellingProduct   
+     debugger  
      this.isLoading=false
     if (!this.isLoading) {
     this.createDoughnutChart();

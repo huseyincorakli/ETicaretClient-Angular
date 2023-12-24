@@ -20,7 +20,7 @@ declare var $: any;
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent extends BaseComponent implements OnInit {
-  
+
   constructor(
     private categoryService: CategoryService,
     private productService: ProductService,
@@ -45,6 +45,8 @@ export class ListComponent extends BaseComponent implements OnInit {
   selectedCategoryId: string;
   firstFilterPriceValue: number = 0;
   secondFilterPriceValue: number = 500000;
+  sortAZ: boolean = false;
+  sortPriceAsc: boolean = false;
 
 
   onCategorySelected(event: any): void {
@@ -56,10 +58,10 @@ export class ListComponent extends BaseComponent implements OnInit {
     this.secondFilterPriceValue = parseInt(secondValue.value);
   }
 
-  async wipeFilter(){
-    this.firstFilterPriceValue=null;
-    this.secondFilterPriceValue=null;
-    this.selectedCategoryId=null;
+  async wipeFilter() {
+    this.firstFilterPriceValue = null;
+    this.secondFilterPriceValue = null;
+    this.selectedCategoryId = null;
     await this.filter()
   }
 
@@ -70,7 +72,6 @@ export class ListComponent extends BaseComponent implements OnInit {
       this.showSpinner(SpinnerType.Classic)
       this.categories = (await this.categoryService.getAllCategoryNames()).categoryNames;
 
-      const deneme = params["pageNo"]
 
       if (parseInt(params["pageNo"]) <= 0 || params["pageNo"] == undefined) {
         this.currentPageNo = 1
@@ -86,6 +87,19 @@ export class ListComponent extends BaseComponent implements OnInit {
 
 
       this.products = data.products;
+      if (!this.sortAZ) {
+        this.alphabeticSortAZ()
+      }
+      else {
+        this.alphabeticSortZA()
+      }
+      if (!this.sortPriceAsc) {
+        this.sortByPriceAsc()
+      }
+      else {
+        this.sortByPriceDesc()
+      }
+
       this.products = this.products.map<List_Product>(p => {
 
 
@@ -133,6 +147,22 @@ export class ListComponent extends BaseComponent implements OnInit {
 
 
   }
+  alphabeticSortAZ() {
+    this.sortAZ = true;
+    this.products = this.products.sort((a, b) => a.name.localeCompare(b.name))
+  }
+  alphabeticSortZA() {
+    this.sortAZ = false;
+    this.products = this.products.sort((a, b) => b.name.localeCompare(a.name))
+  }
+  sortByPriceAsc() {
+    this.sortPriceAsc = true;
+    this.products = this.products.sort((a, b) => a.price - b.price);
+  }
+  sortByPriceDesc() {
+    this.sortPriceAsc = false;
+    this.products = this.products.sort((a, b) => b.price - a.price);
+  }
   changePage(pageNumber: number) {
     this.currentPageNo = pageNumber;
     this.ngOnInit();
@@ -143,7 +173,7 @@ export class ListComponent extends BaseComponent implements OnInit {
       const data: { totalProductCount: number, products: List_Product[] } = await this.productService.read(
         this.currentPageNo - 1,
         this.pageSize,
-        this.productName,null,null,null, () => { }, () => { }
+        this.productName, null, null, null, () => { }, () => { }
       );
 
       this.products = data.products.map(p => {
@@ -169,15 +199,15 @@ export class ListComponent extends BaseComponent implements OnInit {
     this.toastr.message('BAŞARILI', 'ÜRÜN SEPETE EKLENDİ', ToastrMessageType.Success, ToastrPosition.TopRight);
   }
   async filter() {
-   this.showSpinner(SpinnerType.Classic)
-    const data  =await this.productService.read(this.currentPageNo - 1, this.pageSize,null,this.firstFilterPriceValue,this.secondFilterPriceValue,this.selectedCategoryId)
+    this.showSpinner(SpinnerType.Classic)
+    const data = await this.productService.read(this.currentPageNo - 1, this.pageSize, null, this.firstFilterPriceValue, this.secondFilterPriceValue, this.selectedCategoryId)
     this.products = data.products.map(p => {
       return {
         ...p,
         imagePath: p.productImageFiles.length ? p.productImageFiles.find(img => img.showcase).path : ''
       };
     });
-   this.hideSpinner(SpinnerType.Classic)
+    this.hideSpinner(SpinnerType.Classic)
 
   }
 }

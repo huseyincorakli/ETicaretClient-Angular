@@ -1,54 +1,92 @@
 <div class="mt-2 p-2">
   <div class="container">
+   <div class="container filters">
     <input
-      [(ngModel)]="productName"
-      (input)="searchProducts()"
-      type="text"
-      placeholder="Ürün Ara"
-      class="form-control mb-2 float searchInput"
-      style="width: 100%; max-width: 200px; display: inline"
-    />
-    <button
-      style="float: right; max-width: 200px; display: inline"
-      class="btn btn-primary searchInput  dropdown-toggle"
-      data-bs-toggle="dropdown"
-      data-bs-auto-close="outside"
-      aria-expanded="false"
-    >
-      Ürünleri Filtrele
-    </button>
-    <div class="dropdown">
-      <div class="dropdown-menu" style="width: 300px; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
-          <div class="row mb-3">
-              <div class="col">
-                  <label class="form-label" style="font-weight: bold; margin-bottom: 5px;">Minimum Fiyat</label>
-                  <input #firstpriceValue style="width: 100%" type="range" class="form-range" id="customRange1" min="0" max="500000" (change)="changeFilter(firstpriceValue, seconpriceValue)" step="1000" [value]="firstFilterPriceValue" />
-              </div>
-              <div class="col-auto">
-                  <input #firstPriceEnd type="number"  class="form-control form-control-sm" min="0" max="500000" (change)="changeFilter(firstPriceEnd, secondPriceEnd)" value="{{firstFilterPriceValue}}">
-              </div>
-          </div>
-  
-          <div class="row mb-3">
-              <div class="col">
-                  <label class="form-label" style="font-weight: bold; margin-top: 10px; margin-bottom: 5px;">Maksimum Fiyat</label>
-                  <input #seconpriceValue style="width: 100%" type="range" class="form-range" id="customRange2" min="0" max="500000" (change)="changeFilter(firstpriceValue, seconpriceValue)" step="1000" [value]="secondFilterPriceValue" />
-              </div>
-              <div class="col-auto">
-                  <input #secondPriceEnd type="number" class="form-control form-control-sm" min="0" max="500000" (change)="changeFilter(firstPriceEnd, secondPriceEnd)" value="{{secondFilterPriceValue}}">
-              </div>
-          </div>
-  
-          <select class="form-select mb-3" aria-label="Kategori seçiniz" (change)="onCategorySelected($event)">
-            <option disabled selected>Kategori Seç</option>
-            <option *ngFor="let category of categories" [value]="category.id">{{category.categoryName}}</option>
-        </select>
-        <button class="btn btn-sm btn-warning w-50" (click)="wipeFilter()" >Sıfırla</button>
-          <button class="btn btn-sm btn-primary w-50" (click)="filter()" >Filtrele</button>
+        [(ngModel)]="productName"
+        (input)="searchProducts()"
+        type="text"
+        placeholder="Ürün Ara"
+        class="form-control mb-2 float searchInput productNameInput"
+        style="width: 100%;  display: inline"
+      />
+      <button
+        style="float: right; max-width: 200px; display: inline"
+        class="btn btn-primary searchInput  dropdown-toggle"
+        data-bs-toggle="dropdown"
+        data-bs-auto-close="outside"
+        aria-expanded="false"
+      >
+        Ürünleri Filtrele
+      </button>
+      <div class="d-md-inline-flex">
+        <button
+          *ngIf="!sortAZ"
+          (click)="alphabeticSortAZ()"
+          style="max-width: 200px;"
+          class="btn btn-light searchInput "
+        >
+          <span class="sorting">A-Z Sırala</span>
+          <span><img style="margin-left: 3px;" width="18px" height="18px" src="../../../../../assets/sort-az.png" alt=""></span>
+        </button>
+        <button
+          *ngIf="sortAZ"
+          (click)="alphabeticSortZA()"
+          style="max-width: 200px;"
+          class="btn btn-light searchInput "
+        >
+          <span class="sorting">Z-A Sırala</span>
+          <span><img style="margin-left: 3px;" width="18px" height="18px" src="../../../../../assets/sort-za.png" alt=""></span>
+        </button>
+        <button
+        *ngIf="!sortPriceAsc"
+        (click)="sortByPriceAsc()"
+          style="max-width: 200px;"
+          class="btn btn-light searchInput "
+        >
+          <span class="sorting">Artan Fiyat</span>
+          <span><img style="margin-left: 3px;" width="18px" height="18px" src="../../../../../assets/interlining.png" alt=""></span>
+        </button>
+        <button
+        *ngIf="sortPriceAsc"
+        (click)="sortByPriceDesc()"
+          style="max-width: 200px;"
+          class="btn btn-light searchInput "
+        >
+          <span class="sorting">Azalan Fiyat</span>
+          <span><img style="margin-left: 3px;" width="18px" height="18px" src="../../../../../assets/interlining.png" alt=""></span>
+        </button>
       </div>
-  </div>
-  
-  
+  <div class="dropdown">
+    <div class="dropdown-menu" style="width: 300px; padding: 10px; border: 1px solid #ccc; border-radius: 5px;">
+        <div class="row mb-3">
+            <div class="col">
+                <label class="form-label" style="font-weight: bold; margin-bottom: 5px;">Minimum Fiyat</label>
+                <input #firstpriceValue style="width: 100%" type="range" class="form-range" id="customRange1" min="0" max="500000" (change)="changeFilter(firstpriceValue, seconpriceValue)" step="1000" [value]="firstFilterPriceValue" />
+            </div>
+            <div class="col-auto">
+                <input #firstPriceEnd type="number"  class="form-control form-control-sm" min="0" max="500000" (change)="changeFilter(firstPriceEnd, secondPriceEnd)" value="{{firstFilterPriceValue}}">
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col">
+                <label class="form-label" style="font-weight: bold; margin-top: 10px; margin-bottom: 5px;">Maksimum Fiyat</label>
+                <input #seconpriceValue style="width: 100%" type="range" class="form-range" id="customRange2" min="0" max="500000" (change)="changeFilter(firstpriceValue, seconpriceValue)" step="1000" [value]="secondFilterPriceValue" />
+            </div>
+            <div class="col-auto">
+                <input #secondPriceEnd type="number" class="form-control form-control-sm" min="0" max="500000" (change)="changeFilter(firstPriceEnd, secondPriceEnd)" value="{{secondFilterPriceValue}}">
+            </div>
+        </div>
+
+        <select class="form-select mb-3" aria-label="Kategori seçiniz" (change)="onCategorySelected($event)">
+          <option disabled selected>Kategori Seç</option>
+          <option *ngFor="let category of categories" [value]="category.id">{{category.categoryName}}</option>
+      </select>
+      <button class="btn btn-sm btn-warning w-50" (click)="wipeFilter()" >Sıfırla</button>
+        <button class="btn btn-sm btn-primary w-50" (click)="filter()" >Filtrele</button>
+    </div>
+</div>
+   </div>
 
     <div class="row">
       <div class="col-md-3 mb-2" *ngFor="let product of products">
@@ -152,3 +190,4 @@
     </ul>
   </nav>
 </div>
+
