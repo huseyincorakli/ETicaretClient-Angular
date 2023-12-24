@@ -3,7 +3,7 @@ import { HttpClientService } from '../http-client.service';
 import { Create_Product } from 'src/app/contracts/create_product';
 import { HttpErrorResponse } from '@angular/common/http';
 import { List_Product } from 'src/app/contracts/list_product';
-import { firstValueFrom,Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { List_Product_Image } from 'src/app/contracts/list_product_image';
 import { GenerateProductDescription } from 'src/app/contracts/products/generate_products_desciription';
 import { Product_Details } from 'src/app/contracts/products/product_detail';
@@ -17,7 +17,7 @@ import { Low_Stock_Product } from 'src/app/contracts/products/low_stock_product'
 export class ProductService {
 
   constructor(private httpClientService: HttpClientService) { }
-  
+
   create(product: Create_Product, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void) {
     this.httpClientService.post({
       controller: 'products'
@@ -35,13 +35,25 @@ export class ProductService {
         errorCallBack(message)
       })
   }
- 
-  
-  async read(page: number = 0, size: number = 5,productName?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
+
+
+  async read(page: number = 0, size: number = 5,productName?: string, firstPriceValue?: number, secondPriceValue?: number,categoryId?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
     let _queryString = `page=${page}&size=${size}`;
 
     if (productName) {
-        _queryString += `&productName=${productName}`; // Ürün ismine göre filtreleme
+      _queryString += `&productName=${productName}`; 
+    }
+    if (firstPriceValue) {
+      _queryString += `&FirstPriceValue=${firstPriceValue}`;
+    }
+    if (secondPriceValue) {
+      _queryString += `&SecondPriceValue=${secondPriceValue}`;
+    }
+    if(secondPriceValue && firstPriceValue){
+      _queryString +=`&FirstPriceValue=${firstPriceValue}` +`&SecondPriceValue=${secondPriceValue}`;
+    }
+    if (categoryId) {
+      _queryString+=`&CategoryId=${categoryId}`
     }
     const promiseData: Promise<{ totalProductCount: number, products: List_Product[] }> = this.httpClientService.get
       <{ totalProductCount: number, products: List_Product[] }>({
@@ -49,24 +61,24 @@ export class ProductService {
         queryString: _queryString
       }).toPromise();
     promiseData.then(d => succesCallBack && succesCallBack())
-    .catch((errorResponse: HttpErrorResponse) => errorCallBack && errorCallBack(errorResponse.message));
+      .catch((errorResponse: HttpErrorResponse) => errorCallBack && errorCallBack(errorResponse.message));
 
     return await promiseData;
   }
-  async getBestSellingProduct(succesCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void):Promise<{bestSellingProduct:Best_Selling_Product}>{
+  async getBestSellingProduct(succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ bestSellingProduct: Best_Selling_Product }> {
     try {
       const promiseData = this.httpClientService.get({
         controller: 'products',
         queryString: '',
-        action:'GetBestSellingProducts'
+        action: 'GetBestSellingProducts'
       });
-  
+
       const result = await firstValueFrom(promiseData) as Best_Selling_Product;
-  
+
       if (succesCallBack) {
         succesCallBack();
       }
-  
+
       return { bestSellingProduct: result };
     } catch (e) {
       if (errorCallBack) {
@@ -75,36 +87,15 @@ export class ProductService {
       throw e;
     }
   }
-  async getDailySales(year:number,mounth:number,day:number,errorCallBack?:(errorMessage:string)=>void):Promise<any>{
+  async getDailySales(year: number, mounth: number, day: number, errorCallBack?: (errorMessage: string) => void): Promise<any> {
     try {
-        const promiseData=this.httpClientService.get({
-          controller:'products',
-          action:'GetDailySale',
-          queryString:`year=${year}&mounth=${mounth}&day=${day}`
-        });
-        const result=await firstValueFrom(promiseData)
-        return result
-    } catch (error) {
-      if(errorCallBack){
-        errorCallBack(error)
-      }
-      throw error;
-    }
-  }
-
-  async getLowStockProducts(succesCallBack?:()=>void,errorCallBack?:(errorMessage:string)=>void):Promise<{lowStockProducts:Low_Stock_Product}>{
-    try {
-      const promiseData=this.httpClientService.get({
-        controller:'products',
-        queryString:'',
-        action:'GetLowStockProducts'
+      const promiseData = this.httpClientService.get({
+        controller: 'products',
+        action: 'GetDailySale',
+        queryString: `year=${year}&mounth=${mounth}&day=${day}`
       });
-
-      const result = await firstValueFrom(promiseData) as Low_Stock_Product;
-      if (succesCallBack) {
-        succesCallBack()
-      }
-      return {lowStockProducts:result};
+      const result = await firstValueFrom(promiseData)
+      return result
     } catch (error) {
       if (errorCallBack) {
         errorCallBack(error)
@@ -113,22 +104,43 @@ export class ProductService {
     }
   }
 
-  async readById(productId:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise< Product_Details> {
-   const promiseData:Observable<Product_Details> = this.httpClientService.get({
-    controller:'products'
-   },productId)
-    
-   return await firstValueFrom(promiseData)
+  async getLowStockProducts(succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ lowStockProducts: Low_Stock_Product }> {
+    try {
+      const promiseData = this.httpClientService.get({
+        controller: 'products',
+        queryString: '',
+        action: 'GetLowStockProducts'
+      });
+
+      const result = await firstValueFrom(promiseData) as Low_Stock_Product;
+      if (succesCallBack) {
+        succesCallBack()
+      }
+      return { lowStockProducts: result };
+    } catch (error) {
+      if (errorCallBack) {
+        errorCallBack(error)
+      }
+      throw error;
+    }
   }
-  async readByCategory(page: number = 0, size: number = 5 ,categoryId:string,productName?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
-    let _queryString=`CategoryId=${categoryId}&page=${page}&size=${size}`
-    if (productName){
-      _queryString=`CategoryId=${categoryId}&page=${page}&size=${size}&ProductName=${productName}`
+
+  async readById(productId: string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<Product_Details> {
+    const promiseData: Observable<Product_Details> = this.httpClientService.get({
+      controller: 'products'
+    }, productId)
+
+    return await firstValueFrom(promiseData)
+  }
+  async readByCategory(page: number = 0, size: number = 5, categoryId: string, productName?: string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
+    let _queryString = `CategoryId=${categoryId}&page=${page}&size=${size}`
+    if (productName) {
+      _queryString = `CategoryId=${categoryId}&page=${page}&size=${size}&ProductName=${productName}`
     }
     const promiseData: Promise<{ totalProductCount: number, products: List_Product[] }> = this.httpClientService.get
       <{ totalProductCount: number, products: List_Product[] }>({
         controller: 'products',
-        action:'GetProductsByCategory',
+        action: 'GetProductsByCategory',
         queryString: _queryString
       }).toPromise();
     promiseData.then(d => succesCallBack())
@@ -137,7 +149,7 @@ export class ProductService {
     return await promiseData;
   }
 
-  
+
   async delete(id: string) {
     await this.httpClientService.delete({
       controller: 'products'
@@ -190,40 +202,40 @@ export class ProductService {
 
   async GenerateProductDescription(obj: GenerateProductDescription, succesCallBack?: () => void, errorCallBack?: () => void) {
     try {
-      const generateProductDescriptionObservable:Observable<any> = this.httpClientService.post({
+      const generateProductDescriptionObservable: Observable<any> = this.httpClientService.post({
         controller: "products",
         action: "CreateProductDescription",
       }, obj);
-  
+
       const response = await firstValueFrom(generateProductDescriptionObservable);
 
       if (succesCallBack) {
         return await response;
       }
-      
+
     } catch (error) {
       // Hata durumunda errorCallBack'ı çağırabilirsiniz.
       console.error('Hata:', error);
-  
+
       if (errorCallBack) {
         errorCallBack();
       }
     }
   }
 
-  async UpdateProduct(id:string,name:string,price:number,
-    stock:number,description:string,shortDesciription:string,brand:string,spesification:string[],
-    succesCallBack?:()=>void,errorCallBack?:()=>void){
-     const observable:Observable<any> =  this.httpClientService.put({
-        controller:'products'
-      },{
-        id,name,price,stock,description,shortDesciription,brand,spesification
-      })
-      await firstValueFrom(observable).then(()=>{
-        succesCallBack()
-      }).catch(()=>{
-        errorCallBack();
-      })
+  async UpdateProduct(id: string, name: string, price: number,
+    stock: number, description: string, shortDesciription: string, brand: string, spesification: string[],
+    succesCallBack?: () => void, errorCallBack?: () => void) {
+    const observable: Observable<any> = this.httpClientService.put({
+      controller: 'products'
+    }, {
+      id, name, price, stock, description, shortDesciription, brand, spesification
+    })
+    await firstValueFrom(observable).then(() => {
+      succesCallBack()
+    }).catch(() => {
+      errorCallBack();
+    })
   }
 }
 

@@ -42,8 +42,7 @@ export class ListComponent extends BaseComponent implements OnInit {
       await this.productService.read(
         this.paginator ? this.paginator.pageIndex : 0,
         this.paginator ? this.paginator.pageSize : 5,
-        this.productName,
-        () => this.hideSpinner(SpinnerType.Clock),
+        this.productName,null,null,null,() => this.hideSpinner(SpinnerType.Clock),
         errorMessage => {
           this.alertify.message(errorMessage,
             { dismissOthers: true, messageType: MessageType.Error, position: Position.TopRight })

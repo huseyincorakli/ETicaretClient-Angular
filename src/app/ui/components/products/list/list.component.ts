@@ -6,11 +6,12 @@ import { BaseUrl } from 'src/app/contracts/base_url';
 import { Create_Basket_Item } from 'src/app/contracts/basket/create_basket_item';
 import { List_Product } from 'src/app/contracts/list_product';
 import { BasketService } from 'src/app/services/common/models/basket.service';
+import { CategoryService } from 'src/app/services/common/models/category.service';
 import { FileService } from 'src/app/services/common/models/file.service';
 import { ProductService } from 'src/app/services/common/models/product.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 
-declare var $:any;
+declare var $: any;
 
 
 @Component({
@@ -19,9 +20,9 @@ declare var $:any;
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent extends BaseComponent implements OnInit {
- firstFilterPriceValue:number=0;
- secondFilterPriceValue:number=500000;
+  
   constructor(
+    private categoryService: CategoryService,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
     private fileService: FileService,
@@ -31,15 +32,9 @@ export class ListComponent extends BaseComponent implements OnInit {
   ) {
     super(spinner)
   }
-  filterProduct(firstValue:HTMLInputElement,secondValue:HTMLInputElement){
-  this.firstFilterPriceValue=parseInt(firstValue.value);
-  this.secondFilterPriceValue=parseInt(secondValue.value);
 
-  console.log('changed',this.firstFilterPriceValue,this.secondFilterPriceValue);
-  
-  }
   products: List_Product[];
-  
+  categories: any = [];
   productName: string;
   currentPageNo: number;
   totalProductCount: number;
@@ -47,13 +42,34 @@ export class ListComponent extends BaseComponent implements OnInit {
   pageSize: number = 12;
   baseUrl: BaseUrl;
   pageList: number[] = [];
+  selectedCategoryId: string;
+  firstFilterPriceValue: number = 0;
+  secondFilterPriceValue: number = 500000;
 
-  
+
+  onCategorySelected(event: any): void {
+    this.selectedCategoryId = event.target.value;
+  }
+
+  changeFilter(firstValue: HTMLInputElement, secondValue: HTMLInputElement) {
+    this.firstFilterPriceValue = parseInt(firstValue.value);
+    this.secondFilterPriceValue = parseInt(secondValue.value);
+  }
+
+  async wipeFilter(){
+    this.firstFilterPriceValue=null;
+    this.secondFilterPriceValue=null;
+    this.selectedCategoryId=null;
+    await this.filter()
+  }
+
   async ngOnInit() {
     this.baseUrl = await this.fileService.getBaseStorageUrl()
 
     this.activatedRoute.params.subscribe(async params => {
       this.showSpinner(SpinnerType.Classic)
+      this.categories = (await this.categoryService.getAllCategoryNames()).categoryNames;
+
       const deneme = params["pageNo"]
 
       if (parseInt(params["pageNo"]) <= 0 || params["pageNo"] == undefined) {
@@ -65,7 +81,7 @@ export class ListComponent extends BaseComponent implements OnInit {
       }
 
       const data: { totalProductCount: number, products: List_Product[] } =
-        await this.productService.read(this.currentPageNo - 1, this.pageSize, '',)
+        await this.productService.read(this.currentPageNo - 1, this.pageSize, '', null, null)
 
 
 
@@ -83,9 +99,9 @@ export class ListComponent extends BaseComponent implements OnInit {
           updatedDate: p.updatedDate,
           productImageFiles: p.productImageFiles,
           imagePath: p.productImageFiles.length ? p.productImageFiles.find(p => p.showcase).path : '',
-          categoryName:p.categoryName,
-          isActive:p.isActive,
-          brand:p.brand
+          categoryName: p.categoryName,
+          isActive: p.isActive,
+          brand: p.brand
         }
 
 
@@ -114,7 +130,7 @@ export class ListComponent extends BaseComponent implements OnInit {
       this.hideSpinner(SpinnerType.Classic)
     });
 
-    
+
 
   }
   changePage(pageNumber: number) {
@@ -123,23 +139,23 @@ export class ListComponent extends BaseComponent implements OnInit {
   }
   async searchProducts() {
     if (this.productName) {
-      
+
       const data: { totalProductCount: number, products: List_Product[] } = await this.productService.read(
         this.currentPageNo - 1,
         this.pageSize,
-       this.productName,()=>{},()=>{}
+        this.productName,null,null,null, () => { }, () => { }
       );
-  
+
       this.products = data.products.map(p => {
         return {
           ...p,
           imagePath: p.productImageFiles.length ? p.productImageFiles.find(img => img.showcase).path : ''
         };
       });
-      
-      
+
+
     } else {
-      this.ngOnInit(); 
+      this.ngOnInit();
     }
   }
 
@@ -152,5 +168,16 @@ export class ListComponent extends BaseComponent implements OnInit {
     this.hideSpinner(SpinnerType.Clock);
     this.toastr.message('BAŞARILI', 'ÜRÜN SEPETE EKLENDİ', ToastrMessageType.Success, ToastrPosition.TopRight);
   }
+  async filter() {
+   this.showSpinner(SpinnerType.Classic)
+    const data  =await this.productService.read(this.currentPageNo - 1, this.pageSize,null,this.firstFilterPriceValue,this.secondFilterPriceValue,this.selectedCategoryId)
+    this.products = data.products.map(p => {
+      return {
+        ...p,
+        imagePath: p.productImageFiles.length ? p.productImageFiles.find(img => img.showcase).path : ''
+      };
+    });
+   this.hideSpinner(SpinnerType.Classic)
 
+  }
 }

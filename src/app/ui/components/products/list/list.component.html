@@ -22,29 +22,29 @@
           <div class="row mb-3">
               <div class="col">
                   <label class="form-label" style="font-weight: bold; margin-bottom: 5px;">Minimum Fiyat</label>
-                  <input #firstpriceValue style="width: 100%" type="range" class="form-range" id="customRange1" min="0" max="500000" (change)="filterProduct(firstpriceValue, seconpriceValue)" step="1000" [value]="firstFilterPriceValue" />
+                  <input #firstpriceValue style="width: 100%" type="range" class="form-range" id="customRange1" min="0" max="500000" (change)="changeFilter(firstpriceValue, seconpriceValue)" step="1000" [value]="firstFilterPriceValue" />
               </div>
               <div class="col-auto">
-                  <input #firstPriceEnd type="number"  class="form-control form-control-sm" min="0" max="500000" (change)="filterProduct(firstPriceEnd, secondPriceEnd)" value="{{firstFilterPriceValue}}">
+                  <input #firstPriceEnd type="number"  class="form-control form-control-sm" min="0" max="500000" (change)="changeFilter(firstPriceEnd, secondPriceEnd)" value="{{firstFilterPriceValue}}">
               </div>
           </div>
   
           <div class="row mb-3">
               <div class="col">
                   <label class="form-label" style="font-weight: bold; margin-top: 10px; margin-bottom: 5px;">Maksimum Fiyat</label>
-                  <input #seconpriceValue style="width: 100%" type="range" class="form-range" id="customRange2" min="0" max="500000" (change)="filterProduct(firstpriceValue, seconpriceValue)" step="1000" [value]="secondFilterPriceValue" />
+                  <input #seconpriceValue style="width: 100%" type="range" class="form-range" id="customRange2" min="0" max="500000" (change)="changeFilter(firstpriceValue, seconpriceValue)" step="1000" [value]="secondFilterPriceValue" />
               </div>
               <div class="col-auto">
-                  <input #secondPriceEnd type="number" class="form-control form-control-sm" min="0" max="500000" (change)="filterProduct(firstPriceEnd, secondPriceEnd)" value="{{secondFilterPriceValue}}">
+                  <input #secondPriceEnd type="number" class="form-control form-control-sm" min="0" max="500000" (change)="changeFilter(firstPriceEnd, secondPriceEnd)" value="{{secondFilterPriceValue}}">
               </div>
           </div>
   
-          <select class="form-select mb-3" aria-label="Kategori seçiniz">
-              <option selected>Kategori</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
-          </select>
+          <select class="form-select mb-3" aria-label="Kategori seçiniz" (change)="onCategorySelected($event)">
+            <option disabled selected>Kategori Seç</option>
+            <option *ngFor="let category of categories" [value]="category.id">{{category.categoryName}}</option>
+        </select>
+        <button class="btn btn-sm btn-warning w-50" (click)="wipeFilter()" >Sıfırla</button>
+          <button class="btn btn-sm btn-primary w-50" (click)="filter()" >Filtrele</button>
       </div>
   </div>
   

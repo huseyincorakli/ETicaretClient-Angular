@@ -104,7 +104,7 @@ export class GetProductByCategoryComponent extends BaseComponent implements OnIn
       const data: { totalProductCount: number, products: List_Product[] } = await this.productService.read(
         this.currentPageNo - 1,
         this.pageSize,
-       this.productName,()=>{},()=>{}
+       this.productName,null,null,null,()=>{},()=>{}
       );
   
       this.products = data.products.map(p => {
