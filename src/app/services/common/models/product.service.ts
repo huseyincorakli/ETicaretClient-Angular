@@ -37,11 +37,11 @@ export class ProductService {
   }
 
 
-  async read(page: number = 0, size: number = 5,productName?: string, firstPriceValue?: number, secondPriceValue?: number,categoryId?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
+  async read(page: number = 0, size: number = 5, productName?: string, firstPriceValue?: number, secondPriceValue?: number, categoryId?: string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ totalProductCount: number, products: List_Product[] }> {
     let _queryString = `page=${page}&size=${size}`;
 
     if (productName) {
-      _queryString += `&productName=${productName}`; 
+      _queryString += `&productName=${productName}`;
     }
     if (firstPriceValue) {
       _queryString += `&FirstPriceValue=${firstPriceValue}`;
@@ -49,11 +49,11 @@ export class ProductService {
     if (secondPriceValue) {
       _queryString += `&SecondPriceValue=${secondPriceValue}`;
     }
-    if(secondPriceValue && firstPriceValue){
-      _queryString +=`&FirstPriceValue=${firstPriceValue}` +`&SecondPriceValue=${secondPriceValue}`;
+    if (secondPriceValue && firstPriceValue) {
+      _queryString += `&FirstPriceValue=${firstPriceValue}` + `&SecondPriceValue=${secondPriceValue}`;
     }
     if (categoryId) {
-      _queryString+=`&CategoryId=${categoryId}`
+      _queryString += `&CategoryId=${categoryId}`
     }
     const promiseData: Promise<{ totalProductCount: number, products: List_Product[] }> = this.httpClientService.get
       <{ totalProductCount: number, products: List_Product[] }>({
@@ -65,6 +65,40 @@ export class ProductService {
 
     return await promiseData;
   }
+
+  async getByBrand(brand: string, errorCallback?: (err: string) => void):Promise<{ totalProductCount: number, products: List_Product[] }> {
+    const promiseData: Promise<{ totalProductCount: number, products: List_Product[] }> = this.httpClientService.get
+      <{ totalProductCount: number, products: List_Product[] }>({
+        controller: 'products',
+        queryString: `Brand=${brand}`
+      }).toPromise();
+    promiseData.then()
+      .catch((errorResponse: HttpErrorResponse) => {
+        if (errorCallback) {
+          errorCallback(errorResponse.message)
+        }
+      });
+
+    return await promiseData;
+  }
+
+  async getBrands(errorCallback?: (err: string) => void) {
+    const observable= this.httpClientService.get({
+      controller:'products',
+      action:'GetBrands'
+    })
+    const promiseData = firstValueFrom(observable)
+    promiseData.then(()=>{
+      
+    }).catch((err:HttpErrorResponse)=>{
+      if (errorCallback) {
+        errorCallback(err.message);
+      }
+    })
+
+    return await promiseData;
+  }
+
   async getBestSellingProduct(succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void): Promise<{ bestSellingProduct: Best_Selling_Product }> {
     try {
       const promiseData = this.httpClientService.get({

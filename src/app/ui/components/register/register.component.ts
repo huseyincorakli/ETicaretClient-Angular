@@ -7,7 +7,7 @@ import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { Router } from '@angular/router';
-
+import * as CryptoJS from 'crypto-js';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -69,6 +69,9 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     this.submitted = true;
     if (this.frm.invalid)
       return;
+    user.password=CryptoJS.SHA256(user.password).toString()
+    user.passwordConfirm=CryptoJS.SHA256(user.passwordConfirm).toString();
+    debugger
     this.showSpinner(SpinnerType.Classic)
     const result: Create_User = await this.userService.create(user)
     if (result.succeeded) {

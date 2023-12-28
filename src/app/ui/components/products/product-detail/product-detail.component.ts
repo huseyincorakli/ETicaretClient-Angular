@@ -11,6 +11,7 @@ import { FileService } from 'src/app/services/common/models/file.service';
 import { ProductService } from 'src/app/services/common/models/product.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 import { take } from 'rxjs/operators';
+import { CommentService } from 'src/app/services/common/models/comment.service';
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -24,6 +25,7 @@ export class ProductDetailComponent extends BaseComponent implements OnInit  {
     private fileService: FileService,
     private basketService: BasketService,
     private toastr:CustomToastrService,
+    private commentService:CommentService,
 
   ) {
     super(spinner)
@@ -32,10 +34,11 @@ export class ProductDetailComponent extends BaseComponent implements OnInit  {
   baseUrl: BaseUrl;
   selectedImage:any;
   productId:string;
+  starCount:number=0;
   
   async ngOnInit(): Promise<void> {
     this.showSpinner(SpinnerType.Classic)
-
+    
     this.baseUrl = await this.fileService.getBaseStorageUrl()
     this.productId= this.activatedRoute.snapshot.paramMap.get('productId')
     this.product = await this.productService.readById(this.productId)
@@ -46,6 +49,8 @@ export class ProductDetailComponent extends BaseComponent implements OnInit  {
     this.activatedRoute.paramMap.subscribe(params => {
       this.updateProductDetails(params.get('productId'))
     });
+    this.starCount=(await this.commentService.getCommentsByProductId(this.productId,null,null)).avarageScore;
+    debugger
     this.hideSpinner(SpinnerType.Classic)
   }
 
@@ -60,6 +65,9 @@ export class ProductDetailComponent extends BaseComponent implements OnInit  {
 
   changeSelectedImage(index: number): void {
     this.selectedImage = this.product.imageFiles[index].path;    
+  }
+  generateStars(score: number): number[] {
+    return Array.from({ length: score }, (_, index) => index + 1);
   }
   
   async addToBasket(txtQuantityValue:HTMLInputElement){

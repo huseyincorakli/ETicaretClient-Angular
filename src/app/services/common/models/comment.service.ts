@@ -10,9 +10,11 @@ export class CommentService {
 
   constructor(private httpClientService: HttpClientService) { }
 
-  async getCommentsByProductId(productId,page:number=0,size:number=5,errorCallback?:(error:string)=>void):Promise<{ totalCount: number,avarageScore:number, responseData: Comment[] }>{
-    let _queryString = `ProductId=${productId}&page=${page}&size=${size}`;
-
+  async getCommentsByProductId(productId,page?:number,size?:number,errorCallback?:(error:string)=>void):Promise<{ totalCount: number,avarageScore:number, responseData: Comment[] }>{
+    let _queryString = `ProductId=${productId}`;
+    if(page && size){
+      _queryString+=`&page=${page}&size=${size}`
+    }
     const observable: Observable<{ totalCount: number,avarageScore:number, responseData: Comment[] }> = this.httpClientService.get
       <{ totalCount: number,avarageScore:number, responseData: Comment[] }>({
         controller: 'comments',
@@ -23,7 +25,11 @@ export class CommentService {
       promiseData.then(value => {
        
       })
-        .catch(error => errorCallback(error))
+        .catch(error =>{
+          if(errorCallback){
+            errorCallback(error)
+          }
+        })
       return await promiseData;
   }
 

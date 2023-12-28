@@ -16,10 +16,11 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    let url: string |undefined; 
     return next.handle(req).pipe(catchError((err) => {
+      url = this.router.url;
       switch (err.status) {
         case HttpStatusCode.Unauthorized:
-          const url = this.router.url;
           if (url.includes('/products')) {
             this.toastr.message(
               'Giriş Yapınız',

@@ -6,6 +6,7 @@ import { UserInfoService } from 'src/app/services/admin/user-info.service';
 import { HttpClientService } from 'src/app/services/common/http-client.service';
 import { UserService } from 'src/app/services/common/models/user.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-profile-settings',
@@ -49,8 +50,8 @@ super(spinner)
     updateProfile.userId = this.userId;
     updateProfile.email = email.value;
     updateProfile.nameSurname = name.value;
-    updateProfile.password = password.value;
-    updateProfile.passwordConfirm = passwordConfirm.value;
+    updateProfile.password = CryptoJS.SHA256(password.value).toString();
+    updateProfile.passwordConfirm = CryptoJS.SHA256(passwordConfirm.value).toString();
     updateProfile.username = username.value;
 
     this.userService.updateProfile(updateProfile, () => {

@@ -14,6 +14,7 @@
       class="form-control"
       id="username"
       placeholder="Kullanıcı Adı & E-mail"
+      (keydown.enter)="login(txtPassword.value, txtUsernameOrEmail.value)"
     />
   </div>
   <div class="form-group">
@@ -24,6 +25,7 @@
       class="form-control"
       id="password"
       placeholder="Şifre"
+      (keydown.enter)="login(txtPassword.value, txtUsernameOrEmail.value)"
     />
   </div>
   <br />

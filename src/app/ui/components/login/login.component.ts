@@ -8,6 +8,7 @@ import { FacebookLoginProvider, SocialAuthService, SocialUser } from "@abacritt/
 import { GoogleLoginProvider } from "@abacritt/angularx-social-login";
 import { UserAuthService } from 'src/app/services/common/models/user-auth.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
+import * as CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
@@ -66,6 +67,9 @@ export class LoginComponent extends BaseComponent {
 
 
   async login(password: string, usernameOrEmail: string) {
+    
+    password=CryptoJS.SHA256(password).toString();
+    debugger;
     this.showSpinner(SpinnerType.Classic)
    const data =  await this.userAuthService.login(usernameOrEmail, password, () => {
       this.authService.identityCheck();

@@ -6,7 +6,7 @@
         <div class="col-md-8">
           <div class="card">
             <div class="card-body">
-    <form [formGroup]="frm" (ngSubmit)="onSubmit(frm.value)">
+    <form [formGroup]="frm" (ngSubmit)="onSubmit(frm.value)" (keyup.enter)="onSubmit(frm.value)">
       <div class="form-group">
         <label for="nameSurname">Ad Soyad</label>
         <input

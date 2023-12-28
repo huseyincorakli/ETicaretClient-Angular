@@ -107,6 +107,7 @@ const routes: Routes = [
         component:ProductDetailComponent,
         canActivate:[AuthGuard]
       },
+     
   {
     path: 'products-by-category/:categoryId',
     loadChildren: () =>

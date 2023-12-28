@@ -1,7 +1,8 @@
 <div class="">
   <nav class="headerNav navbar navbar-expand-lg sticky-top">
     <div class="container-fluid">
-      <a class="navbar-brand" routerLink=""><b>LOGO</b></a>
+      <a class="navbar-brand" routerLink=""><b>CARTOPIA</b></a>
+
       <button
         style="margin-left: 120px"
         class="navbar-toggler"
@@ -24,7 +25,7 @@
               routerLink="products"
             >
               <span class="hover-underline-animation"
-                ><span style="font-weight: 500">Tüm Ürünler</span></span
+                ><span (click)="deneme()" style="font-weight: 500">Tüm Ürünler</span></span
               >
             </a>
           </li>
@@ -43,8 +44,31 @@
               <app-categories></app-categories>
             </a>
           </li>
+          <li class="nav-item dropdown">
+            <a
+            style="cursor: pointer"
+            id="deneme"
+            class="cta nav-link active"
+            aria-current="page"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span class="hover-underline-animation"
+              ><span style="font-weight: 500">Markalar</span></span
+            >
+            <ul  class="dropdown-menu">
+              <li *ngFor="let brand of uniqueBrandNames">
+                <a (click)="getProductByBrand(brand)" class="dropdown-item" >
+                 {{brand}}
+                </a>
+              </li>
+              
+            </ul>
+            
+          </a>
+          </li>
         </ul>
-        
+
         <ul class="navbar-nav ms-auto">
           <ul class="navbar-nav">
             <li>
@@ -71,13 +95,11 @@
                 *ngIf="authService.isAuthenticated"
                 routerLink="my-orders"
               >
-                <span style="font-weight: 500; font-size: 15px">Siparişlerim</span>
+                <span style="font-weight: 500; font-size: 15px"
+                  >Siparişlerim</span
+                >
                 <span class="arrow">
-                  <img
-                    class="registerIcon"
-                    src="../assets/order.png"
-                    alt=""
-                  />
+                  <img class="registerIcon" src="../assets/order.png" alt="" />
                 </span>
               </button>
             </li>
@@ -174,7 +196,7 @@
               </span>
             </button>
           </li>
-          
+
           <li class="nav-item">
             <button
               class="signinBtn"
@@ -192,25 +214,33 @@
             </button>
           </li>
         </ul>
-       
       </div>
     </div>
   </nav>
   <div class="main">
     <br />
-    
-    <div  *ngIf="showCampaignCard && activeCampaign" class="campaign-card">
+
+    <div *ngIf="showCampaignCard && activeCampaign" class="campaign-card">
       <div class="d-flex justify-content-between campaing-c">
-        <span class="title"><span style="font-size: 24px;">🎉 </span> <span style="font-size: 20px;">{{activeCampaign.title}}</span> <span style="font-size: 24px;"> 🎉</span></span> 
-        <span (click)="closeCampaignCard()" id="campaing-close" class="title">X</span>
+        <span class="title"
+          ><span style="font-size: 24px">🎉 </span>
+          <span style="font-size: 20px">{{ activeCampaign.title }}</span>
+          <span style="font-size: 24px"> 🎉</span></span
+        >
+        <span (click)="closeCampaignCard()" id="campaing-close" class="title"
+          >X</span
+        >
       </div>
       <p class="description">
-      {{activeCampaign.content}}   <b>Son Tarih: {{activeCampaign.expiredTime | date:'dd.MM.yyyy  HH:mm'}}</b>
+        {{ activeCampaign.content }}
+        <b
+          >Son Tarih:
+          {{ activeCampaign.expiredTime | date: 'dd.MM.yyyy  HH:mm' }}</b
+        >
       </p>
       <div class="actions">
-        <input type="text" value={{activeCampaign.code}} disabled>
+        <input type="text" value="{{ activeCampaign.code }}" disabled />
         <button (click)="copy(activeCampaign.code)" class="copy">
-          
           <span
             class="tooltip"
             data-text-initial="Kopyala"
@@ -227,7 +257,7 @@
               x="0"
               y="0"
               viewBox="0 0 6.35 6.35"
-              style="enable-background:new 0 0 512 512"
+              style="enable-background: new 0 0 512 512"
               xml:space="preserve"
             >
               <g>
@@ -247,7 +277,7 @@
               x="0"
               y="0"
               viewBox="0 0 24 24"
-              style="enable-background:new 0 0 512 512"
+              style="enable-background: new 0 0 512 512"
               xml:space="preserve"
             >
               <g>
@@ -260,7 +290,6 @@
             </svg>
           </span>
         </button>
-        
       </div>
     </div>
     <router-outlet></router-outlet>
