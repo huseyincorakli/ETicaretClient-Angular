@@ -27,6 +27,13 @@ const routes: Routes = [
           ),canActivate:[AuthGuard]
       },
       {
+        path: 'payments',
+        loadChildren: () =>
+          import('./admin/components/payments/payments.module').then(
+            (module) => module.PaymentsModule
+          ),canActivate:[AuthGuard]
+      },
+      {
         path: 'shipping',
         loadChildren: () =>
           import('./admin/components/shipping/shipping.module').then(

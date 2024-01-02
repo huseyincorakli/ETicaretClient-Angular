@@ -4,6 +4,7 @@ import { Create_Order } from 'src/app/contracts/order/create_order';
 import { Observable, firstValueFrom } from 'rxjs'
 import { List_Order } from 'src/app/contracts/order/list_order';
 import { SingleOrder } from 'src/app/contracts/order/single_order';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -38,6 +39,38 @@ export class OrderService {
     return await firstValueFrom(observable)
   }
   
+  async getCompletedPayments(limit:number,errorCallBack?: (errorMessage: string) => void){
+    const observable = this.httpClientService.get({
+      action:'GetPayments',
+      controller:'PaymentIntentApi',
+      queryString:`limit=${limit}`
+    })
+    const promiseData = firstValueFrom(observable);
+    promiseData.then().catch((err:HttpErrorResponse)=>{
+      if (errorCallBack) {
+        errorCallBack(err.message)
+      }
+    })
+
+    return await promiseData;
+  }
+
+  async getPaymentDetail(paymentMethodId:string,errorCallBack?: (errorMessage: string) => void){
+     const observable = this.httpClientService.get({
+      action:'GetPaymentDetail',
+      controller:'PaymentIntentApi',
+      queryString:`PaymentMethodId=${paymentMethodId}`
+    })
+    const promiseData = firstValueFrom(observable);
+    promiseData.then().catch((err:HttpErrorResponse)=>{
+      if (errorCallBack) {
+        errorCallBack(err.message)
+      }
+    })
+
+    return await promiseData;
+  }
+
 
   async getAllOrders(page: number = 0, size: number = 5,isCompleted:boolean,
     orderCode?:string, succesCallBack?: () => void, errorCallBack?: (errorMessage: string) => void):

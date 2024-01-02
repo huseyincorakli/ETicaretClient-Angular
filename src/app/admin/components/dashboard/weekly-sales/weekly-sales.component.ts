@@ -81,7 +81,7 @@ export class WeeklySalesComponent implements OnInit,AfterViewInit   {
   
     pdf.text(`${this.datesArr[0].toString()}-${this.datesArr[this.datesLen].toString()} Satis Raporu`, 20, 10);
 
-    autoTable(pdf,{ html: '#salesTable' });
+    autoTable(pdf,{ html: '#salesTable2' });
 
     pdf.save(`${this.datesArr[0].toString()}-${this.datesArr[this.datesLen].toString()} Satis Raporu.pdf`);
   }
