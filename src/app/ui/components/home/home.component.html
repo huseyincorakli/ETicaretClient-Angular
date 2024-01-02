@@ -1,170 +1,93 @@
 <div class="container mt-5">
-    <!-- Hero Section -->
-    <div class="container-fluid p-0">
-        <div class="jumbotron text-center cardx  p-5">
-          <h1 class="jumbotronHeader">Cartopia'a Hoşgeldiniz!</h1>
-          <p class="jumbotronContent">
-            Eğlenceli alışveriş deneyimine hoş geldiniz! Cartopia sizin için çeşitli ürünler sunarak alışverişinizi daha kolay ve keyifli hale getirmek için burada. Her zevke ve ihtiyaca yönelik geniş bir ürün yelpazesi sunuyoruz, böylece istediğiniz her şeyi kolayca bulabilirsiniz.
-          </p>
-        </div>
-        <br>
-        <br>
-      </div>
-      <div class="container text-center cardx">
-        <h2>Markalar</h2>
-        <ul class="brand-list row">
-          <li *ngFor="let brand of uniqueBrandNames" class="buttons col">
-            <button class="btn">
-              <span></span><p data-text="Ziyaret Et!" [attr.data-title]="brand"></p>
-            </button>
-            
-          </li>
-        </ul>
-      </div>
-      <br>
-      <br>
-      <!--KAMPANYALAR-->
-      <div class="jumbotron text-center  mb-5">
-        <div class="card">
-          <h2>Kampanyalar</h2>
-        <div id="carouselExampleAutoplaying" class="carousel slide " data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <div class="">
-                <div class="card-body">
-                  <h5 class="card-title">Special Offer 1</h5>
-                  <p class="card-text">$9.99 <del>$14.99</del></p>
-                  <a href="#" class="btn btn-primary">Add to Cart</a>
+  
+  <!-- Hero Section -->
+  <app-hero></app-hero>
+
+  <!--Markalar-->
+  <app-brands></app-brands>
+  <br />
+  <br />
+
+
+  <!--KAMPANYALAR-->
+  <app-campaigns></app-campaigns>
+  <!-- ÖNE ÇIKAN 6 ÜRÜNLER -->
+  <div class="jumbotron text-center mb-5">
+    <div *ngIf="!isLoading" class="card">
+      <h2>Öne Çıkan Ürünler</h2>
+      <div id="carouselExampleAutoplaying2" class="carousel slide" data-bs-ride="carousel">
+        <div  class="carousel-inner">
+          <div *ngFor="let group of groupedProductSellings; let i = index" class="carousel-item" [class.active]="i === 0">
+            <div  class="row">
+              <div *ngFor="let product of group" class="col"  >
+                <div  class="col">
+                  <div class="card-body">
+                    <img
+                      style=" width: 250px; height: 250px; "
+                      *ngIf="product.productImageFiles.length"
+                      class="card-img-top"
+                      src="{{ baseUrl.url }}/{{ product.productImageFiles[0].path }}"
+                      alt="Card image cap"
+                    />
+                 
+                  <h5 class="card-title"><b>{{ product.name }}</b></h5>
+                  <p class="card-text">{{ product.price| currency:'TRY' }} </p>
+                  <a [routerLink]="['/products/detail/', product.id]" class="btn btn-primary w-100">Ürüne Git</a>
                 </div>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <div class="">
-                <div class="card-body">
-                  <h5 class="card-title">Special Offer 1</h5>
-                  <p class="card-text">$9.99 <del>$14.99</del></p>
-                  <a href="#" class="btn btn-primary">Add to Cart</a>
-                </div>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <div class="">
-                <div class="card-body">
-                  <h5 class="card-title">Special Offer 1</h5>
-                  <p class="card-text">$9.99 <del>$14.99</del></p>
-                  <a href="#" class="btn btn-primary">Add to Cart</a>
-                </div>
+              </div>        
               </div>
             </div>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+        
+          
         </div>
-        </div>
+       
+        <button  class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying2" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying2" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
-      
-    
-      <!-- ÖNE ÇIKAN 10 ÜRÜNLER -->
-      <div class="jumbotron text-center mb-5">
-        <div class="card">
-          <h2>Öne Çıkan Ürünler</h2>
-          <div id="carouselExampleAutoplaying2" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <div class="row">
-                  <div class="col">
-                    <div class="card-body">
-                      <h5 class="card-title">Special Offer 1</h5>
-                      <p class="card-text">$9.99 <del>$14.99</del></p>
-                      <a href="#" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-body">
-                      <h5 class="card-title">Special Offer 2</h5>
-                      <p class="card-text">$9.99 <del>$14.99</del></p>
-                      <a href="#" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-body">
-                      <h5 class="card-title">Special Offer 3</h5>
-                      <p class="card-text">$9.99 <del>$14.99</del></p>
-                      <a href="#" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="carousel-item ">
-                <div class="row">
-                  <div class="col">
-                    <div class="card-body">
-                      <h5 class="card-title">Special Offer 4</h5>
-                      <p class="card-text">$9.99 <del>$14.99</del></p>
-                      <a href="#" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-body">
-                      <h5 class="card-title">Special Offer 5</h5>
-                      <p class="card-text">$9.99 <del>$14.99</del></p>
-                      <a href="#" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-body">
-                      <h5 class="card-title">Special Offer 6</h5>
-                      <p class="card-text">$9.99 <del>$14.99</del></p>
-                      <a href="#" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="carousel-item ">
-                <div class="row">
-                  <div class="col">
-                    <div class="card-body">
-                      <h5 class="card-title">Special Offer 7</h5>
-                      <p class="card-text">$9.99 <del>$14.99</del></p>
-                      <a href="#" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-body">
-                      <h5 class="card-title">Special Offer 8</h5>
-                      <p class="card-text">$9.99 <del>$14.99</del></p>
-                      <a href="#" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="card-body">
-                      <h5 class="card-title">Special Offer 9</h5>
-                      <p class="card-text">$9.99 <del>$14.99</del></p>
-                      <a href="#" class="btn btn-primary">Add to Cart</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying2" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying2" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
+    </div>
+
+    <div *ngIf="isLoading" class="card">
+      <div class="row">
+        <div class="col">
+          <div class="card-body">
+            <p class="placeholder-glow">
+              <span style="width: 250px; height: 250px;" class="placeholder col-12"></span>
+            </p>
+            <p class="placeholder-glow">
+              <span class="placeholder" style="width: 25%;"></span>
+            </p>
+            <p class="placeholder-glow">
+              <span class="placeholder" style="width: 25%;"></span>
+            </p>
+            <a class="btn btn-primary disabled placeholder w-100 col-4" aria-disabled="true"></a>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card-body">
+            <p class="placeholder-glow">
+              <span style="width: 250px; height: 250px;" class="placeholder col-12"></span>
+            </p>
+            <p class="placeholder-glow">
+              <span class="placeholder" style="width: 25%;"></span>
+            </p>
+            <p class="placeholder-glow">
+              <span class="placeholder" style="width: 25%;"></span>
+            </p>
+            <a class="btn btn-primary disabled placeholder col-4 w-100" aria-disabled="true"></a>
           </div>
         </div>
       </div>
-      
-      <br>
-      <br>
+    </div>
     
+  </div>
+
+  <br />
+  <br />
 </div>

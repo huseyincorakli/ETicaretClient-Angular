@@ -4,7 +4,12 @@
     <canvas   #barCanvas> </canvas>
    </div>
     <div class="canvasContent">
-      
+      <div >
+        <div class="input-group input-group-sm mb-1 mt-1 mx-1">
+          <button (click)="createPdf(txtProductSize)" class="btn btn-success" type="button" id="button-addon1">Rapor Oluştur</button>
+          <input #txtProductSize type="number" class="form-control" placeholder="Ürün Sayısı" aria-label="Example text with button addon" aria-describedby="button-addon1">
+        </div>
+        </div>
       <h2>Stokta Azalan Ürünler</h2>
       <div class="chartLegend">
         <div class="chartLegend">
@@ -30,3 +35,23 @@
 
   </div>
   
+  <div style="display: none;">
+    <table id="stockTable">
+      <thead>
+        <tr>
+          <th>Marka</th>
+          <th>Urun Adi</th>
+          <th>Urun Stogu</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pro of leastStockedProducts">
+          <td>{{pro.brand}}</td>
+          <td>{{pro.name}}</td>
+          <td>{{pro.stock}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+ 

@@ -74,10 +74,11 @@ export class AppComponent implements OnInit {
     path=this.router.url
 
     if (path!='/products') {
-      this.router.navigate(['products'])
-      setInterval(()=>{
+      this.router.navigate(['products']).then(()=>{
+        console.log('Yönlendirme tamamlandı');
         this.emitterService.sendBrandName(brandName)
-      },1050)
+      })
+      
     }
     else{
       this.emitterService.sendBrandName(brandName)

@@ -1,0 +1,27 @@
+<div *ngIf="!isLoading" class="container text-center cardx">
+  <h2>Markalar</h2>
+  <ul class="brand-list row">
+    <li *ngFor="let brand of uniqueBrandNames" class="buttons col">
+      <button class="btn">
+        <span></span>
+        <p data-text="Ziyaret Et!" [attr.data-title]="brand"></p>
+      </button>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="isLoading" class="container text-center cardx">
+  <ul class="brand-list row">
+    <li
+      style="list-style: none"
+      class="placeholder-glow d-flex justify-content-around mt-3 mb-3"
+    >
+      <span style="width: 10%; height: 20px" class="placeholder col-12"></span>
+      <span style="width: 10%; height: 20px" class="placeholder col-12"></span>
+      <span style="width: 10%; height: 20px" class="placeholder col-12"></span>
+      <span style="width: 10%; height: 20px" class="placeholder col-12"></span>
+      <span style="width: 10%; height: 20px" class="placeholder col-12"></span>
+      <span style="width: 10%; height: 20px" class="placeholder col-12"></span>
+    </li>
+  </ul>
+</div>

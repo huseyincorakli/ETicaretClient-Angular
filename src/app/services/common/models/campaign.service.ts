@@ -10,11 +10,18 @@ export class CampaignService {
 
   constructor(private httpClientService: HttpClientService) { }
 
-  async getAllCampaigns(size:number=3,campaignCode:string,errorCallBack?:(err:string)=>void):Promise<any>{
+  async getAllCampaigns(size?:number,campaignCode?:string,errorCallBack?:(err:string)=>void):Promise<any>{
+   let _queryString;
+    if (size) {
+    _queryString:`Size=${size}`
+   }
+   if (campaignCode) {
+    _queryString+=`&CampaignCode=${campaignCode}`
+   }
     const observable=  this.httpClientService.get({
       action:'GetAllCampaign',
       controller:'Campaigns',
-      queryString:`Size=${size}&CampaignCode=${campaignCode}`
+      queryString:_queryString?_queryString:''
     })
     const promiseData= firstValueFrom(observable);
     promiseData.then(()=>{}).catch((err)=>{

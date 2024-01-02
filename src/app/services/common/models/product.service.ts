@@ -9,6 +9,7 @@ import { GenerateProductDescription } from 'src/app/contracts/products/generate_
 import { Product_Details } from 'src/app/contracts/products/product_detail';
 import { Best_Selling_Product } from 'src/app/contracts/products/best_selling_product';
 import { Low_Stock_Product } from 'src/app/contracts/products/low_stock_product';
+import { Best_Selling_Product_BySize } from 'src/app/contracts/products/best_selling_product_size';
 
 
 @Injectable({
@@ -270,6 +271,42 @@ export class ProductService {
     }).catch(() => {
       errorCallBack();
     })
+  }
+
+  async getBestSellingBySize(size:number,errorCallback?:(err:string)=>void):Promise<Best_Selling_Product_BySize>{
+    const observable =this.httpClientService.get<Best_Selling_Product_BySize>({
+      action:'GetProductSellingReport',
+      controller:'products',
+      queryString:`Size=${size}`
+    })
+
+    const promiseData = firstValueFrom(observable);
+
+    promiseData.then().catch((err:HttpErrorResponse)=>{
+      if (errorCallback) {
+        errorCallback(err.message)
+      }
+    })
+
+    return await promiseData;
+  }
+
+  async getProductStockBySize(size:number,errorCallback?:(err:string)=>void):Promise<any>{
+    const observable =this.httpClientService.get<any>({
+      action:'GetProductStockReport',
+      controller:'products',
+      queryString:`Size=${size}`
+    })
+
+    const promiseData = firstValueFrom(observable);
+
+    promiseData.then().catch((err:HttpErrorResponse)=>{
+      if (errorCallback) {
+        errorCallback(err.message)
+      }
+    })
+
+    return await promiseData;
   }
 }
 

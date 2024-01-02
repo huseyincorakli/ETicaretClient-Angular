@@ -60,6 +60,7 @@ export class ListComponent extends BaseComponent implements OnInit,OnDestroy  {
   secondFilterPriceValue: number = 500000;
   sortAZ: boolean = false;
   sortPriceAsc: boolean = false;
+  isLoading:boolean=true;
 
 
   onCategorySelected(event: any): void {
@@ -79,23 +80,7 @@ export class ListComponent extends BaseComponent implements OnInit,OnDestroy  {
   }
 
   async ngOnInit() {
-    this.brandNameSubscription =  this.emitterService.brandName$.subscribe((brandName) => {
-      this.getProductByBrand(brandName);
-    });
-    this.denemeSubscription =  this.emitterService.deneme.subscribe(async()=>{
-      const data: { totalProductCount: number, products: List_Product[] } = await this.productService.read(
-        this.currentPageNo - 1,
-        this.pageSize,
-        null, null, null, null, () => { }, () => { }
-      );
-
-      this.products = data.products.map(p => {
-        return {
-          ...p,
-          imagePath: p.productImageFiles.length ? p.productImageFiles.find(img => img.showcase).path : ''
-        };
-      });
-    })
+   
     this.baseUrl = await this.fileService.getBaseStorageUrl()
 
     this.activatedRoute.params.subscribe(async params => {
@@ -163,6 +148,26 @@ export class ListComponent extends BaseComponent implements OnInit,OnDestroy  {
           this.pageList.push(i);
       this.hideSpinner(SpinnerType.Classic)
     });
+    this.isLoading=false;
+    
+    this.brandNameSubscription =  this.emitterService.brandName$.subscribe((brandName) => {
+      this.getProductByBrand(brandName);
+    });
+    
+    this.denemeSubscription =  this.emitterService.deneme.subscribe(async()=>{
+      const data: { totalProductCount: number, products: List_Product[] } = await this.productService.read(
+        this.currentPageNo - 1,
+        this.pageSize,
+        null, null, null, null, () => { }, () => { }
+      );
+
+      this.products = data.products.map(p => {
+        return {
+          ...p,
+          imagePath: p.productImageFiles.length ? p.productImageFiles.find(img => img.showcase).path : ''
+        };
+      });
+    })
 
 
 

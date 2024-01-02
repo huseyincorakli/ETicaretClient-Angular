@@ -20,6 +20,13 @@ const routes: Routes = [
           ),canActivate:[AuthGuard]
       },
       {
+        path: 'main-page-settings',
+        loadChildren: () =>
+          import('./admin/components/main-page/main-page.module').then(
+            (module) => module.MainPageModule
+          ),canActivate:[AuthGuard]
+      },
+      {
         path: 'shipping',
         loadChildren: () =>
           import('./admin/components/shipping/shipping.module').then(

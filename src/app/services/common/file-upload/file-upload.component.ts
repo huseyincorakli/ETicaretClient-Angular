@@ -90,24 +90,10 @@ export class FileUploadComponent {
     
    })
 
-  //  this.openDialog(()=>{
-    
-    
-  //  })
   
 }
 
-  // openDialog(afterClosed:any): void {
-  //   const dialogRef = this.dialog.open(FileUploadDialogComponent, {
-  //     width:'250px',
-  //     data:FileUploadDialogState.Yes,
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result==FileUploadDialogState.Yes)
-  //     afterClosed()
-  //   });
-  // }
+  
 }
 
 export class FileUploadOptions {

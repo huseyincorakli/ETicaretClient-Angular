@@ -1,0 +1,39 @@
+.home-video {
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    height: 500px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+  }
+
+  .cardx {
+    background-color: #FBFFF1;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease-in-out;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  
+  }
+  
+  
+  
+  .cardx img {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+  .card-titlex {
+    color: #007bff;
+  }
+  .cardx>h1{
+    color: #090C9B;
+  }
+
+  .cardx>p{
+    font-size: 18px;
+    text-align: center;
+  }

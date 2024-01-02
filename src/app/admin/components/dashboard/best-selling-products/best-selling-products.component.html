@@ -1,7 +1,15 @@
+
 <div class="colContent">
   
   <canvas #doughnutCanvas> </canvas>
+  
   <div class="canvasContent">
+    <div >
+      <div class="input-group input-group-sm mb-1 mx-1">
+        <button (click)="createProductReport(txtProductSize)" class="btn btn-success" type="button" id="button-addon1">Rapor Oluştur</button>
+        <input #txtProductSize type="number" class="form-control" placeholder="Ürün Sayısı" aria-label="Example text with button addon" aria-describedby="button-addon1">
+      </div>
+      </div>
     <h2 *ngIf="!isLoading">En Çok Satılan Ürünler</h2>
     <div class="chartLegend">
       <div class="chartLegend">
@@ -24,3 +32,26 @@
     </div>
   </div>
 </div>
+
+
+<div style="display: none;">
+  <table id="salesTable">
+    <thead>
+      <tr>
+        <th>Marka</th>
+        <th>Ürün Adi</th>
+        <th>Ürün Fiyati</th>
+        <th>Satilan Miktar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pro of productSellingReportData">
+        <td>{{pro.brand}}</td>
+        <td>{{pro.name}}</td>
+        <td>{{pro.price}}</td>
+        <td>{{pro.quantitySold}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

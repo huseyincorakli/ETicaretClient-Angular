@@ -1,0 +1,103 @@
+<div class="container mb-1">
+  <div class="form-floating">
+    <textarea
+    #txtTitle
+      class="form-control"
+      placeholder="Leave a comment here"
+      [value]="homeSetting?.welcomeTitle"
+      id="floatingTextarea"
+    ></textarea>
+    <label for="floatingTextarea">Karşılama Başlığı</label>
+    <button (click)="updateTitle(txtTitle)" style="float: right" class="btn btn-warning btn-sm mt-2">
+        Güncelle
+      </button>
+  </div>
+</div>
+<br />
+<hr />
+
+<div class="container mb-1">
+  <div class="form-floating">
+    <textarea
+    #txtWelcomeText
+      class="form-control"
+      placeholder="Leave a comment here"
+      id="floatingTextarea2"
+      style="height: 100px"
+      [value]="homeSetting?.welcomeText"
+    ></textarea>
+    <label for="floatingTextarea2">Karşılama Yazısı</label>
+    <button (click)="updateText(txtWelcomeText)" style="float: right" class="btn btn-warning btn-sm mt-2">
+      Güncelle
+    </button>
+  </div>
+</div>
+<br />
+<hr />
+
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <video
+        style="width: 100%; height: 100%; object-fit: fill"
+        class="w-full h-full slider-video"
+        autoplay
+        loop
+        playsinline
+        muted
+        src="{{ baseUrl }}/home-video/homevideo.mp4"
+      ></video>
+    </div>
+    <div class="col-6">
+      <div>
+        <input
+          class="form-control mb-1"
+          type="file"
+          (change)="onFileSelected($event)"
+          accept="video/*"
+        />
+        <div
+          *ngIf="isLoading"
+          class="progress"
+          role="progressbar"
+          aria-label="Example with label"
+          [attr.aria-valuenow]="percentDoneNum"
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
+          <div class="progress-bar" [style.width.%]="percentDoneNum">
+            {{ percentDoneNum }}%
+          </div>
+        </div>
+        <button
+          style="float: right"
+          class="btn btn-warning btn-sm"
+          (click)="uploadVideo()"
+        >
+          Videoyu Güncelle
+        </button>
+        <br />
+      </div>
+      <hr />
+      <div class="d-flex" style="justify-content: center; align-items: center">
+        <label style="width: 40%" for="numberOfFeatured"
+          >Öne Çıkan Ürün Sayısı</label
+        >
+        <input
+        #txtFeaturedSize
+          id="numberOfFeatured"
+          class="form-control"
+          min="6"
+          max="30"
+          [value]="homeSetting?.numberOfFeaturedProducts"
+          type="number"
+        />
+        <button (click)="updateFeaturedSize(txtFeaturedSize)" class="btn btn-warning btn-sm mx-2">Güncelle</button>
+      </div>
+
+      <div></div>
+    </div>
+  </div>
+</div>
+<br>
+<br>
