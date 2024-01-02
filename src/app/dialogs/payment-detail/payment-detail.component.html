@@ -1,0 +1,34 @@
+<div class="container">
+    <br>
+    <table  class="table table-success table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Email</th>
+            <th scope="col">Ad Soyad</th>
+            <th scope="col">Kart Markası</th>
+            <th scope="col">Kart Son Kullanma Tarihi</th>
+            <th scope="col">Kart Son 4 Hane</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr >
+            <th scope="row">
+              {{ paymentDetail.billingDetails.email }}
+            </th>
+            <th scope="row">
+              {{ paymentDetail.billingDetails.name }}
+            </th>
+            <th scope="row">
+              {{ paymentDetail.card.brand }}
+            </th>
+            <th scope="row">
+              {{ paymentDetail.card.expMonth }}/{{ paymentDetail.card.expYear }}
+            </th>
+            <th scope="row">
+              {{ paymentDetail.card.last4 }}
+            </th>
+          </tr>
+        </tbody>
+      </table>
+      
+</div>

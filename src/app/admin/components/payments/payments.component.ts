@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PaymentDetailComponent } from 'src/app/dialogs/payment-detail/payment-detail.component';
+import { DialogService } from 'src/app/services/common/dialog.service';
 import { OrderService } from 'src/app/services/common/models/order.service';
 
 @Component({
@@ -9,7 +11,9 @@ import { OrderService } from 'src/app/services/common/models/order.service';
 export class PaymentsComponent implements OnInit {
   completedPayments: any;
   completedPaymentSize: number = 5;
-  constructor(private orderService: OrderService) {
+  constructor(
+    private orderService: OrderService,
+    private dialogService:DialogService) {
   }
 
   async ngOnInit() {
@@ -30,7 +34,18 @@ export class PaymentsComponent implements OnInit {
   async moreCompletedPayment(){
     console.log("çalıştır");
     
-    const size = this.completedPaymentSize+3
-    this.completedPayments= await this.getCompletedPayments(size);
+    this.completedPaymentSize+=3;
+    this.completedPayments= await this.orderService.getCompletedPayments(this.completedPaymentSize);
+  }
+
+  async getDetail(paymentMethodId:string){
+    this.dialogService.openDialog({
+      componentType:PaymentDetailComponent,
+      data:{paymentMethodId},
+      options:{
+        width:'700px',
+        height:'150px'
+      }
+    })
   }
 }

@@ -30,6 +30,7 @@ import { RouterModule } from '@angular/router';
 import { CreateCampaignComponent } from './create-campaign/create-campaign.component';
 import { UpdateShippingCompanyComponent } from './update-shipping-company/update-shipping-company.component';
 import {MatSelectModule} from '@angular/material/select';
+import { PaymentDetailComponent } from './payment-detail/payment-detail.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import {MatSelectModule} from '@angular/material/select';
     UpdateCategoryDialogComponent,
     EditProductDialogComponent,
     CreateCampaignComponent,
-    UpdateShippingCompanyComponent
+    UpdateShippingCompanyComponent,
+    PaymentDetailComponent
   ],
   imports: [
     CommonModule,

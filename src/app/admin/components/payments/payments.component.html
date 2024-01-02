@@ -1,25 +1,80 @@
 <div class="container">
-    <table class="table table-hover table-bordered">
-        <thead>
-          <tr class="text-center">
-            <th scope="col">Ödeme Methodu</th>
-            <th scope="col">Durum</th>
-            <th scope="col">Para Birimi</th>
-            <th scope="col">Oluşturulma Tarihi</th>
-            <th scope="col">Alınan Miktar</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr  *ngFor="let payment of completedPayments" class="text-center">
-            <th scope="row">{{payment.paymentMethodTypes[0]}}</th>
-            <td>{{payment.status}}</td>
-            <td>{{payment.currency}}</td>
-            <td>{{payment.created |date: 'dd/MM/yyyy hh:mm a'}}</td>
-            <td>{{payment.amount/100 |currency:'TRY'}}</td>
-            <td><button class="btn btn-sm btn-warning w-100">Detay</button></td>
-          </tr>
-        </tbody>
-      </table>
-      <button click="moreCompletedPayment()" class="btn btn-sm btn-warning">Daha Fazla Göster</button>
+  <div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button
+          class="accordion-button"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapseOne"
+          aria-expanded="true"
+          aria-controls="collapseOne"
+        >
+          ÖDEMELER
+        </button>
+      </h2>
+      <div
+        id="collapseOne"
+        class="accordion-collapse collapse show"
+        data-bs-parent="#accordionExample"
+      >
+        <div class="accordion-body">
+          <div class="container">
+            <a
+              class="btn btn-sm btn-primary mb-1 float-end"
+              href="https://dashboard.stripe.com/test/payments"
+              target="_blank"
+              >Stripe DASHBOARDA GİT</a
+            >
+            <table class="table table-hover table-bordered">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col">Ödeme Methodu</th>
+                  <th scope="col">Durum</th>
+                  <th scope="col">Para Birimi</th>
+                  <th scope="col">Oluşturulma Tarihi</th>
+                  <th scope="col">Alınan Miktar</th>
+                  <th scope="col"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let payment of completedPayments"
+                  class="text-center"
+                >
+                  <th scope="row">{{ payment.paymentMethodTypes[0] }}</th>
+                  <td>{{ payment.status }}</td>
+                  <td>{{ payment.currency }}</td>
+                  <td>{{ payment.created | date: 'dd/MM/yyyy hh:mm a' }}</td>
+                  <td>{{ payment.amount / 100 | currency: 'TRY' }}</td>
+                  <td>
+                    <button (click)="getDetail(payment.paymentMethodId)" class="btn btn-sm btn-warning w-100">Detay</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button
+              (click)="moreCompletedPayment()"
+              class="btn btn-sm btn-warning"
+            >
+              Daha Fazla Göster
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="accordion accordion-flush" id="accordionFlushExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+          İADE TALEPLERİ
+        </button>
+      </h2>
+      <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+        <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+      </div>
+    </div>
 </div>
