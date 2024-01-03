@@ -3,4 +3,7 @@ export class Get_Home_Setting{
     numberOfFeaturedProducts:number;
     welcomeText:string;
     welcomeTitle:string;
+    contactNumber:string;
+    contactAddress:string;
+    contactMail:string;
 }

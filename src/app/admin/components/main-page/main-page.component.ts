@@ -103,4 +103,28 @@ successMessage(){
       this.successMessage();
     })
   }
+  async updateContactNumber(txtContactNumber:HTMLInputElement){
+    const value = txtContactNumber.value;
+    await this.homeSettingService.updateContactNumber(value,(err)=>{
+      this.errorMessage();
+    },()=>{
+      this.successMessage();
+    })
+  }
+ async updateContactMail(txtContactMail:HTMLInputElement){
+  const value = txtContactMail.value;
+  await this.homeSettingService.updateContactMail(value,(err)=>{
+    this.errorMessage();
+  },()=>{
+    this.successMessage();
+  })
+ }
+ async updateContactAdress(txtContactAdress:HTMLTextAreaElement){
+  const value = txtContactAdress.value;
+  await this.homeSettingService.updateContactAddress(value,(err)=>{
+    this.errorMessage();
+  },()=>{
+    this.successMessage();
+  })
+ }
 }

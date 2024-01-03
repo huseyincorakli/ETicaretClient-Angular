@@ -89,6 +89,67 @@ export class HomeSettingService {
     return await promiseData;
   }
 
+  async updateContactAddress(address: string, errorCallback?: (err: string) => void, succesCallback?: () => void) {
+    const observable = this.httpClientService.get({
+      action: 'UpdateContactAddress',
+      controller: 'HomeSettings',
+      queryString:`address=${address}`
+    })
+
+    const promiseData = firstValueFrom(observable)
+    promiseData.then(()=>{
+      if (succesCallback) {
+        succesCallback();
+      }
+    }).catch((err: HttpErrorResponse) => {
+      if (errorCallback) {
+        errorCallback(err.message)
+      }
+    })
+
+    return await promiseData;
+  }
+  async updateContactNumber(telNumber:string, errorCallback?: (err: string) => void, succesCallback?: () => void) {
+    const observable = this.httpClientService.get({
+      action: 'UpdateContactNumber',
+      controller: 'HomeSettings',
+      queryString:`number=${telNumber}`
+    })
+
+    const promiseData = firstValueFrom(observable)
+    promiseData.then(()=>{
+      if (succesCallback) {
+        succesCallback();
+      }
+    }).catch((err: HttpErrorResponse) => {
+      if (errorCallback) {
+        errorCallback(err.message)
+      }
+    })
+
+    return await promiseData;
+  }
+  async updateContactMail(mail: string, errorCallback?: (err: string) => void, succesCallback?: () => void) {
+    const observable = this.httpClientService.get({
+      action: 'UpdateContactMail',
+      controller: 'HomeSettings',
+      queryString:`mail=${mail}`
+    })
+
+    const promiseData = firstValueFrom(observable)
+    promiseData.then(()=>{
+      if (succesCallback) {
+        succesCallback();
+      }
+    }).catch((err: HttpErrorResponse) => {
+      if (errorCallback) {
+        errorCallback(err.message)
+      }
+    })
+
+    return await promiseData;
+  }
+
 
 
 

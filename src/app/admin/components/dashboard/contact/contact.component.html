@@ -1,0 +1,25 @@
+<div class="colContent">
+    <div class="container">
+        
+        <div class="row">
+            <h3>Mesajlar</h3>
+            <div  class="col-3">
+             <ul>
+                <li *ngFor="let message of messages">
+                <button (click)="showMessageContent(message)" class="btn btn-sm btn-warning">
+                    {{message.messageTitle}} | {{message.email}}
+                </button>
+                </li>
+             </ul>
+            </div>
+            <div  class="col-9">
+                <div *ngIf="selectedMessage">
+                    {{selectedMessage.email}} <br>
+                    {{selectedMessage.messageTitle}} <br>
+                    {{selectedMessage.createDate | date:'dd-MM-YYYY hh:mm a'}} <br>
+                    {{selectedMessage.messageContent}}
+                </div>
+            </div>
+          </div>
+    </div>
+<br>

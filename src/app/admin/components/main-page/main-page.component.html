@@ -1,16 +1,20 @@
 <div class="container mb-1">
   <div class="form-floating">
     <textarea
-    #txtTitle
+      #txtTitle
       class="form-control"
       placeholder="Leave a comment here"
       [value]="homeSetting?.welcomeTitle"
       id="floatingTextarea"
     ></textarea>
     <label for="floatingTextarea">Karşılama Başlığı</label>
-    <button (click)="updateTitle(txtTitle)" style="float: right" class="btn btn-warning btn-sm mt-2">
-        Güncelle
-      </button>
+    <button
+      (click)="updateTitle(txtTitle)"
+      style="float: right"
+      class="btn btn-warning btn-sm mt-2"
+    >
+      Güncelle
+    </button>
   </div>
 </div>
 <br />
@@ -19,7 +23,7 @@
 <div class="container mb-1">
   <div class="form-floating">
     <textarea
-    #txtWelcomeText
+      #txtWelcomeText
       class="form-control"
       placeholder="Leave a comment here"
       id="floatingTextarea2"
@@ -27,7 +31,11 @@
       [value]="homeSetting?.welcomeText"
     ></textarea>
     <label for="floatingTextarea2">Karşılama Yazısı</label>
-    <button (click)="updateText(txtWelcomeText)" style="float: right" class="btn btn-warning btn-sm mt-2">
+    <button
+      (click)="updateText(txtWelcomeText)"
+      style="float: right"
+      class="btn btn-warning btn-sm mt-2"
+    >
       Güncelle
     </button>
   </div>
@@ -84,7 +92,7 @@
           >Öne Çıkan Ürün Sayısı</label
         >
         <input
-        #txtFeaturedSize
+          #txtFeaturedSize
           id="numberOfFeatured"
           class="form-control"
           min="6"
@@ -92,12 +100,89 @@
           [value]="homeSetting?.numberOfFeaturedProducts"
           type="number"
         />
-        <button (click)="updateFeaturedSize(txtFeaturedSize)" class="btn btn-warning btn-sm mx-2">Güncelle</button>
+        <button
+          (click)="updateFeaturedSize(txtFeaturedSize)"
+          class="btn btn-warning btn-sm mx-2"
+        >
+          Güncelle
+        </button>
+      </div>
+
+      <hr />
+      <div class="d-flex" style="justify-content: center; align-items: center">
+        <label style="width: 40%" for="contactNumber">İletişim Numarası</label>
+        <input
+          #txtContactNumber
+          id="contactNumber"
+          class="form-control"
+          [value]="homeSetting?.contactNumber"
+          type="tel"
+        />
+        <button
+          (click)="updateContactNumber(txtContactNumber)"
+          class="btn btn-warning btn-sm mx-2"
+        >
+          Güncelle
+        </button>
+      </div>
+
+      <hr />
+      <div class="d-flex" style="justify-content: center; align-items: center">
+        <label style="width: 40%" for="contactMail">Mail</label>
+        <input
+          #txtContactMail
+          id="contactMail"
+          class="form-control"
+          [value]="homeSetting?.contactMail"
+          type="email"
+        />
+        <button
+          (click)="updateContactMail(txtContactMail)"
+          class="btn btn-warning btn-sm mx-2"
+        >
+          Güncelle
+        </button>
+      </div>
+
+      <hr />
+      <div class="d-flex" style="justify-content: center; align-items: center">
+        <label style="width: 40%" for="contactMail">Mail</label>
+        <input
+          #txtContactMail
+          id="contactMail"
+          class="form-control"
+          [value]="homeSetting?.contactMail"
+          type="email"
+        />
+        <button
+          (click)="updateContactMail(txtContactMail)"
+          class="btn btn-warning btn-sm mx-2"
+        >
+          Güncelle
+        </button>
+      </div>
+
+      <hr />
+      <div class="d-flex" style="justify-content: center; align-items: center">
+        <label style="width: 40%" for="contactAddress">Adres</label>
+        <textarea
+          #txtContactAdress
+          class="form-control"
+          placeholder="Adresi Giriniz"
+          [value]="homeSetting?.contactAddress"
+          id="contactAddress"
+        ></textarea>
+        <button
+          (click)="updateContactAdress(txtContactAdress)"
+          class="btn btn-warning btn-sm mx-2"
+        >
+          Güncelle
+        </button>
       </div>
 
       <div></div>
     </div>
   </div>
 </div>
-<br>
-<br>
+<br />
+<br />

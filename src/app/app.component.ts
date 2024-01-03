@@ -14,6 +14,9 @@ import { CampaignService } from './services/common/models/campaign.service';
 import { Campaign } from './contracts/campaign/campaign';
 import { ProductService } from './services/common/models/product.service';
 import { CategoryEmitterService } from './services/common/emitters.service';
+import { HomeSettingService } from './services/common/models/home-setting.service';
+import { ContactService } from './services/common/models/contact.service';
+import { Create_Message } from './contracts/contact/create-message';
 
 declare var $: any;
 
@@ -24,15 +27,18 @@ declare var $: any;
 })
 export class AppComponent implements OnInit {
   showCampaignCard: boolean = true;
+  showFooter:boolean=true;
   campaignCardClosed: boolean = false;
   activeCampaign: Campaign = null;
   brands:any=[]
   uniqueBrands = [];
   uniqueBrandNames = [];
+  homeSetting:any;
   @ViewChild(DynamicLoadComponentDirective, { static: true })
   dynamicLoadComponentDirective: DynamicLoadComponentDirective
   @ViewChild('navbarSupportedContent') navbarContent: ElementRef;
   constructor(
+    private contactService:ContactService,
     private clipboard: ClipboardService,
     public authService: AuthService,
     private toastr: CustomToastrService,
@@ -41,21 +47,25 @@ export class AppComponent implements OnInit {
     private spinner: NgxSpinnerService,
     private dynamicLoadComponentService: DynamicLoadComponentService,
     private campaignService: CampaignService,
-    private productService: ProductService
+    private productService: ProductService,
+    private homeSettignService:HomeSettingService
   ) {
+    
 
     authService.identityCheck();
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.checkShowCampaignCard();
+        this.checkShowFooter();
       }
     });
   }
 
   async ngOnInit(): Promise<void> {
+    this.homeSetting= await this.homeSettignService.getSetting();
     await this.getActiveCampaign()
     await this.getBrands();
-
+    
   }
 
   async getBrands() {
@@ -97,9 +107,14 @@ export class AppComponent implements OnInit {
     this.showCampaignCard = false;
     this.campaignCardClosed = true;
   }
+
   checkShowCampaignCard(): void {
     const currentRoute = this.router.url;
     this.showCampaignCard = !this.campaignCardClosed && !currentRoute.includes('/admin') && !currentRoute.includes('/my-orders') && !currentRoute.includes('/checkouts');
+  }
+  checkShowFooter(){
+    const currentRoute = this.router.url;
+    this.showFooter=!this.campaignCardClosed && !currentRoute.includes('/admin') && !currentRoute.includes('/my-orders') && !currentRoute.includes('/checkouts');
   }
 
   toggleNavbarContent() {
@@ -128,6 +143,23 @@ export class AppComponent implements OnInit {
   }
   copy(value) {
     this.clipboard.copyTextToClipboard(value)
+  }
+
+ async sendMessage(txtMail:HTMLInputElement,txtMessage:HTMLTextAreaElement,txtTitle:HTMLInputElement){
+  console.log("tıkladı");
+  
+  const message:Create_Message={
+    email:txtMail.value,
+    messageContent:txtMessage.value,
+    messageTitle:txtTitle.value
+  }
+
+ await this.contactService.createMessage(message,(err)=>{
+    this.toastr.message('Hata','Mesaj gönderilirken bir hata oluştu',ToastrMessageType.Error,ToastrPosition.BottomRight)
+  },()=>{
+    this.toastr.message('Mesaj gönderildi','En kısa sürede sizinle iletişime geçilecektir.',ToastrMessageType.Success,ToastrPosition.BottomRight)
+
+  })
   }
   loadComponent() {
     this.dynamicLoadComponentService.loadComponent(ComponentType.BasketComponent, this.dynamicLoadComponentDirective.viewContainerRef)
