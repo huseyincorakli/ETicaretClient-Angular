@@ -1,0 +1,12 @@
+<div class="container mt-3 p-3">
+    <h3><strong>{{data.email}}</strong> mailine cevap veriyorsuz</h3>
+    <div class="form-floating mb-3">
+        <input #txtTitle type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+        <label for="floatingInput">Başlık</label>
+      </div>
+      <div class="form-floating">
+        <textarea #txtMessage class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+        <label for="floatingTextarea2">Mesaj</label>
+      </div>
+      <button (click)="sendMessage(data.email,data.id,txtTitle,txtMessage)" class="btn btn-sm btn-primary mt-2 float-end">Gönder</button>
+</div>

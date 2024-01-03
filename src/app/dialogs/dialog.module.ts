@@ -31,6 +31,7 @@ import { CreateCampaignComponent } from './create-campaign/create-campaign.compo
 import { UpdateShippingCompanyComponent } from './update-shipping-company/update-shipping-company.component';
 import {MatSelectModule} from '@angular/material/select';
 import { PaymentDetailComponent } from './payment-detail/payment-detail.component';
+import { ReplyToMessageDialogComponent } from './reply-to-message-dialog/reply-to-message-dialog.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { PaymentDetailComponent } from './payment-detail/payment-detail.componen
     EditProductDialogComponent,
     CreateCampaignComponent,
     UpdateShippingCompanyComponent,
-    PaymentDetailComponent
+    PaymentDetailComponent,
+    ReplyToMessageDialogComponent
   ],
   imports: [
     CommonModule,

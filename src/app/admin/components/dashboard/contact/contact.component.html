@@ -1,25 +1,44 @@
 <div class="colContent">
-    <div class="container">
-        
+    <div *ngIf="!isLoading" class="container mt-4">
+        <h2>GELEN KUTUSU</h2>
+        <button (click)="getMessages()" class="float-end btn-sm btn btn-warning">
+        <img class="float-end" src="../../../../../assets/refresh.png" alt="">
+        </button>
         <div class="row">
-            <h3>Mesajlar</h3>
-            <div  class="col-3">
-             <ul>
-                <li *ngFor="let message of messages">
-                <button (click)="showMessageContent(message)" class="btn btn-sm btn-warning">
-                    {{message.messageTitle}} | {{message.email}}
-                </button>
-                </li>
-             </ul>
+            <div class="col-md-3">
+                <ul class="list-group">
+                    <li *ngFor="let message of messages" class="list-group-item">
+                        <button (click)="showMessageContent(message)" class="btn btn-warning btn-sm">
+                            {{ message.messageTitle.slice(0,21) }} | {{ message.email }}
+                        </button>
+                    </li>
+                </ul>
             </div>
-            <div  class="col-9">
-                <div *ngIf="selectedMessage">
-                    {{selectedMessage.email}} <br>
-                    {{selectedMessage.messageTitle}} <br>
-                    {{selectedMessage.createDate | date:'dd-MM-YYYY hh:mm a'}} <br>
-                    {{selectedMessage.messageContent}}
+            <div class="col-md-9">
+                <div *ngIf="selectedMessage" class="messageCol border p-3">
+                    <h4><strong>Konu:</strong> {{ selectedMessage.messageTitle }}</h4>
+                    <p><strong>Email:</strong> {{ selectedMessage.email }}</p>
+                    <p><strong>Tarih:</strong> {{ selectedMessage.createDate | date:'dd-MM-YYYY hh:mm a' }}</p>
+                    <p> <strong>Mesaj: <br></strong>{{ selectedMessage.messageContent }}</p>
+                    <button (click)="replyMessage(selectedMessage.email,selectedMessage.id)" class="btn btn-success btn-sm float-end ">Cevapla</button>
+                    <button (click)="deleteMessage(selectedMessage.id)" class="btn btn-danger btn-sm float-end mx-1">Sil</button>
+                    
+                    <br>
+
                 </div>
+            </div>
+        </div>
+    <button (click)="moreMessage()" class="btn btn-warning btn-sm mt-2">Daha Fazla Yükle</button>
+
+    </div>
+    <div *ngIf="isLoading" class="container mt-4">
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border" role="status">
+              <span class="visually-hidden">Loading...</span>
             </div>
           </div>
     </div>
+    
+</div>
+<br>
 <br>

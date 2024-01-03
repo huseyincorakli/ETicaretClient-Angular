@@ -17,6 +17,7 @@ import {
 import { HttpErrorHandlerInterceptorService } from './services/common/http-error-handler-interceptor.service';
 import { DynamicLoadComponentDirective } from './directives/common/dynamic-load-component.directive';
 import { CategoryEmitterService } from './services/common/emitters.service';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -24,9 +25,10 @@ import { CategoryEmitterService } from './services/common/emitters.service';
   declarations: [
     AppComponent,
     LoginComponent,
-    DynamicLoadComponentDirective
+    DynamicLoadComponentDirective,
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     AppRoutingModule,
     AdminModule,

@@ -145,21 +145,25 @@ export class AppComponent implements OnInit {
     this.clipboard.copyTextToClipboard(value)
   }
 
- async sendMessage(txtMail:HTMLInputElement,txtMessage:HTMLTextAreaElement,txtTitle:HTMLInputElement){
-  console.log("tıkladı");
+  async sendMessage(txtMail: HTMLInputElement, txtMessage: HTMLTextAreaElement, txtTitle: HTMLInputElement) {
   
-  const message:Create_Message={
-    email:txtMail.value,
-    messageContent:txtMessage.value,
-    messageTitle:txtTitle.value
-  }
-
- await this.contactService.createMessage(message,(err)=>{
-    this.toastr.message('Hata','Mesaj gönderilirken bir hata oluştu',ToastrMessageType.Error,ToastrPosition.BottomRight)
-  },()=>{
-    this.toastr.message('Mesaj gönderildi','En kısa sürede sizinle iletişime geçilecektir.',ToastrMessageType.Success,ToastrPosition.BottomRight)
-
-  })
+    // Validate if any of the message properties is empty
+    if (!txtMail.value || !txtMessage.value || !txtTitle.value) {
+      this.toastr.message('Hata', 'Lütfen tüm alanları doldurun', ToastrMessageType.Error, ToastrPosition.BottomRight);
+      return; // Exit the function if validation fails
+    }
+  
+    const message: Create_Message = {
+      email: txtMail.value,
+      messageContent: txtMessage.value,
+      messageTitle: txtTitle.value
+    }
+  
+    await this.contactService.createMessage(message, (err) => {
+      this.toastr.message('Hata', 'Mesaj gönderilirken bir hata oluştu', ToastrMessageType.Error, ToastrPosition.BottomRight)
+    }, () => {
+      this.toastr.message('Mesaj gönderildi', 'En kısa sürede sizinle iletişime geçilecektir.', ToastrMessageType.Success, ToastrPosition.BottomRight)
+    });
   }
   loadComponent() {
     this.dynamicLoadComponentService.loadComponent(ComponentType.BasketComponent, this.dynamicLoadComponentDirective.viewContainerRef)

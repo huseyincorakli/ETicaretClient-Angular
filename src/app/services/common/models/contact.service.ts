@@ -29,10 +29,11 @@ export class ContactService {
     })
   }
 
-  async getAllMessage(errorCallback?:(err:string)=>void):Promise<Get_Message[]>{
+  async getAllMessage(size:number,errorCallback?:(err:string)=>void):Promise<Get_Message[]>{
     const observable = this.httpClientService.get<Get_Message[]>({
       action:'GetAllMessage',
-      controller:'Contact'
+      controller:'Contact',
+      queryString:`size=${size}`
     })
 
     const promiseData = firstValueFrom(observable)
@@ -51,6 +52,24 @@ export class ContactService {
       action:'DeleteMessage',
       controller:'Contact',
       queryString:`id=${id}`
+    })
+    const promiseData = firstValueFrom(observable)
+    promiseData.then(()=>{
+      if (successCallback) {
+        successCallback()
+      }
+    },(err)=>{
+      if (errorCallback) {
+        errorCallback(err.message)
+      }
+    })
+  }
+
+  async replyToUserMessage(usermail:string,title:string,message:string,errorCallback?:(err:string)=>void,successCallback?:()=>void){
+    const observable = this.httpClientService.get({
+      action:'ReplyToMessage',
+      controller:'Contact',
+      queryString:`userMail=${usermail}&title=${title}&message=${message}`
     })
     const promiseData = firstValueFrom(observable)
     promiseData.then(()=>{
