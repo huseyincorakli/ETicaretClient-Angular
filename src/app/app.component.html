@@ -334,7 +334,7 @@
             </div>
             <div class="col-md-2">
               <h6 class="text-uppercase font-weight-bold">
-                <a href="#!" class="text-white">İade Talebi</a>
+                <a routerLink="/my-orders" class="text-white">İade Talebi</a>
               </h6>
             </div>
           </div>
@@ -366,16 +366,16 @@
             <div class="col">
               <div class="m-3">
                 <img src="../assets/phone.png" alt="">
-                <h2>{{homeSetting.contactNumber}}</h2>
+                <h2>{{homeSetting?.contactNumber}}</h2>
               </div>
               <div  class="m-3">
                 <img src="../assets/location-pin.png" alt="">
-                <h2>{{homeSetting.contactAddress}}</h2>
+                <h2>{{homeSetting?.contactAddress}}</h2>
               </div>
               <div  class="m-3">
                 <img src="../assets/email.png" alt="">
                 <h2>
-               {{homeSetting.contactMail}}
+               {{homeSetting?.contactMail}}
                 </h2>
               </div>
             </div>
@@ -412,33 +412,4 @@
     </footer>
 
 </div>
-
-<!-- 
-contactAddress
-: 
-"1234 Bootstrap Caddesi Sıfır Blok, Bootstrap Mahallesi BootCity, BC 54321 Ülke: Bootland"
-contactMail
-: 
-"info@cartopia.com"
-contactNumber
-: 
-"+90555 555 5555"
-createDate
-: 
-"2024-01-02T22:21:03.72228Z"
-id
-: 
-"343a7511-be1e-42fd-90c0-3b0dd96ed286"
-numberOfFeaturedProducts
-: 
-6
-updatedDate
-: 
-"0001-01-01T00:00:00"
-welcomeText
-: 
-"string"
-welcomeTitle
-: 
-"string" -->
 

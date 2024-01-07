@@ -1,0 +1,30 @@
+<div class="container axu mb-1 mt-3">
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+       İade Taleplerimi Göster
+      </a>
+      <div class="collapse" id="collapseExample">
+        <div  class="container axu mt-2">
+            <h1>İade Taleplerim</h1>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Sipariş Kodu</th>
+                    <th scope="col">Oluşturulma Tarihi</th>
+                    <th scope="col">İade Sebebi</th>
+                    <th scope="col">Durum</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let refund of myRefunds" >
+                    <th scope="row">{{refund.orderCode}}</th>
+                    <td>{{refund.createDate | date:'dd-MM-YYYY h:mm'}}</td>
+                    <td *ngIf="refund.reason.length>30">{{refund.reason.slice(0, 30)}}... </td>
+                    <td *ngIf="refund.reason.length<30">{{refund.reason}} </td>
+                    <td>{{refund.returnStatus}}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <button (click)="moreRefund()" class="btn btn-sm btn-warning">Daha Fazla Yükle</button>
+        </div>
+        </div>
+</div>

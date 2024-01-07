@@ -167,10 +167,11 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () =>
-      import('./ui/components/login/login.module').then(
-        (module) => module.LoginModule
-      ),
+    import('./ui/components/login/login.module').then(
+      (module) => module.LoginModule
+    )
   },
+  
 ];
 
 @NgModule({

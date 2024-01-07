@@ -1,0 +1,20 @@
+
+    <div class="container p-3">
+        <div class="form-floating mb-3">
+            <input #txtName type="text" class="form-control" id="nameSurname" value="{{data.nameSurname}}" disabled>
+            <label  for="nameSurname">Ad Soyad</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input #txtEmail type="text" class="form-control" id="email" value="{{data.email}}" disabled>
+            <label for="email">Email</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input #txtOrderCode type="text" class="form-control" id="orderCode"  value="{{data.orderCode}}" disabled>
+            <label for="orderCode">Sipariş Kodu</label>
+          </div>
+          <div class="form-floating mb-3">
+            <textarea #txtReason style="height: 100px" type="text" class="form-control" id="reason"  placeholder="İade Sebebini Yazınız" ></textarea>
+            <label for="reason"><b>İade Sebebi</b></label>
+          </div>
+          <button (click)="createRefundRequest(txtName,txtEmail,txtOrderCode,txtReason)" class="btn btn-sm btn-warning float-end"> Talep Oluştur</button>
+    </div>

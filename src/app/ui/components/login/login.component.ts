@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { BaseComponent, SpinnerType } from 'src/app/base/base.component';
@@ -9,13 +9,15 @@ import { GoogleLoginProvider } from "@abacritt/angularx-social-login";
 import { UserAuthService } from 'src/app/services/common/models/user-auth.service';
 import { CustomToastrService, ToastrMessageType, ToastrPosition } from 'src/app/services/ui/custom-toastr.service';
 import * as CryptoJS from 'crypto-js';
-
+declare var google:any
+import { jwtDecode } from 'jwt-decode';
+import {  Google_Login_User } from 'src/app/contracts/users/google_login';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent extends BaseComponent {
+export class LoginComponent extends BaseComponent implements OnInit {
 
   constructor(
     private userAuthService: UserAuthService,
@@ -28,40 +30,58 @@ export class LoginComponent extends BaseComponent {
   ) {
     super(spinner)
     
-    this.socialAuthService.authState.subscribe(async (user: SocialUser) => {
-      this.showSpinner(SpinnerType.Clock)
-          await userAuthService.googleLogin(user, () => {
-            this.authService.identityCheck();
-            this.activatedRoute.queryParams.subscribe(params => {
-              const returnUrl: string = params['returnUrl'];
-              if(!returnUrl){
-                this.router.navigate(['admin'])
+   // this.socialAuthService.authState.subscribe(async (user: SocialUser) => {
+    //   this.showSpinner(SpinnerType.Clock)
+    //       await userAuthService.googleLogin(user, () => {
+    //         this.authService.identityCheck();
+    //         this.activatedRoute.queryParams.subscribe(params => {
+    //           const returnUrl: string = params['returnUrl'];
+    //           if(!returnUrl){
+    //             this.router.navigate(['admin'])
                 
-              }
-              if (returnUrl) {
-                this.router.navigate([returnUrl])
-              }
-            })
-            this.hideSpinner(SpinnerType.Clock)
-          })
-        //  case'FACEBOOK':
-        // await userService.facebookLogin(user, () => {
-        //   this.authService.identityCheck();
-        //   this.activatedRoute.queryParams.subscribe(params => {
-        //     const returnUrl: string = params['returnUrl'];
-        //     if(!returnUrl){
-        //       this.router.navigate(['admin'])
-              
-        //     }
-        //     if (returnUrl) {
-        //       this.router.navigate([returnUrl])
-        //     }
-        //   })
-        //   this.hideSpinner(SpinnerType.Clock)
-        // })
-        // break;
+    //           }
+    //           if (returnUrl) {
+    //             this.router.navigate([returnUrl])
+    //           }
+    //         })
+    //         this.hideSpinner(SpinnerType.Clock)
+    //       })
+    //   }
+    // )
+  }
+  async ngOnInit() {
+    google.accounts.id.initialize({
+      client_id:'208902266029-lhr178otq45us116mikv94mb4vf4f3ss.apps.googleusercontent.com',
+      callback:async (resp:any)=>{
+        const abc:any= resp;
+       const decodedData:any= jwtDecode(abc.credential)
+       const user = new Google_Login_User();
+       user.idToken=(abc.credential).toString();
+       user.email=decodedData.email
+       await this.userAuthService.googleLogin(user, () => {
+                this.authService.identityCheck();
+                this.activatedRoute.queryParams.subscribe(params => {
+                 const returnUrl: string = params['returnUrl'];
+                 if(!returnUrl){
+                    this.router.navigate(['admin'])
+                    
+                  }
+                 if (returnUrl) {
+                    this.router.navigate([returnUrl])
+                  }
+                 })
+                 this.hideSpinner(SpinnerType.Clock)
+              })
+
       }
-    )
+    });
+
+    google.accounts.id.renderButton(document.getElementById("google-btn"),{
+      theme:'filled_blue',
+      size:'large',
+      shape:'rectangle',
+      width:350,
+    })
   }
 
 
@@ -95,8 +115,6 @@ export class LoginComponent extends BaseComponent {
   navigateRegister(){
     this.router.navigate(['register'])
   }
-  facebookLogin(){
-    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID)
-  }
+  
 }
 

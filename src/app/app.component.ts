@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
     private dynamicLoadComponentService: DynamicLoadComponentService,
     private campaignService: CampaignService,
     private productService: ProductService,
-    private homeSettignService:HomeSettingService
+    private homeSettignService:HomeSettingService,
   ) {
     
 
@@ -114,7 +114,8 @@ export class AppComponent implements OnInit {
   }
   checkShowFooter(){
     const currentRoute = this.router.url;
-    this.showFooter=!this.campaignCardClosed && !currentRoute.includes('/admin') && !currentRoute.includes('/my-orders') && !currentRoute.includes('/checkouts');
+    this.showFooter=!this.campaignCardClosed && !currentRoute.includes('/admin') && !currentRoute.includes('/my-orders') && !currentRoute.includes('/checkouts')
+  
   }
 
   toggleNavbarContent() {
@@ -165,9 +166,10 @@ export class AppComponent implements OnInit {
       this.toastr.message('Mesaj gönderildi', 'En kısa sürede sizinle iletişime geçilecektir.', ToastrMessageType.Success, ToastrPosition.BottomRight)
     });
   }
+
   loadComponent() {
     this.dynamicLoadComponentService.loadComponent(ComponentType.BasketComponent, this.dynamicLoadComponentDirective.viewContainerRef)
   }
 
-}
 
+}

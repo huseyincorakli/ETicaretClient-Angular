@@ -26,30 +26,27 @@
               target="_blank"
               >Stripe DASHBOARDA GİT</a
             >
-            <table class="table table-hover table-bordered">
+            <table *ngIf="completedPayments" class="table table-hover table-bordered">
               <thead>
                 <tr class="text-center">
-                  <th scope="col">Ödeme Methodu</th>
-                  <th scope="col">Durum</th>
+                  <th scope="col">Ad Soyad</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Tarih</th>
+                  <th scope="col">Kartın Son 4 Hanesi</th>
+                  <th scope="col">Kart Kullanım Tarihi (AY/YIL)</th>
+                  <th scope="col">Alınan  Miktar</th>
                   <th scope="col">Para Birimi</th>
-                  <th scope="col">Oluşturulma Tarihi</th>
-                  <th scope="col">Alınan Miktar</th>
-                  <th scope="col"></th>
                 </tr>
               </thead>
               <tbody>
-                <tr
-                  *ngFor="let payment of completedPayments"
-                  class="text-center"
-                >
-                  <th scope="row">{{ payment.paymentMethodTypes[0] }}</th>
-                  <td>{{ payment.status }}</td>
-                  <td>{{ payment.currency }}</td>
+                <tr *ngFor="let payment of completedPayments" class="text-center">
+                  <td>{{ payment.paymentDetail.billingDetails?.name }}</td>
+                  <td>{{ payment.paymentDetail.billingDetails?.email }}</td>
                   <td>{{ payment.created | date: 'dd/MM/yyyy hh:mm a' }}</td>
-                  <td>{{ payment.amount / 100 | currency: 'TRY' }}</td>
-                  <td>
-                    <button (click)="getDetail(payment.paymentMethodId)" class="btn btn-sm btn-warning w-100">Detay</button>
-                  </td>
+                  <td>{{ payment.paymentDetail.card.last4 ? '**** **** **** ' + payment.paymentDetail.card.last4 : 'N/A' }}</td>
+                  <td>{{payment.paymentDetail.card.expMonth}}/{{payment.paymentDetail.card.expYear}}</td>
+                  <td>{{payment.amount / 100 |currency:'TRY'}}</td>
+                  <td>{{payment.currency }}</td>
                 </tr>
               </tbody>
             </table>
