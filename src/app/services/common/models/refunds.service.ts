@@ -49,4 +49,40 @@ export class RefundsService {
     return  await promiseData;
 
   }
+
+  async getAllRefund(size:number,errorCallBack?: (errorMessage: string) => void){
+    const observable = this.httpClientService.get({
+      action:'GetAllRefunds',
+      controller:'PaymentIntentApi',
+      queryString:`size=${size}`
+    })
+    const promiseData = firstValueFrom(observable);
+    promiseData.then(()=>{
+      
+    }).catch((err:HttpErrorResponse)=>{
+      if (errorCallBack) {
+        errorCallBack(err.message)
+      }
+    })
+
+    return  await promiseData;
+  }
+
+  async getPaymentsByEmail(email:string,errorCallBack?: (errorMessage: string) => void){
+    const observable = this.httpClientService.get({
+      action:'GetPaymentsByMail',
+      controller:'PaymentIntentApi',
+      queryString:`email=${email}`
+    })
+    const promiseData = firstValueFrom(observable);
+    promiseData.then(()=>{
+      
+    }).catch((err:HttpErrorResponse)=>{
+      if (errorCallBack) {
+        errorCallBack(err.message)
+      }
+    })
+
+    return  await promiseData;
+  }
 }

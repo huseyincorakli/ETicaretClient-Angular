@@ -33,6 +33,7 @@ import {MatSelectModule} from '@angular/material/select';
 import { PaymentDetailComponent } from './payment-detail/payment-detail.component';
 import { ReplyToMessageDialogComponent } from './reply-to-message-dialog/reply-to-message-dialog.component';
 import { RefundDialogComponent } from './refund-dialog/refund-dialog.component';
+import { PaymentAndOrderDetailDialogComponent } from './payment-and-order-detail-dialog/payment-and-order-detail-dialog.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { RefundDialogComponent } from './refund-dialog/refund-dialog.component';
     UpdateShippingCompanyComponent,
     PaymentDetailComponent,
     ReplyToMessageDialogComponent,
-    RefundDialogComponent
+    RefundDialogComponent,
+    PaymentAndOrderDetailDialogComponent
   ],
   imports: [
     CommonModule,

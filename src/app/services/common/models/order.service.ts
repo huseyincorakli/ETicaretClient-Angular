@@ -167,4 +167,23 @@ export class OrderService {
         return await promiseData;
   }
 
+  async getOrderByOrdercode(orderCode:string,succesCallBack?:()=>void,errorCallBack?:()=>void){
+    const observable=  this.httpClientService.get({
+       action:'GetOrderByOrderCode',
+       controller:'orders',
+       queryString:`orderCode=${orderCode}`
+     })
+     const promiseData= firstValueFrom(observable)
+       promiseData.then(val=>{
+         if (succesCallBack) {
+           succesCallBack();
+         }
+       }).catch(err=>{
+           if (errorCallBack) {
+             errorCallBack()
+           }
+       })
+       return await promiseData;
+ }
+
 }

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { PaymentAndOrderDetailDialogComponent } from 'src/app/dialogs/payment-and-order-detail-dialog/payment-and-order-detail-dialog.component';
 import { PaymentDetailComponent } from 'src/app/dialogs/payment-detail/payment-detail.component';
 import { DialogService } from 'src/app/services/common/dialog.service';
 import { OrderService } from 'src/app/services/common/models/order.service';
+import { RefundsService } from 'src/app/services/common/models/refunds.service';
+import { UserService } from 'src/app/services/common/models/user.service';
 
 @Component({
   selector: 'app-payments',
@@ -10,16 +13,39 @@ import { OrderService } from 'src/app/services/common/models/order.service';
 })
 export class PaymentsComponent implements OnInit {
   completedPayments: any;
-  completedPaymentsFullData:any;
+  completedPaymentsFullData: any;
   completedPaymentSize: number = 5;
+  refundSize: number = 51;
+  refunds: any = [];
+  userMail: any;
   constructor(
     private orderService: OrderService,
-    private dialogService:DialogService) {
+    private dialogService: DialogService,
+    private refundService: RefundsService,
+    private userService: UserService) {
   }
 
   async ngOnInit() {
     await this.getCompletedPayments(7);
+    await this.getAllRefunds(this.refundSize);
+    this.userMail = (await this.userService.getUserById(localStorage.getItem('userId'))).updateProfile.email;
+  }
 
+  async getAllRefunds(size: number) {
+    this.refunds = await this.refundService.getAllRefund(size)
+  }
+
+
+  getData(code: string) {
+    const mail = this.userMail;
+    this.dialogService.openDialog({
+      componentType: PaymentAndOrderDetailDialogComponent,
+      data: { code, mail },
+      options: {
+        width: '500px',
+        height: 'auto'
+      }
+    })
   }
 
   async getCompletedPayments(size?: number) {
@@ -31,7 +57,6 @@ export class PaymentsComponent implements OnInit {
         // Elde edilen veriyi completedPayments'e ekleyin
         element.paymentDetail = paymentDetails;
       }));
-      debugger
     }
     else {
       this.completedPayments = await this.orderService.getCompletedPayments(this.completedPaymentSize);
@@ -45,11 +70,15 @@ export class PaymentsComponent implements OnInit {
     }
   }
 
-  async moreCompletedPayment(){
+  async moreRefunds() {
+    this.refundSize += 3;
+    this.refunds = await this.getAllRefunds(this.refundSize)
+  }
+  async moreCompletedPayment() {
     console.log("çalıştır");
-    
-    this.completedPaymentSize=this.completedPaymentSize+2;
-    this.completedPayments= await this.orderService.getCompletedPayments(this.completedPaymentSize);
+
+    this.completedPaymentSize = this.completedPaymentSize + 2;
+    this.completedPayments = await this.orderService.getCompletedPayments(this.completedPaymentSize);
     debugger
 
     await Promise.all(this.completedPayments.map(async (element) => {
@@ -58,13 +87,13 @@ export class PaymentsComponent implements OnInit {
     }));
   }
 
-  async getDetail(paymentMethodId:string){
+  async getDetail(paymentMethodId: string) {
     this.dialogService.openDialog({
-      componentType:PaymentDetailComponent,
-      data:{paymentMethodId},
-      options:{
-        width:'700px',
-        height:'150px'
+      componentType: PaymentDetailComponent,
+      data: { paymentMethodId },
+      options: {
+        width: '700px',
+        height: '150px'
       }
     })
   }

@@ -38,6 +38,7 @@ export class MyOrdersComponent extends BaseComponent implements OnInit {
     this.maxOrderSize=userOrders.totalOrderCount
     this.orders=userOrders.orders;
     this.hideSpinner(SpinnerType.Classic)
+    debugger;
 
   }
   

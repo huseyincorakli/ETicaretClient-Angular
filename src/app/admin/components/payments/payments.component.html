@@ -40,13 +40,13 @@
               </thead>
               <tbody>
                 <tr *ngFor="let payment of completedPayments" class="text-center">
-                  <td>{{ payment.paymentDetail.billingDetails?.name }}</td>
-                  <td>{{ payment.paymentDetail.billingDetails?.email }}</td>
-                  <td>{{ payment.created | date: 'dd/MM/yyyy hh:mm a' }}</td>
-                  <td>{{ payment.paymentDetail.card.last4 ? '**** **** **** ' + payment.paymentDetail.card.last4 : 'N/A' }}</td>
-                  <td>{{payment.paymentDetail.card.expMonth}}/{{payment.paymentDetail.card.expYear}}</td>
-                  <td>{{payment.amount / 100 |currency:'TRY'}}</td>
-                  <td>{{payment.currency }}</td>
+                  <td>{{ payment?.paymentDetail.billingDetails?.name }}</td>
+                  <td>{{ payment?.paymentDetail.billingDetails?.email }}</td>
+                  <td>{{ payment?.created | date: 'dd/MM/yyyy hh:mm a' }}</td>
+                  <td>{{ payment?.paymentDetail.card.last4 ? '**** **** **** ' + payment.paymentDetail.card.last4 : 'N/A' }}</td>
+                  <td>{{payment?.paymentDetail.card.expMonth}}/{{payment.paymentDetail.card.expYear}}</td>
+                  <td>{{payment?.amount / 100 |currency:'TRY'}}</td>
+                  <td>{{payment?.currency }}</td>
                 </tr>
               </tbody>
             </table>
@@ -71,7 +71,46 @@
         </button>
       </h2>
       <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-        <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item's accordion body.</div>
+       <div class="container">
+        <table *ngIf="refunds?.length>0" class="table table-hover table-bordered">
+          <thead>
+            <tr class="text-center">
+              <th scope="col">Ad Soyad</th>
+              <th scope="col">Email</th>
+              <th scope="col">Sipariş Kodu</th>
+              <th scope="col">Oluşturulma Tarihi</th>
+              <th scope="col">Durum</th>
+              <th scope="col">Sipariş ve Ödeme Detayları</th>
+              <th scope="col"></th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let refund of refunds"  class="text-center">
+              <td>{{refund.name}}</td>
+              <td>{{refund.email}}</td>
+              <td>{{refund.orderCode}}</td>
+              <td>{{refund.createDate | date:'dd-MM-YYYY h:ms'}}</td>
+              <td>{{refund.returnStatus}}</td>
+              <td>
+                <button class="btn btn-primary btn-sm" (click)="getData(refund.orderCode)" >Göster</button>
+                
+              </td>
+              <td><button class="btn btn-success btn-sm ">İade Talep Kabulü</button></td>
+              <td><button class="btn btn-danger btn-sm ">İade Talep Reddi</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button
+        (click)="moreRefunds()" 
+        class="btn btn-sm btn-warning mb-2" 
+        >
+          Daha Fazla Göster
+        </button>
+       
+       </div>
       </div>
     </div>
 </div>
+<br>
+<br>
