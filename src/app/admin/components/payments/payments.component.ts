@@ -15,7 +15,7 @@ export class PaymentsComponent implements OnInit {
   completedPayments: any;
   completedPaymentsFullData: any;
   completedPaymentSize: number = 5;
-  refundSize: number = 51;
+  refundSize: number = 4;
   refunds: any = [];
   userMail: any;
   constructor(
@@ -34,16 +34,21 @@ export class PaymentsComponent implements OnInit {
   async getAllRefunds(size: number) {
     this.refunds = await this.refundService.getAllRefund(size)
   }
+  async getAllRefundsx(size: number) {
+    return await this.refundService.getAllRefund(size);
+  }
 
-
-  getData(code: string) {
+  async refreshData(){
+   await this.getAllRefunds(this.refundSize)
+  }
+  getData(code: string,refundReason:string,returnStatus:string,id:string) {
     const mail = this.userMail;
     this.dialogService.openDialog({
       componentType: PaymentAndOrderDetailDialogComponent,
-      data: { code, mail },
+      data: { code, mail,refundReason,returnStatus,id },
       options: {
-        width: '500px',
-        height: 'auto'
+        width: '800px',
+        height: '495px'
       }
     })
   }
@@ -65,21 +70,18 @@ export class PaymentsComponent implements OnInit {
         // Elde edilen veriyi completedPayments'e ekleyin
         element.paymentDetail = paymentDetails;
       }));
-      debugger
 
     }
   }
 
   async moreRefunds() {
-    this.refundSize += 3;
-    this.refunds = await this.getAllRefunds(this.refundSize)
+    this.refundSize += 2;
+    this.refunds = await this.getAllRefundsx(this.refundSize);
   }
   async moreCompletedPayment() {
-    console.log("çalıştır");
 
     this.completedPaymentSize = this.completedPaymentSize + 2;
     this.completedPayments = await this.orderService.getCompletedPayments(this.completedPaymentSize);
-    debugger
 
     await Promise.all(this.completedPayments.map(async (element) => {
       const paymentDetails = await this.orderService.getPaymentDetail(element.paymentMethodId);

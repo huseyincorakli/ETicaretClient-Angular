@@ -1,2 +1,158 @@
-<p>{{data.mail}}</p>
-<p>{{data.code}}</p>
+<!-- <p>{{data.mail}}</p>
+<p>{{data.code}}</p> -->
+
+<div class="container p-3">
+  <div class="row">
+    <div class="col-12">
+      <div class="orders">
+        <span
+          *ngIf="!order.completed"
+          class="badge text-bg-danger float-end mt-1"
+          >Tamamlanmamış</span
+        >
+        <span *ngIf="order.completed" class="badge text-bg-primary float-end"
+          >Tamamlanmış</span
+        >
+        <h2>SİPARİŞ BİLGİLERİ</h2>
+        <div class="row">
+            <div class="col">
+                <p>
+                    Sipariş Kodu: <b>{{ order.orderCode }}</b>
+                    
+                  </p>
+                  <div class="card mb-1" style="width: 18rem">
+                    <div class="card-body">
+                      <p>
+                        Sipariş Tarihi:
+                        <b>{{ order.createdDate | date: 'yyyy-MM-dd HH:mm:ss' }}</b>
+                      </p>
+                      <h3 class="card-title">Sipariş Notu</h3>
+                      <b>
+                        <p class="card-text" *ngIf="order.description === ''">
+                          Sipariş Notu Doldurulmamış
+                        </p>
+                      </b>
+                      <b>
+                        <p class="card-text" *ngIf="order.description !== ''">
+                          {{ order.description }}
+                        </p>
+                      </b>
+                      <hr />
+                      <h4 class="card-title">İade Sebebi</h4>
+                      <b
+                        ><p *ngIf="data.refundReason !== ''" class="card-text">
+                          {{ data.refundReason }}
+                        </p></b
+                      >
+                      <b>
+                        <p *ngIf="data.refundReason === ''" class="card-text">
+                          İade Sebebi Doldurulmamış
+                        </p>
+                      </b>
+                    </div>
+                  </div>
+            </div>
+            <div class="col">
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th scope="col">Ürün Adı</th>
+                        <th scope="col">Ürün Fiyatı</th>
+                        <th scope="col">Alınan Adet</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of order.basketItems">
+                        <th scope="row">{{ item.name }}</th>
+                        <td>{{ item.price }}</td>
+                        <td>{{ item.quantity }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <h3 class="float-end p-3">
+                    TOPLAM SİPARİŞ BEDELİ : <b> {{totalPrice}}</b>
+                </h3>
+            </div>
+            
+        </div>
+
+       
+      </div>
+    </div>
+    <div class="col">
+      <div class="refunds">
+        <h2>Kullanıcıya Ait Ödemeler</h2>
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Adı Soyadı</th>
+                <th scope="col">Ödeme Miktarı</th>
+                <th scope="col">Tarih</th>
+                <th scope="col">İade Kodu</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let payment of payments">
+                <th scope="row">{{payment.paymentMethod.billingDetails.name}}</th>
+                <td>{{payment.amount/100}}</td>
+                <td>{{payment.created | date:'dd-MM-YYY H:MS'}}</td>
+                <td>{{payment.id}}<span (click)="copyToId(payment.id)" style="cursor: pointer" class="badge text-bg-warning mx-3"
+                    >Kopyala</span
+                  ></td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+      </div>
+    </div>
+         <button *ngIf="data.returnStatus=='İnceleniyor'" class="btn btn-sm btn-success mb-2" 
+         data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"
+         > İade Talebini Kabul Et</button>
+         <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input #txtIntentId type="text" class="form-control" id="floatingInput" placeholder="İade kodunu giriniz">
+                            <label  for="floatingInput">İade Kodu</label>
+                          </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating mb-3">
+                            <input #txtAmount type="number" min="1" class="form-control" id="floatingInput" placeholder="İade kodunu giriniz">
+                            <label  for="floatingInput">İade Miktarı</label>
+                          </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <textarea #txtMessage class="form-control" value="{{acceptMessage}}" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                            <label for="floatingTextarea2">Mesajınız</label>
+                          </div>
+                    </div>
+                </div>
+            <button (click)="agreeRefund(txtIntentId,txtAmount,txtMessage)" class="btn btn-sm btn-warning float-end">Gönder</button>
+            </div>
+
+            <br>
+          </div>
+          <button *ngIf="data.returnStatus=='İnceleniyor'" class="btn btn-sm btn-danger" 
+          data-bs-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample3">İade Talebini Reddet</button>
+          <div class="collapse" id="collapseExample3">
+            <div class="card card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form-floating mb-3">
+                            <textarea #txtMessage2 class="form-control" value="{{rejectMessage}}" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                            <label  for="floatingTextarea2">Mesajınız</label>
+                          </div>
+                    </div>
+                </div>
+            <button (click)="rejectRefund(txtMessage2)" class="btn btn-sm btn-warning float-end">Gönder</button>
+            </div>
+            <br>
+          </div>
+  </div>
+</div>

@@ -72,6 +72,8 @@
       </h2>
       <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
        <div class="container">
+        <button (click)="refreshData()" class="btn btn-sm btn-warning float-end mb-1" >
+        <img src="../../../../assets/refresh.png" alt=""></button>
         <table *ngIf="refunds?.length>0" class="table table-hover table-bordered">
           <thead>
             <tr class="text-center">
@@ -81,8 +83,7 @@
               <th scope="col">Oluşturulma Tarihi</th>
               <th scope="col">Durum</th>
               <th scope="col">Sipariş ve Ödeme Detayları</th>
-              <th scope="col"></th>
-              <th scope="col"></th>
+             
             </tr>
           </thead>
           <tbody>
@@ -93,11 +94,11 @@
               <td>{{refund.createDate | date:'dd-MM-YYYY h:ms'}}</td>
               <td>{{refund.returnStatus}}</td>
               <td>
-                <button class="btn btn-primary btn-sm" (click)="getData(refund.orderCode)" >Göster</button>
+                <button  *ngIf="refund.returnStatus=='İnceleniyor'"class="btn btn-primary btn-sm" (click)="getData(refund.orderCode,refund.reason,refund.returnStatus,refund.id)" >Göster</button>
+                <button style="cursor: grab;" *ngIf="refund.returnStatus!='İnceleniyor'"class="btn btn-danger btn-sm"  >Değerlendirme Tamamlanmamış </button>
                 
               </td>
-              <td><button class="btn btn-success btn-sm ">İade Talep Kabulü</button></td>
-              <td><button class="btn btn-danger btn-sm ">İade Talep Reddi</button></td>
+              
             </tr>
           </tbody>
         </table>

@@ -100,14 +100,7 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
             ToastrPosition.BottomFull);
           break;
 
-        default:
-          
-          this.toastr.message(
-            'Hata!',
-            'Beklenmeyen bir hata oluştu!',
-            ToastrMessageType.Warning,
-            ToastrPosition.BottomFull);
-          break;
+      
       }
       this.spinner.hide(SpinnerType.Classic)
       this.spinner.hide(SpinnerType.Clock)

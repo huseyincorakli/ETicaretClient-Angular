@@ -1,0 +1,25 @@
+
+.refunds{
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: auto; /* ya da istediğiniz genişliği belirleyin */
+}
+
+.orders {
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 10px;
+    width: auto; /* ya da istediğiniz genişliği belirleyin */
+}
+
+.orders ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.orders li {
+    margin-bottom: 5px;
+}

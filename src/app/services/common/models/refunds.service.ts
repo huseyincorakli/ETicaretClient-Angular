@@ -85,4 +85,64 @@ export class RefundsService {
 
     return  await promiseData;
   }
+
+  async AgreeRefund(paymentIntentId: string, amount: number, message: string, userId: string,orderCode:string,
+    succesCallBack?: () => Promise<void>, errorCallBack?: (errorMessage: string) => void) {
+    
+    const observable = this.httpClientService.get({
+      action: 'RefundAccept',
+      controller: 'PaymentIntentApi',
+      queryString: `paymentIntentId=${paymentIntentId}&amount=${amount}&message=${message}&userId=${userId}&orderCode=${orderCode}`
+    });
+  
+    try {
+      await observable.toPromise();
+      if (succesCallBack) {
+        await succesCallBack();
+      }
+      
+    } catch (err) {
+      if (errorCallBack) {
+        errorCallBack(err.message);
+      }
+    }
+  }
+
+    async RejectRefund(message:string,userId:string,
+      succesCallBack?: () => Promise<void>, errorCallBack?: (errorMessage: string) => void){
+        const observable = this.httpClientService.get({
+          action:'RefundReject',
+          controller:'PaymentIntentApi',
+          queryString:`message=${message}&userId=${userId}`
+        })
+        try {
+          await observable.toPromise();
+          if (succesCallBack) {
+           await succesCallBack();
+          }
+        } catch (err) {
+          if (errorCallBack) {
+            errorCallBack(err.message);
+          }
+        };
+      }
+
+      async ChangeRefundStatus(refundId:string,value:number,
+        succesCallBack?: () =>  void, errorCallBack?: (errorMessage: string) => void){
+          const observable = this.httpClientService.get({
+            action:'UpdateRefundStatus',
+            controller:'PaymentIntentApi',
+            queryString:`refundId=${refundId}&value=${value}`
+          })
+          try {
+            await observable.toPromise();
+            if (succesCallBack) {
+              succesCallBack();
+            }
+          } catch (err) {
+            if (errorCallBack) {
+              errorCallBack(err.message);
+            }
+          }
+        }
 }
